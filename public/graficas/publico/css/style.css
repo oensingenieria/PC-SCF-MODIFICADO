@@ -1,0 +1,111 @@
+/*Estilos de la tabla de reportes*/
+#tablewrapper {width:100%; margin:0 auto}
+#tableheader {height:55px}
+.search {float:left; padding:4px; border:0px solid #941B37; background:#c6d5e1}
+#tableheader select {float:left; font-size:12px; width:200px; padding:2px 4px 4px}
+#tableheader input {float:left; font-size:12px; width:225px; padding:2px 4px 4px; margin-left:4px}
+.details {float:right; padding-top:12px}
+.details div {float:left; margin-left:15px; font-size:12px}
+.tinytable {width:100%; border-left:1px solid #c6d5e1; border-top:1px solid #c6d5e1; border-bottom:none}
+.tinytable th {text-align:center; color:#ffffff; border:2px solid #fff; background-color: #203E9B}
+.tinytable th h3 {font-size:14px; padding:6px 8px 8px; font-weight: bold}
+.tinytable td {padding:0px 0px 0px; border-bottom:1px solid #c6d5e1; border-right:1px solid #c6d5e1}
+.tinytable .head h3 {background:url(../../publico/images/administracion/sort.png) 7px center no-repeat; cursor:pointer; padding-left:18px}
+.tinytable .desc h3 {background:url(../../publico/images/administracion/desc.png) 7px center no-repeat; cursor:pointer; padding-left:18px}
+.tinytable .asc h3 {background:url(../../publico/images/administracion/asc.png) 7px  center no-repeat; cursor:pointer; padding-left:18px}
+.tinytable .head:hover, .tinytable .desc:hover, .tinytable .asc:hover {color:#941B37}
+.tinytable .evenrow td {background:#fff}
+.tinytable tfoot {background:#fff; font-weight:bold}
+.tinytable tfoot td {padding:6px 8px 8px}
+.tinytable span {color: #203E9B;font-weight:bold} 
+#tablefooter {height:15px; margin-top:20px}
+#tablenav {float:left}
+#tablenav img {cursor:pointer}
+#tablenav div {float:left; margin-right:15px}
+#tablelocation {float:right; font-size:12px}
+#tablelocation select {margin-right:3px}
+#tablelocation div {float:left; margin-left:15px}
+.page {margin-top:2px; font-style:italic}
+#selectedrow td {background:#c6d5e1}
+
+#popupbox h2{
+    margin:0px;
+
+}
+#popupbox{
+    display: none;
+    padding: 0px;
+    padding-top: 0px;
+    background-color: white;
+    border: 5px solid #C3D9FF;
+    border-radius: 0px 0px 0px 0px;
+    margin: 0px auto 0 0px;
+    position: absolute;
+    box-shadow:1px 1px 1px #000;
+    z-index: 1;
+    width: 80%;
+}
+#popupbox label{
+    display: block;
+    float: left;
+    margin-right: 0px;
+    margin-top: 0px;
+    text-align: right;
+    width: 40%;
+}
+.menu_resportes{
+    margin-right: 0px;
+    width: 59%;
+    height: 35px;
+    padding: 10px 0px 8px 0px;
+    background-color:#F8F8F8;
+    text-align: left;
+    color: #000000;
+    font-size: 12px;
+    font-family: Arial;
+    position: absolute; 
+    top: -13px;
+}
+.banner_reportes{
+    margin-top:1px;
+}
+.boton_reportes{
+    color: #FFF;
+    background-color: #203E9B;
+    border-color: #203E9B;
+    margin-bottom: 5px;
+    width: 100%;
+    font-size: 16px;
+    font-family: Arial;
+}
+.boton_reportes_1{
+    color: #FFF;
+    background-color: #203E9B;
+    border-color: #203E9B;
+    font-size: 12px;
+    font-family: Arial;
+}
+.bv_reportes {
+    background-color: #D9EDF7;
+    text-align: center;
+    font-weight: bold;
+    width: 100%;
+    height: 40px;
+    padding: 7px 0px 8px 0px;
+    font-size: 18px;
+    font-family: Arial;
+    margin-bottom: 2%;
+}
+.footer_reportes{
+    color: #000000;
+    font-size: 12px;
+    font-family: Arial;
+    margin-top: 5%;
+}
+.footer_reportes_interno{
+    color: #000000;
+    font-size: 12px;
+    font-family: Arial;
+    margin-top: 42%;
+}
+/*Fin Estilos de la tabla de reportes*/

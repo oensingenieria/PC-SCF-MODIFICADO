@@ -1,0 +1,44 @@
+
+#marcoVistaPrevia{
+    width: 100px;
+    height: 100px;
+    float: right;
+}
+#vistaPrevia{
+    max-width: 100px;
+    max-height: 100px;            
+}
+
+#marcoVistaPreviaCedula{
+    width: 100px;
+    height: 100px;
+    float: right;
+}
+#vistaPreviaCedula{
+    max-width: 100px;
+    max-height: 100px;            
+}
+
+#marcoVistaPreviaCarnet{
+    width: 100px;
+    height: 100px;
+    float: right;
+}
+#vistaPreviaCarnet{
+    max-width: 100px;
+    max-height: 100px;            
+}
+
+#marcoVistaPreviaVer{
+    width: 112px;
+    height: 120px;
+    float: right;
+    padding: 5px;
+    float: center;
+    background: #CCC;
+    border: #999 1px solid;
+}
+#vistaPreviaVer{
+    max-width: 100px;
+    max-height: 100px;            
+}
