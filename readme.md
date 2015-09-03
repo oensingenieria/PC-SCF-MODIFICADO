@@ -1,8 +1,8 @@
 ## NOTAS
 
--Clonar el repositorio -> git clone url.
--Actualizar desde la ruta del proyecto las dependencias -> composer update
--Ejecutar con php artisan serve para confirmar el correcto funcionamiento del proyecto.
+*Clonar el repositorio -> git clone url.
+*Actualizar desde la ruta del proyecto las dependencias -> composer update
+*Ejecutar con php artisan serve para confirmar el correcto funcionamiento del proyecto.
 
 ## Laravel PHP Framework
 
