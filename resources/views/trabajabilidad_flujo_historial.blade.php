@@ -23,7 +23,7 @@
 				<div class="col-md-12  ">
 			@if(isset($mixer))	
 				@if(!is_null($mixer) & count($mixer) > 0)	
-				<table class="table table-bordered ">
+				<table class="table table-bordered tablePag">
  				
 				   <thead class="bg-success " style="font-weight:bold" >
 				      <tr>

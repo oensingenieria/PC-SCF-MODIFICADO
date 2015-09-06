@@ -73,7 +73,7 @@
 				<div class="col-md-12  ">
 			@if(isset($mixer))	
 				@if(!is_null($mixer) & count($mixer) > 0)	
-				<table class="table table-bordered ">
+				<table class="table table-bordered tablePag ">
  				
 				   <thead class="bg-success " style="font-weight:bold" >
 				      <tr>
@@ -274,19 +274,19 @@
 
 <div class="remodal" data-remodal-id="llenardatos_modal">
   <button data-remodal-action="close" class="remodal-close"></button>
-  <h3 class="bg-success">Llenar Datos</h3>
+  <h4 style="color:#459645"><b>Realizar Ensayo</b></h4>
   <br>
   
+  <form class="form-horizontal" method="post" action="/pc/trabajabilidad_flujo">
+    <input name="_token" type="hidden" value="{!! csrf_token() !!}" />
   <div class="row">
-  		<div class="col-md-9">
-  		
-		  		<form class="form-horizontal" method="post" action="/pc/trabajabilidad_flujo">
-		  		<input name="_token" type="hidden" value="{!! csrf_token() !!}" />
+  		<div class="col-md-6">
+  		 
 
-		  	<div class="form-group">
+		  	<div class="form-group" >
 		    <label  class="col-sm-6 control-label">ID:</label>
 		    <div class="col-sm-6">
-		      <input value="" name="idmixer"  id="id_mixer"  readonly="" type="number" class="form-control"  >
+		      <input style="color:#459645" value="" name="idmixer"  id="id_mixer"  readonly="" type="number" class="form-control"  >
 		    </div>
 		  </div>
 
@@ -294,14 +294,14 @@
 		   <div class="form-group">
 		    <label  class="col-sm-6 control-label">Numero de carga:</label>
 		    <div class="col-sm-6">
-		      <input value="" name="Numero_Carga"  id="Numero_Carga" readonly="" type="text" class="form-control"  >
+		      <input style="color:#459645" value="" name="Numero_Carga"  id="Numero_Carga" readonly="" type="text" class="form-control"  >
 		    </div>
 		  </div>
 
 		  <div class="form-group">
 		    <label for="inputEmail3" class="col-sm-6 control-label">Nombre Proyecto</label>
 		    <div class="col-sm-6">
-		      <input type="text" class="form-control" name="Nombre_Proyecto" id="Nombre_Proyecto" readonly="" value="" placeholder="Elemento">
+		      <input style="color:#459645" type="text" class="form-control" name="Nombre_Proyecto" id="Nombre_Proyecto" readonly="" value="" placeholder="Elemento">
 		    </div>
 		   </div>
 		 
@@ -309,14 +309,14 @@
 		  <div class="form-group">
 		    <label for="inputEmail3" class="col-sm-6 control-label">Nombre Elemento:</label>
 		    <div class="col-sm-6">
-		      <input type="text" class="form-control" name="Nombre_Elemento" id="Nombre_Elemento" readonly="" value=""  placeholder="Elemento">
+		      <input style="color:#459645" type="text" class="form-control" name="Nombre_Elemento" id="Nombre_Elemento" readonly="" value=""  placeholder="Elemento">
 		    </div>
 		   </div>
 
 		  <div class="form-group">
 		    <label for="inputEmail3" class="col-sm-6 control-label">Fecha de ensayo:</label>
 		    <div class="col-sm-6">
-		      <input name="Fecha_Ensayo" style="cursor: pointer; background-color: white;"  required="" readonly=""  type="Text" class="form-control  datepicker"  placeholder="Fecha">
+		      <input style="color:#459645" name="Fecha_Ensayo" style="cursor: pointer; background-color: white;"  required="" readonly=""  type="Text" class="form-control today"   placeholder="Fecha">
 		    </div>
 		  </div>
 		  <div class="form-group">
@@ -335,69 +335,87 @@
 		    </div>
 		  </div>
 
-		  <div class="form-group">
-		    <label for="inputEmail3" class="col-sm-6 control-label">Temperatura (°C):</label>
-		    <div class="col-sm-6">
-		      <input type="number" step="0.01" required="" name="Temperatura" class="form-control" id="inputEmail3" placeholder="Temperatura">
-		    </div>
-		  </div>
-		  <div class="form-group">
-		    <label for="inputEmail3" class="col-sm-6 control-label">Volumen (m3): </label>
-		    <div class="col-sm-6">
-		      <input type="number" step="0.01" required=""  readonly="" name="Volumen" class="form-control" id="Volumen" >
-		    </div>
-		  </div>
-		  <div class="form-group">
-		    <label for="inputEmail3" class="col-sm-6 control-label">Zona: </label>
-		    <div class="col-sm-6">
-		      
-		      <select class="form-control" name="Zona">
-				  <option value="Zona_1">Zona 1 - 2</option>
-				  <option value="Zona_2">Zona 3 - 4</option>
-				  <option value="Zona_3">Zona 5 - 6</option>
-				  <option value="Zona_4">Zona 7 - 8</option>
-				  <option value="Zona_5">Zona Patio</option>
-				  
-				</select>
-
-		    </div>
-		  </div>
-		  <div class="form-group">
-		    <label for="inputEmail3" class="col-sm-6 control-label">Encargado: </label>
-		    <div class="col-sm-6">
-		      <input type="text" required=""  name="Encargado" class="form-control" id="inputEmail3" placeholder="Nombre">
-		    </div>
-		  </div>
-		  <div class="form-group">
-		    <label for="inputEmail3" class="col-sm-6 control-label">Cod. Tarro: </label>
-		    <div class="col-sm-6">
-		      <input name="Codigo_Tarro" required=""  type="text" class="form-control" id="inputEmail3" placeholder="Codigo">
-		    </div>
-		  </div>
-		  <div class="form-group">
-		    <label for="inputEmail3" class="col-sm-6 control-label">Observaciones: </label>
-		    <div class="col-sm-6">
-		      
-		      <textarea  overflow: auto; wrap="off" rows="2" placeholder="Observacion" style="white-space: normal ; width:100%" class="form-control" name="Observaciones">
-		      	
-
-		      </textarea>
-		    </div>
-		  </div>
-
 		  <input type="hidden" id="id_mixer" name="id_mixer">
 		  	
-		  <div class="form-group">
-		    <div class="col-sm-offset-6 col-sm-6">
-		     
-		      <button type="submit" class="btn btn-success">Grabar</button>
-		       
-		    </div>
-		  </div>
-		</form>
+        <div class="form-group" style="color:#459645">
+         
+         <input class="ensayoschk"  type="checkbox" name="sex" value="male" checked><b>Vebe</b>&nbsp;&nbsp;
+         <input class="ensayoschk" type="checkbox" name="sex" value="female"><b>Falla 7 y 28</b>&nbsp;&nbsp;
+         <input class="ensayoschk" type="checkbox" name="sex" value="female"><b>Transferencia</b>&nbsp;&nbsp;
+         <input id="desechoschk" type="checkbox" name="sex" value="female"><b>Desecho</b>
 
        </div>
+  
+  </div>
 
+
+   <div class="col-md-6">
+        
+         <div class="form-group">
+        <label for="inputEmail3" class="col-sm-6 control-label">Temperatura (°C):</label>
+        <div class="col-sm-6">
+          <input type="number" step="0.01" required="" name="Temperatura" class="form-control" id="inputEmail3" placeholder="Temperatura">
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="inputEmail3" class="col-sm-6 control-label">Volumen (m3): </label>
+        <div class="col-sm-6">
+          <input style="color:#459645" type="number" step="0.01" required=""  readonly="" name="Volumen" class="form-control" id="Volumen" >
+        </div>
+      </div>
+
+
+        <div class="form-group">
+        <label for="inputEmail3" class="col-sm-6 control-label">Zona: </label>
+        <div class="col-sm-6">
+          
+          <select class="form-control" name="Zona">
+          <option value="Zona_1">Zona 1 - 2</option>
+          <option value="Zona_2">Zona 3 - 4</option>
+          <option value="Zona_3">Zona 5 - 6</option>
+          <option value="Zona_4">Zona 7 - 8</option>
+          <option value="Zona_5">Zona Patio</option>
+          
+        </select>
+
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputEmail3" class="col-sm-6 control-label">Encargado: </label>
+        <div class="col-sm-6">
+          <input type="text" required=""  name="Encargado" class="form-control" id="inputEmail3" placeholder="Nombre">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputEmail3" class="col-sm-6 control-label">Cod. Tarro: </label>
+        <div class="col-sm-6">
+          <input name="Codigo_Tarro" required=""  type="text" class="form-control" id="inputEmail3" placeholder="Codigo">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputEmail3" class="col-sm-6 control-label">Observaciones: </label>
+        <div class="col-sm-6">
+          
+          <textarea  overflow: auto; wrap="off" rows="2" placeholder="Observacion" style="white-space: normal ; width:100%" class="form-control" name="Observaciones">
+            
+
+          </textarea>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-offset-6 col-sm-6">
+         
+          <button type="submit" class="btn btn-success">Grabar</button>
+           
+        </div>
+      </div>
+
+       </div>
+     </div>
+
+</form>
 </div>
 </div>
 {{--Modal Llenado de datos--}}
@@ -433,6 +451,19 @@ $(document).ready(function(){
 
       });
 
+//checkbox logic
+    $('#desechoschk').on('change', function() {
+    
+    $('.ensayoschk').not(this).prop('checked', false);  
+     });
+
+    $('.ensayoschk').on('change', function() {
+    
+    $('#desechoschk').not(this).prop('checked', false);  
+     });
+
+//checkbox logic
+    
 
     });
 
