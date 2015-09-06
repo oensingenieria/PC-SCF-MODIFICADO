@@ -28,7 +28,7 @@ class EnsayoTrabajabilidadController extends Controller {
 
 			public function trabajabilidad_flujo(){
 
-		        return view('trabajabilidad_flujo' );
+		        return view('trabajabilidad_flujo' , array('titlemesage' => 'TRABAJABILIDAD Y FLUJO') );
 
 			}
 
@@ -51,13 +51,14 @@ class EnsayoTrabajabilidadController extends Controller {
 			public function consulta_trabajabilidad_carga(){
 
 				$codigo = $_POST['Parametro'];
+
 				$mixer = Mixer::where("Numero_Carga",$codigo)->groupBy('Numero_Carga')->get();
 
-				$revenimiento_revisado = Trabajabilidad::where('Revision' , '=' , 'Revisado')
-										 ->where('Numero_Carga' , $codigo)
-				                         ->get();
+				return view('trabajabilidad_flujo' , 
+					array('mixer' => $mixer , 
+						 'titlemesage' => 'CONSULTA POR NUMERO DE CARGA '.$codigo . '. ENSAYOS NO REALIZADOS.'
 
-				return view('trabajabilidad_flujo' , array('mixer' => $mixer , 'revenimiento_re' => $revenimiento_revisado));
+						));
 
 
 			}
@@ -66,27 +67,17 @@ class EnsayoTrabajabilidadController extends Controller {
 
 				$codigo = $_POST['Parametro'];
 				
-				
 				$mixer = Mixer::where('Codigo_Diseño' , $codigo )->groupBy('Numero_Carga')->get();
 				
-				$revenimiento_revisado = Trabajabilidad::where('Revision' , '=' , 'Revisado')
-									     ->get();
+				return view('trabajabilidad_flujo' , 
+					array('mixer' => $mixer , 
+						  'titlemesage' => 'CONSULTA POR CODIGO DE DISEÑO '.$codigo . '. ENSAYOS NO REALIZADOS.'
 
-				return view('trabajabilidad_flujo' , array('mixer' => $mixer , 'revenimiento_re' => $revenimiento_revisado));
+						));
 
 			}	
 
-			public function consulta_trabajabilidad_boleta(){
-
-			    $codigo = $_POST['Parametro'];
-				
-				$mixer = Mixer::where('Boleta_Batida' , $codigo )->groupBy('Numero_Carga')->get();
-				
-				$revenimiento_revisado = Trabajabilidad::where('Revision' , '=' , 'Revisado')->get();
-
-				return view('trabajabilidad_flujo' , array('mixer' => $mixer , 'revenimiento_re' => $revenimiento_revisado));
-
-			}
+		
 
 			public function consulta_trabajabilidad_fecha(){
 
@@ -94,57 +85,93 @@ class EnsayoTrabajabilidadController extends Controller {
 				
 				$mixer = Mixer::where('Fecha_de_Carga' , $codigo )->groupBy('Numero_Carga')->get();
 				
-				$revenimiento_revisado = Trabajabilidad::where('Revision' , '=' , 'Revisado')
-										->where('Fecha_Ensayo' , $codigo)
-										->get();
+				return view('trabajabilidad_flujo' , 
+					array(
+						'mixer' => $mixer ,
+						'titlemesage' => 'CONSULTA POR FECHA '.$codigo . '. ENSAYOS NO REALIZADOS.'
 
-				return view('trabajabilidad_flujo' , array('mixer' => $mixer , 'revenimiento_re' => $revenimiento_revisado));
+						));
 				
 
 			}
 
 
 
-			// Consultas por historial
+// Consultas por historial
 
 
 
 			public function consulta_trabajabilidad_carga_historial(){
-
-				$codigo = $_POST['Parametro'];
 				
-				$mixer = Mixer::where("Numero_Carga",$codigo)->groupBy('Numero_Carga')->get();
+			$mixer = \DB::table('mixerconsumo')
+			        ->join('revenimiento', function ($join) {
+			        	
+			        	
 
-				$revenimiento_revisado = Trabajabilidad::where('Revision' , '=' , 'Revisado')
-                                                         ->where('Numero_Carga' , '=' , $codigo)
-				                                         ->get();
+			            $join->on('mixerconsumo.Numero_Carga', '=', 'revenimiento.Numero_Carga')
+			                 ->where('revenimiento.Numero_Carga', '=', $_POST['Parametro'] );
+			        })
+			        ->groupBy('revenimiento.Numero_Carga')
+			        ->get();
 
-				return view('trabajabilidad_flujo' , array('mixer' => $mixer , 'revenimiento_re' => $revenimiento_revisado));
+
+				return view('trabajabilidad_flujo_historial' , array(
+					'mixer' => $mixer ,
+					'titlemesage' => 'CONSULTA POR NUMERO DE CARGA '.$_POST['Parametro']. '. ENSAYOS REALIZADOS.'
+
+
+					) );
 
 			}
 
 			
 			public function consulta_trabajabilidad_fecha_historial(){
 
-				$codigo = $_POST['Parametro'];
+				$mixer = \DB::table('mixerconsumo')
+			        ->join('revenimiento', function ($join) {
+			        	
+			        	
+
+			            $join->on('mixerconsumo.Numero_Carga', '=', 'revenimiento.Numero_Carga')
+			                 ->where('revenimiento.Fecha_Ensayo', '=', $_POST['Parametro'] );
+			        })
+			        ->groupBy('revenimiento.Numero_Carga')
+			        ->get();
+
+
+				return view('trabajabilidad_flujo_historial' , array(
+					'mixer' => $mixer ,
+					'titlemesage' => 'CONSULTA POR FECHA '.$_POST['Parametro']. '. ENSAYOS REALIZADOS.'
+
+
+					) );
 				
-				
-				$revenimiento_revisado = Trabajabilidad::where('Revision' , '=' , 'Revisado')
-										->where('Fecha_Ensayo' , $codigo)
-										->get();
-
-				//Provisional . se obtiene la fecha de carga del mixer con el numero de carga del ensayo
-				//Problema solo trae el primer registro revisado	
-				$rev = 	Trabajabilidad::where('Revision' , '=' , 'Revisado')
-										->where('Fecha_Ensayo' , $codigo)
-										->first();		
+			}
 
 
-				$mixer =  Mixer::where('Numero_Carga' , $rev->Numero_Carga )->groupBy('Numero_Carga')->get();					
+			public function consulta_trabajabilidad_fecha_historial_rango(){
 
-               
+				$mixer = \DB::table('mixerconsumo')
+			        ->join('revenimiento', function ($join) {
+			        	
+			        	
 
-				return view('trabajabilidad_flujo' , array('mixer' => $mixer, 'revenimiento_re' => $revenimiento_revisado ));
+			            $join->on('mixerconsumo.Numero_Carga', '=', 'revenimiento.Numero_Carga')
+			                 ->where('revenimiento.Fecha_Ensayo', '>=', $_POST['Desde'] )
+			                 ->where('revenimiento.Fecha_Ensayo', '<=', $_POST['Hasta'] );
+
+
+			        })
+			        ->groupBy('revenimiento.Numero_Carga')
+			        ->get();
+
+
+				return view('trabajabilidad_flujo_historial' , array(
+					'mixer' => $mixer ,
+					'titlemesage' => 'CONSULTA POR FECHA DESDE '.$_POST['Desde']. ' HASTA '.$_POST['Hasta'].'. ENSAYOS REALIZADOS.'
+
+
+					) );
 				
 			}
 

@@ -21,9 +21,8 @@ Route::post('pc/trabajabilidad_flujo/codigo', 'EnsayoTrabajabilidadController@co
 Route::post('pc/trabajabilidad_flujo/boleta', 'EnsayoTrabajabilidadController@consulta_trabajabilidad_boleta');
 Route::post('pc/trabajabilidad_flujo/fecha', 'EnsayoTrabajabilidadController@consulta_trabajabilidad_fecha');
 Route::post('pc/trabajabilidad_flujo/carga/historial', 'EnsayoTrabajabilidadController@consulta_trabajabilidad_carga_historial');
-Route::post('pc/trabajabilidad_flujo/codigo/historial', 'EnsayoTrabajabilidadController@consulta_trabajabilidad_codigo_historial');
-Route::post('pc/trabajabilidad_flujo/boleta/historial', 'EnsayoTrabajabilidadController@consulta_trabajabilidad_boleta_historial');
 Route::post('pc/trabajabilidad_flujo/fecha/historial', 'EnsayoTrabajabilidadController@consulta_trabajabilidad_fecha_historial');
+Route::post('pc/trabajabilidad_flujo/fecha_rango/historial', 'EnsayoTrabajabilidadController@consulta_trabajabilidad_fecha_historial_rango');
 
 
 Route::get('pc/yield', 'EnsayoYieldController@consulta_yield');
