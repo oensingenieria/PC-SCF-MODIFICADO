@@ -20,6 +20,10 @@ protected $fillable = ['Numero_Carga' ,
 'Codigo_Tarro',
 'Observaciones',
 'Revision',
+'vebe',
+'falla',
+'transferencia',
+'desecho',
 'id_mixer'];
 
 }

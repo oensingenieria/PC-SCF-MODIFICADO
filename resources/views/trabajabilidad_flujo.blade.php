@@ -337,13 +337,16 @@
 
 		  <input type="hidden" id="id_mixer" name="id_mixer">
 		  	
-        <div class="form-group" style="color:#459645">
+        <div class="form-group text-left" style="color:#459645">
          
-         <input class="ensayoschk"  type="checkbox" name="sex" value="male" checked><b>Vebe</b>&nbsp;&nbsp;
-         <input class="ensayoschk" type="checkbox" name="sex" value="female"><b>Falla 7 y 28</b>&nbsp;&nbsp;
-         <input class="ensayoschk" type="checkbox" name="sex" value="female"><b>Transferencia</b>&nbsp;&nbsp;
-         <input id="desechoschk" type="checkbox" name="sex" value="female"><b>Desecho</b>
+         <input class="ensayoschk"  type="checkbox" name="vebe" value="1" checked>&nbsp;<b>Vebe</b>&nbsp;&nbsp;
+         <input class="ensayoschk" type="checkbox" name="falla" value="1">&nbsp;<b>Falla 7 y 28</b>&nbsp;&nbsp;
+     
+       </div>
 
+       <div class="form-group text-left" style="color:#459645">
+       <input class="ensayoschk" type="checkbox" name="transferencia" value="1">&nbsp;<b>Transferencia</b>&nbsp;&nbsp;
+       <input id="desechoschk" type="checkbox" name="desecho" value="1">&nbsp;<b>Desecho</b>&nbsp;&nbsp;
        </div>
   
   </div>
@@ -384,13 +387,26 @@
       <div class="form-group">
         <label for="inputEmail3" class="col-sm-6 control-label">Encargado: </label>
         <div class="col-sm-6">
-          <input type="text" required=""  name="Encargado" class="form-control" id="inputEmail3" placeholder="Nombre">
+          
+          <select name="Encargado" class="form-control" >
+            @foreach($encargados as $encargado)
+            <option value="{{$encargado->nombre}}" > {{$encargado->nombre}} </option>
+            @endforeach
+          </select>
+
+
         </div>
       </div>
       <div class="form-group">
         <label for="inputEmail3" class="col-sm-6 control-label">Cod. Tarro: </label>
         <div class="col-sm-6">
-          <input name="Codigo_Tarro" required=""  type="text" class="form-control" id="inputEmail3" placeholder="Codigo">
+
+           <select name="Codigo_Tarro" class="form-control" >
+            @foreach($tarros as $tarro)
+            <option value="{{$tarro->codigo}}" > {{$tarro->codigo}} </option>
+            @endforeach
+          </select>
+
         </div>
       </div>
       <div class="form-group">

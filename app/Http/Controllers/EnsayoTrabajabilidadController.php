@@ -10,6 +10,8 @@ use App\Http\Requests\Request_Trabajabilidad; //Solicitud trabajabilidad
 
 use App\Mixer;
 use App\Trabajabilidad;
+use App\Encargado;
+use App\Tarros;
 
 use Auth;
 
@@ -35,14 +37,29 @@ class EnsayoTrabajabilidadController extends Controller {
 			public function post_trabajabilidad_flujo(Request_Trabajabilidad $request){
 				
 		       $datos = new Trabajabilidad($request->all());
-				
-				
+
+		       
 		        $datos->id_mixer =  $_POST['idmixer'] ;
 				$datos->Revision = 'Revisado';
 				$datos->Nombre_Cuenta = Auth::user()->username;
 				$datos->save();
 
-				return redirect('/pc/trabajabilidad_flujo')->with('success','Revisión realizada con exito');
+				
+				//Logic return list
+				$getdate =  Mixer::where('Numero_Carga' , $datos->Numero_Carga )->first();
+
+				$mixer = Mixer::where('Fecha_de_Carga' , $getdate->Fecha_de_Carga )->groupBy('Numero_Carga')->get();
+				$tarros = Tarros::all();
+				$encargados = Encargado::all();
+				
+				return view('trabajabilidad_flujo' , 
+					array(
+						'mixer' => $mixer ,
+						'tarros' => $tarros ,
+						'encargados' => $encargados ,
+						'titlemesage' => "ENSAYO  ".$datos->Numero_Carga ." .   REALIZADO CON EXITO!."
+
+						));
 
 			}
 
@@ -53,9 +70,14 @@ class EnsayoTrabajabilidadController extends Controller {
 				$codigo = $_POST['Parametro'];
 
 				$mixer = Mixer::where("Numero_Carga",$codigo)->groupBy('Numero_Carga')->get();
+				$tarros = Tarros::all();
+				$encargados = Encargado::all();
+
 
 				return view('trabajabilidad_flujo' , 
 					array('mixer' => $mixer , 
+						'tarros' => $tarros ,
+						'encargados' => $encargados ,
 						 'titlemesage' => 'CONSULTA POR NUMERO DE CARGA '.$codigo . '. ENSAYOS NO REALIZADOS.'
 
 						));
@@ -68,9 +90,13 @@ class EnsayoTrabajabilidadController extends Controller {
 				$codigo = $_POST['Parametro'];
 				
 				$mixer = Mixer::where('Codigo_Diseño' , $codigo )->groupBy('Numero_Carga')->get();
+				$tarros = Tarros::all();
+				$encargados = Encargado::all();
 				
 				return view('trabajabilidad_flujo' , 
 					array('mixer' => $mixer , 
+						'tarros' => $tarros ,
+						'encargados' => $encargados ,
 						  'titlemesage' => 'CONSULTA POR CODIGO DE DISEÑO '.$codigo . '. ENSAYOS NO REALIZADOS.'
 
 						));
@@ -84,17 +110,20 @@ class EnsayoTrabajabilidadController extends Controller {
 				$codigo = $_POST['Parametro'];
 				
 				$mixer = Mixer::where('Fecha_de_Carga' , $codigo )->groupBy('Numero_Carga')->get();
+				$tarros = Tarros::all();
+				$encargados = Encargado::all();
 				
 				return view('trabajabilidad_flujo' , 
 					array(
 						'mixer' => $mixer ,
+						'tarros' => $tarros ,
+						'encargados' => $encargados ,
 						'titlemesage' => 'CONSULTA POR FECHA '.$codigo . '. ENSAYOS NO REALIZADOS.'
 
 						));
 				
 
 			}
-
 
 
 // Consultas por historial

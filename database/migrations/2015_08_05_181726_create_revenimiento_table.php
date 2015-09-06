@@ -40,6 +40,11 @@ class CreateRevenimientoTable extends Migration {
 		    	                   'Pendiente']);
 		    $table->integer('id_mixer');
 
+		    $table->tinyInteger('vebe');
+		    $table->tinyInteger('falla');
+		    $table->tinyInteger('transferencia');
+		    $table->tinyInteger('desecho');
+
 
 			$table->timestamps();
 		});
