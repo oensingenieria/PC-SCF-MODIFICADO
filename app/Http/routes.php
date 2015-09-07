@@ -27,6 +27,7 @@ Route::post('pc/trabajabilidad_flujo/fecha_rango/historial', 'EnsayoTrabajabilid
 
 Route::get('pc/yield', 'EnsayoYieldController@consulta_yield');
 Route::post('pc/yield/fecha', 'EnsayoYieldController@consulta_yield_historial_fecha');
+Route::post('pc/yield/rango', 'EnsayoYieldController@consulta_yield_historial_rango');
 Route::post('pc/yield/carga', 'EnsayoYieldController@consulta_yield_historial_carga');
 Route::get('pc/yield/historial/{carga}', 'EnsayoYieldController@muestra_historial_yield');
 Route::post('/pc/yield/crear', 'EnsayoYieldController@yield_post');

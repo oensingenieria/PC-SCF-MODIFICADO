@@ -24,12 +24,18 @@
 				<div class="col-md-12" >
 				
 				@if(!isset($carga))
-				<p class="bg-info text-center" style="height:40px;padding-top:10px"><b>Por favor realize una busqueda</b></p>
+				 	@if(isset($bad))
+				 	<p class="bg-danger text-center" style="height:40px;padding-top:10px"><b>Datos no encontrados . Por favor realize una nueva busqueda.</b></p>
+				 	@else
+					<p class="bg-info text-center" style="height:40px;padding-top:10px"><b>Por favor realize una busqueda</b></p>
+
+					@endif
 				@endif
 
 				</div>
 				
 				@if(isset($carga))
+				 @if(!is_null($carga))
 				<div class="row">
 				<div class="col-md-12  ">
 				 <table class="table table-bordered tablePag">
@@ -72,7 +78,8 @@
 
 				</table>
 		
-				    
+				  
+				  @endif  
 				@endif
 
 				</div>
@@ -162,11 +169,11 @@
   	<div class="col-md-12">
      
        
-        <form class="form-horizontal" >
+        <form class="form-horizontal" method="post" action="/pc/yield/rango">
          <input name="_token" type="hidden" value="{!! csrf_token() !!}" />
-        <label>Rango de fecha:<input  type="text" name="Parametro"   style="cursor: pointer; background-color: white; margin-bottom:5px"  required="" readonly=""  type="Text" class="form-control  datepicker"  placeholder="Desde" >
+        <label>Rango de fecha:<input  type="text" name="Desde"   style="cursor: pointer; background-color: white; margin-bottom:5px"  required="" readonly=""  type="Text" class="form-control  datepicker"  placeholder="Desde" >
 
-          <input  type="text" name="Parametro"   style="cursor: pointer; background-color: white;"  required="" readonly=""  type="Text" class="form-control  datepicker"  placeholder="Hasta" >
+          <input  type="text" name="Hasta"   style="cursor: pointer; background-color: white;"  required="" readonly=""  type="Text" class="form-control  datepicker"  placeholder="Hasta" >
 
         </label>
         <div class="form-group">
@@ -337,9 +344,6 @@
 	</div>	  
 
 		</form>
-
-
-       
 
 </div>
 </div>
