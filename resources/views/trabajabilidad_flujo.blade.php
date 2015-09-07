@@ -158,7 +158,7 @@
   <div class="row">
   <div class="col-md-12">
   		<div class="col-md-6">
-  			<form class="form-inline" method="post" action="/pc/trabajabilidad_flujo/carga">
+  			<form class="form-horizontal" method="post" action="/pc/trabajabilidad_flujo/carga">
   			<input name="_token" type="hidden" value="{!! csrf_token() !!}" />
         <div class="form-group">
   			<label>Numero de carga <input required  class="form-control" type="text" name="Parametro" placeholder="Numero de carga" /></label>
@@ -173,7 +173,7 @@
 
   		<div class="col-md-6">
   			
-  				<form class="form-inline"  method="post" action="/pc/trabajabilidad_flujo/codigo">
+  				<form class="form-horizontal"  method="post" action="/pc/trabajabilidad_flujo/codigo">
   				<input name="_token" type="hidden" value="{!! csrf_token() !!}" />
           <div class="form-group">
   			<label>Codigo de diseño <input required="" class="form-control" type="text" name="Parametro" placeholder="Codigo" /></label></div>
@@ -231,7 +231,7 @@
 
 
        <div class="col-md-6">
-  			<form class="form-inline" method="post" action="/pc/trabajabilidad_flujo/fecha/historial">
+  			<form class="form-horizontal" method="post" action="/pc/trabajabilidad_flujo/fecha/historial">
   			 <input name="_token" type="hidden" value="{!! csrf_token() !!}" />
          
   			<label>Fecha de Carga&nbsp;&nbsp;<input  type="text" name="Parametro"   style="cursor: pointer; background-color: white;"  required="" readonly=""  type="Text" class="form-control  datepicker"  placeholder="Ingrese una fecha" ></label>
@@ -271,7 +271,7 @@
 
 
 {{--Modal Llenado de datos--}}
-
+@if(isset($mixer))
 <div class="remodal" data-remodal-id="llenardatos_modal">
   <button data-remodal-action="close" class="remodal-close"></button>
   <h4 style="color:#459645"><b>Realizar Ensayo</b></h4>
@@ -313,16 +313,18 @@
 		    </div>
 		   </div>
 
+       <?php date_default_timezone_set('America/Costa_Rica'); ?>
+
 		  <div class="form-group">
 		    <label for="inputEmail3" class="col-sm-6 control-label">Fecha de ensayo:</label>
 		    <div class="col-sm-6">
-		      <input style="color:#459645" name="Fecha_Ensayo" style="cursor: pointer; background-color: white;"  required="" readonly=""  type="Text" class="form-control today"   placeholder="Fecha">
+		      <input value="{{date ( 'Y-m-d' )}}"  name="Fecha_Ensayo" style="cursor: pointer; background-color: white; color:#459645"  required="" readonly=""  type="Text" class="form-control "   placeholder="Fecha">
 		    </div>
 		  </div>
 		  <div class="form-group">
 		    <label for="inputPassword3" class="col-sm-6 control-label">Hora de ensayo:</label>
 		    <div class="col-sm-6">
-		      <input type="text" required="" name="Hora_Ensayo" class="form-control timepicker" id="timepicker" placeholder="Hora">
+		      <input  type="text" required="" name="Hora_Ensayo" class="form-control timepicker" id="timepicker" placeholder="Hora">
 		    </div>
 		  </div>
 		  
@@ -434,6 +436,7 @@
 </form>
 </div>
 </div>
+@endif
 {{--Modal Llenado de datos--}}
 
 

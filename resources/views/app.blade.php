@@ -222,12 +222,6 @@ $(document).ready(function(){
 
  $(".tablePag").DataTable();
 
-//Use class today for get the current day and disable datepicker
-     var $datepicker = $('.today');
-         $datepicker.datepicker({dateFormat: 'yy-mm-dd'});
-         $datepicker.datepicker('setDate', new Date());
-         $( ".today" ).datepicker( "option", "disabled", true );
-
 
 
 });

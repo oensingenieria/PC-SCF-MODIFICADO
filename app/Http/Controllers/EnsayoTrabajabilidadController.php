@@ -64,7 +64,6 @@ class EnsayoTrabajabilidadController extends Controller {
 			}
 
 
-
 			public function consulta_trabajabilidad_carga(){
 
 				$codigo = $_POST['Parametro'];

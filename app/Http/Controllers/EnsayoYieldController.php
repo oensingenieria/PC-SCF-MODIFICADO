@@ -30,72 +30,90 @@ class EnsayoYieldController extends Controller {
 
 			public function consulta_yield(){
 
-				$molde = Moldes::all(); 
-
-				return view('yield');
+				return view('yield' , array('titlemesage' => 'YIELD' ));
 
 			}
 
 			
 			  public function consulta_yield_ensayo_carga(){
 
-				$codigo = $_POST['carga'];
+			   //Comprobando si el ensayo ya se realizado en yield
+			    $carga_yield = Ensayo::where('Numero_Carga' , '=' , $_POST['carga'] )->first();
 
-			    $carga = Mixer::where('Numero_Carga' , '=' , $codigo)->first();
-			    
-			    
-			    $cemento = Mixer::where('Numero_Carga' , '=' , $codigo)
+				    if(!is_null($carga_yield)){
+
+				    //Uniendo el registro del mixer con la informacion del ensayo
+				   $carga = \DB::table('yield')
+			            ->join('mixerconsumo', 'yield.Numero_Carga', '=', 'mixerconsumo.Numero_Carga')
+			            ->where('yield.Numero_Carga' , '=' , $_POST['carga'] )
+			            ->first();
+
+				 
+				    return view('yield_historial' , array(
+				    	'carga' =>$carga , 
+				    	'titlemesage' => 'ENSAYO  '.$_POST['carga'] .'  REALIZADO!'
+				    		
+				    		 ));
+
+				    }
+			   //Fin comprobacion de existencia 
+
+
+			   //Busca el ensayo realizado en trabajabilidad
+			    $carga = Trabajabilidad::where('Numero_Carga' , '=' , $_POST['carga'] )->first();
+
+			    if(is_null($carga)){
+			    	return redirect('/pc/yield')->with('badRequest' , 'Ensayo no encontrado');
+			    }
+			    else{
+
+
+
+			         $cemento = Mixer::where('Numero_Carga' , '=' , $_POST['carga'])
 			                           ->where('Tipo_Material','=','CEM')
 			                           ->first();
 
-			    $agua = Mixer::where('Numero_Carga' , '=' , $codigo)
-			                           ->where('Tipo_Material','=','AGU')
-			                           ->first();  
+				    $agua = Mixer::where('Numero_Carga' , '=' , $_POST['carga'])
+				                           ->where('Tipo_Material','=','AGU')
+				                           ->first();  
 
 
-			    $aditivo = Mixer::where('Numero_Carga' , '=' , $codigo)
-			                           ->where('Tipo_Material','=','ADI')
-			                           ->first();                                             
-			                           
+				    $aditivo = Mixer::where('Numero_Carga' , '=' , $_POST['carga'])
+				                           ->where('Tipo_Material','=','ADI')
+				                           ->first();                                             
+				                           
 
-			    $agregado = Mixer::where('Numero_Carga' , '=' , $codigo)
+				    $agregado = Mixer::where('Numero_Carga' , '=' , $_POST['carga'])
 			                           ->where('Tipo_Material','=','AGR')
-			                           ->get();   
+			                           ->get();
 
-			    $molde = Moldes::all();                         
+			        $moldes = Moldes::all();                   
 
+			        $dato_fecha = Mixer::where('Numero_Carga','=', $_POST['carga'])->first();
 
-			    $dato_fecha = Mixer::where('Numero_Carga','=', $codigo)->first();
+			   //Uniendo el registro del mixer con la informacion del ensayo
+			   $carga = \DB::table('revenimiento')
+		            ->join('mixerconsumo', 'revenimiento.Numero_Carga', '=', 'mixerconsumo.Numero_Carga')
+		            ->first();
 			    
-			    if(is_null($dato_fecha)){
-			    	$yield = null ;
-			    }else{
+				    
 
-			     $yield = Ensayo::where('Numero_Carga' , '=' , $codigo)->first();	
-			    }
-			     
-			           	 
-			     
-			    if($carga == null){
-
-			    	return redirect('pc/yield')->with('badRequest','El numero de carga fue encontrado');
-
-			    }else
-			    {
-
-
-
-			    	return view('yield' , array('carga' =>$carga , 
+               return view('yield' , array('carga' =>$carga , 
 			    		'cemento' =>$cemento ,
 			    		'agua' =>$agua ,
 			    		'aditivo' =>$aditivo ,
 			    		'agregado' =>$agregado ,
-			    		'molde' =>$molde ,
-			    		'yield' => $yield
+			    		'molde' => $moldes ,
+			    		'titlemesage' => 'CONSULTA POR NUMERO DE CARGA '.$_POST['carga'] 
+			    		
 
 			    		 ));
-			    }
-			     
+			    
+
+
+
+			       }//End else isnull
+			    
 			    }
 
 
@@ -107,37 +125,18 @@ class EnsayoYieldController extends Controller {
 
 				$yield->save();
 
-				$codigo = $_POST['Numero_Carga'];
+				
+				//Uniendo el registro del mixer con la informacion del ensayo
+			   $carga = \DB::table('yield')
+		            ->join('mixerconsumo', 'yield.Numero_Carga', '=', 'mixerconsumo.Numero_Carga')
+		            ->where('yield.Numero_Carga' , '=' , $_POST['Numero_Carga'] )
+		            ->first();
 
-			    $carga = Mixer::where('Numero_Carga' , '=' , $codigo)->first();
-			    
-			    $cemento = Mixer::where('Numero_Carga' , '=' , $codigo)
-			                           ->where('Tipo_Material','=','CEM')
-			                           ->first();
-
-			    $agua = Mixer::where('Numero_Carga' , '=' , $codigo)
-			                           ->where('Tipo_Material','=','AGU')
-			                           ->first();  
-
-			    $aditivo = Mixer::where('Numero_Carga' , '=' , $codigo)
-			                           ->where('Tipo_Material','=','ADI')
-			                           ->first();                                             
-			                           
-
-			    $agregado = Mixer::where('Numero_Carga' , '=' , $codigo)
-			                           ->where('Tipo_Material','=','AGR')
-			                           ->get();   
-
-			    $molde = Moldes::all();  
-
-			    return view('yield' , array('carga' =>$carga , 
-			    		'cemento' =>$cemento ,
-			    		'agua' =>$agua ,
-			    		'aditivo' =>$aditivo ,
-			    		'agregado' =>$agregado ,
-			    		'molde' =>$molde ,
-			    		'yield' => $yield
-
+			 
+			    return view('yield_historial' , array(
+			    	'carga' =>$carga , 
+			    	'titlemesage' => 'ENSAYO  '.$_POST['Numero_Carga'] .'  REALIZADO!'
+			    		
 			    		 ));
 			}
 
@@ -237,33 +236,5 @@ public function muestra_historial_yield($codigo){
 
 
 //End busqueda historial
-
-
-
-
-
-
-
-
-       //Post para ingreso de molde en seccion del flujo
-
-	public function molde_post(Request_Molde $request){
-
-		$molde = new Moldes($request->all());
-
-		$exist = Moldes::where('Nombre_Molde' , '=' , $molde->Nombre_Molde)->first();
-		if (count($exist) > 0) {
-			return redirect('/pc/yield')->with('badRequest','El nombre para ese molde ya existe');
-		}
-
-
-		$molde->save();
-		return redirect('/pc/yield')->with('success','El molde fue agregado');
-
-	}
-
-//Fin Post para ingreso de molde en seccion del flujo 
-
-
 
 }
