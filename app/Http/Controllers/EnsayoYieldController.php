@@ -209,6 +209,22 @@ public function consulta_yield_historial_rango(){
 					
 }
 
+public function muestra_historial_yield($cod){
+
+//Uniendo el registro del mixer con la informacion del ensayo
+			   $carga = \DB::table('yield')
+		            ->join('mixerconsumo', 'yield.Numero_Carga', '=', 'mixerconsumo.Numero_Carga')
+		            ->where('yield.Numero_Carga' , '=' , $cod)
+		            ->groupBy('yield.Numero_Carga')
+		            ->first(); 
+
+   
+	return view('yield_historial' , array('carga' => $carga , 'titlemesage' => 'LISTA POR CARGA ' .$cod . ' YIELD REALIZADOS'));
+
+
+}
+
+
 //End busqueda historial
 
 }

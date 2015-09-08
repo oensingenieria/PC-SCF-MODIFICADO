@@ -32,9 +32,9 @@
 				      <tr>
 				        <td>Acciones</td>
 				        <td>Numero de carga</td>
-				        <td>Fecha de carga</td>
+				        <td>Fecha de registro</td>
 				        <td>Fecha de ensayo</td>
-				        <td>Hora del ensayo</td>
+				        <td>Hora del registro</td>
 				        <td>Yield</td>
 				     
 				      </tr>
@@ -45,12 +45,12 @@
 				     	
 					 	<td>
 
-					 	<a href="/pc/yield/historial/{{$c->Numero_Carga}}"  class="btn btn-info "  >{{$c->Nombre_Cuenta}}</a>
+					 	<a href="/pc/yield/historial/{{$c->Numero_Carga}}"  class="btn btn-info "  >Desplegar</a>
 					 	</td>	
 				     	<td>{{$c->Numero_Carga}}</td>
-				     	<td>{{$c->Fecha_Carga}}</td>
+				     	<td>{{$c->Fecha_Registro}}</td>
 				     	<td>{{$c->Fecha_Ensayo}}</td>
-                        <td>{{$c->Hora_Ensayo}}</td>
+                        <td>{{$c->Hora_Registro}}</td>
 				     	<td>{{$c->Yield}}</td>
 				     	
 				     	</tr>
@@ -75,9 +75,7 @@
 	 	
 				
 				</div>{{--End Row--}}
-			@if(isset($carga))	
-				<p class="bg-danger text-center" style="height:40px;padding-top:10px"><b>Datos no encontrados . Por favor realize una nueva busqueda.</b></p>
-		     @endif
+			
 
 				</div>{{--End Panel Body--}}
 				

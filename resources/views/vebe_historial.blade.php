@@ -34,20 +34,92 @@
 				        <td>Codigo Elemento</td>
 				        <td>Diseño</td>
 				        <td>Codigo Diseño</td>
-				       
+				        <td colspan="3" style="text-align:center">Vebe</td>
+				        
 
 				      </tr>
 				     </thead>	
 
 
-					  
+				
 				     <tbody>
 
-				  
-				     @foreach($carga as $mix)
-				     
+				    @if(isset($ensayo))
+              
+				     @foreach($ensayo as $mix)
 				     	<tr>
+				     	
+				     	
+
+					 	<td><button class="btn btn-info " >Realizada</button></td>
+				     	<td>{{$mix->Numero_Carga}}</td>
+				     	<td>{{$mix->Codigo_Diseño}}</td>
+				     	<td>{{$mix->Nombre_Proyecto}}</td>
+				     	<td>{{$mix->Fecha_Moldeo}}</td>
+				     	<td>{{$mix->Falla1}}</td>
+				     	<td>{{$mix->Falla2}}</td>
+				     	<td>{{$mix->Falla3}}</td>
+				     	<td>{{$mix->Resis_Promedio}}</td>
+				     	<td>{{$mix->Resis_Nominal}}</td>
+				     	<td>{{$mix->Resis_Porcentual}}</td>
+			
+				     	
+
+				     </tr>
+
+				     @endforeach
+
+				     @endif
+				     
+				     @if(isset($mixer))	
+
+				     <?php 
+				     $pass = true;
+				     $carga = null;
+
+				     
+
+				      ?>
+				     	@foreach($mixer as $mix)
+				     	<tr>
+				     	
+				     	<?php 
+				     	if ($carga != $mix->Numero_Carga ) {
+				     		$pass = true;
+
+				     	}  
+
+				     	?>
+
+				     	@if($pass)
+				     	<?php $carga = $mix->Numero_Carga ;
+				     		  $pass=false; 	
+				     	 ?>
+				     	@if(isset($ensayo)) 
+
+				     	 @if(recorreEnsayo( $ensayo , $mix->Numero_Carga))
 						 	<td><button  class="btn btn-success llenardatos" data-numerocarga="{{$mix->Numero_Carga}}" data-remodal-target="llenardatos_modal" >Seleccionar</button></td>
+					     	<td>{{$mix->Numero_Carga}}</td>
+					     	<td>{{$mix->Codigo_Diseño}}</td>
+					     	<td>{{$mix->Nombre_Proyecto}}</td>
+					     	<td>{{$mix->Fecha_de_Carga}}</td>
+					     	<td></td>
+					     	<td></td>
+					     	<td></td>
+					     	<td></td>
+					     	<td></td>
+					     	<td></td>
+					     @endif	
+					    @endif	
+
+					  	@if(isset($comparaensayo)) 
+					  	
+					        @if(exist_vebe($mix->Numero_Carga , $comparaensayo))
+						 	<td><button class="btn btn-info "  >Ingresado</button></td>
+						 	@else
+						 	<td><button class="btn btn-success llenardatos" data-numerocarga="{{$mix->Numero_Carga}}" data-remodal-target="llenardatos_modal" >Seleccionar</button></td>
+						 	@endif
+
 					     	<td>{{$mix->Numero_Carga}}</td>
 					     	<td>{{$mix->Nombre_Proyecto}}</td>
 					     	<td>{{$mix->Codigo_Proyecto}}</td>
@@ -55,29 +127,37 @@
 					     	<td>{{$mix->Codigo_Elemento}}</td>
 					     	<td>{{$mix->Diseño}}</td>
 					     	<td>{{$mix->Codigo_Diseño}}</td>
-					     	
-					     	
+					     	<td>{{getTarro1($mix->Numero_Carga , $comparaensayo)}} <br> {{getVebe1($mix->Numero_Carga , $comparaensayo)}}</td>
+					     	<td>{{getTarro2($mix->Numero_Carga , $comparaensayo)}} <br> {{getVebe2($mix->Numero_Carga , $comparaensayo)}}</td>
+					     	<td>{{getTarro3($mix->Numero_Carga , $comparaensayo)}} <br> {{getVebe3($mix->Numero_Carga , $comparaensayo)}}</td>
 					    
+				     	@endif
+				     	
+				     	@endif
 			
+				     	
 
-				     	</tr>
+				     </tr>
+				     
 				     @endforeach
+				     @endif
+
 
 				     </tbody>
 
 				</table>
+
 				@else
-				
 				
 				<p class="bg-danger text-center" style="height:40px;padding-top:10px"><b>Datos no encontrados . Por favor realize una nueva busqueda.</b></p>
 				
 				@endif
 
-		          @else
+          @else
 
-		          <p class="bg-info text-center" style="height:40px;padding-top:10px"><b>Por favor realize una busqueda</b></p>
-					
-		          @endif
+          <p class="bg-info text-center" style="height:40px;padding-top:10px"><b>Por favor realize una busqueda</b></p>
+			
+          @endif
 
 				</div>
 				
@@ -203,7 +283,7 @@
   		<thead class="bg-success">
 				      <tr>
 
-				      <td ><input required=""  class="form-control datepicker" type="text" name="Fecha_Registro" placeholder="Ingrese fecha" style="cursor: pointer; background-color: white;"  required="" readonly=""  ></td>
+				      <td ><input required=""  class="form-control datepicker" type="text" name="Fecha" placeholder="Ingrese fecha" style="cursor: pointer; background-color: white;"  required="" readonly=""  ></td>
 				        <td >
                            
 				         </td>
@@ -394,8 +474,17 @@
   <div class="col-md-5 text-left">
   	<ul>
      
-    <li>10017415</li>
-    
+    <li>L20</li>
+    <li>7T1/2-2T3/8</li>
+    <li>7 Tor</li>
+    <li>3/8</li>
+    <li>LP25E</li>
+    <li>03-02-10-L25</li>
+    <li>L25W</li>
+    <li>03-10-56-LE</li>
+    <li>LP25E</li>
+    <li>5T 1/2</li>
+    <li>5t, 1/2.</li>
 
 
     
@@ -407,8 +496,17 @@
   <div class="col-md-5 text-left">
   	<ul>
      
-    <li>10017414</li>
-   
+    <li>LP25E</li>
+    <li>03-02-10-M</li>
+    <li>03-10-56-LE</li>
+    <li>03-02-09-Lex</li>
+    <li>14122-08-Lex</li>
+    <li>6 Tr / 3/8</li>
+    <li>7t1/2,2t3/8.</li>
+    <li>5t0.6</li>
+    <li>5 T, 1/2</li>
+    <li>6 Tr / 3/8</li>
+    <li>5t1/2t</li>
 
 
   	</ul>

@@ -10,7 +10,8 @@ protected $fillable = ['Numero_Carga' ,
 'Nombre_Proyecto',
 'Nombre_Elemento',
 'Fecha_Ensayo',
-'Hora_Ensayo',
+'Fecha_Registro',
+'Hora_Registro',
 'Revenimiento',
 'Temperatura',
 'Volumen',
@@ -24,6 +25,7 @@ protected $fillable = ['Numero_Carga' ,
 'falla',
 'transferencia',
 'desecho',
+'Codigo_Diseño',
 'id_mixer'];
 
 }

@@ -15,11 +15,11 @@ class CreateYieldTable extends Migration {
 		Schema::create('yield', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->date('Fecha_Carga');
-
-			$table->string('Codigo');
-			$table->time('Hora_Ensayo');
 			$table->date('Fecha_Ensayo');
+			$table->date('Fecha_Registro');
+			$table->string('Codigo');
+			$table->time('Hora_Registro');
+			
 			$table->string('Molde');
 			$table->decimal('Peso_Molde');
 			$table->decimal('Volumen_Molde');

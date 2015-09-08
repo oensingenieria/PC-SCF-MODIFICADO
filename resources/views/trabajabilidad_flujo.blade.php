@@ -100,7 +100,7 @@
 				    
        @if(!existe($mix->id))
             <tr >
-					 	<td><button data-carga="{{$mix->Numero_Carga}}" data-proyecto="{{$mix->Nombre_Proyecto}}" data-elemento="{{$mix->Nombre_Elemento}}"  data-volumen="{{$mix->Volumen_de_Carga}}"  data-idmixer="{{$mix->id}}" class="btn btn-success llenardatos" data-remodal-target="llenardatos_modal" >Datos</button></td>
+					 	<td><button data-carga="{{$mix->Numero_Carga}}" data-proyecto="{{$mix->Nombre_Proyecto}}" data-elemento="{{$mix->Nombre_Elemento}}"  data-volumen="{{$mix->Volumen_de_Carga}}"  data-idmixer="{{$mix->id}}"  data-cod="{{$mix->Codigo_Diseño}}" data-fecha="{{$mix->Fecha_de_Carga}}" class="btn btn-success llenardatos" data-remodal-target="llenardatos_modal" >Datos</button></td>
 
 
 				     	<td>{{$mix->Numero_Carga}}</td>
@@ -117,14 +117,13 @@
           @endif
 				@endforeach
 
-        @if($empty)
-         <tr ><td colspan="10" ><p class="bg-danger text-center" style="height:40px;padding-top:10px"><b>No se han encontrado ensayos pendientes con esos parametros . Favor verificar en " <a style="cursor:pointer" data-remodal-target="buscarhistorial_modal" >Ensayos Realizados</a> "</b></p></td> </tr >
-       @endif      
-				     	
-
 				     </tbody>
 
 				</table>
+
+        @if($empty)
+         <tr ><td colspan="10" ><p class="bg-danger text-center" style="height:40px;padding-top:10px"><b>No se han encontrado ensayos pendientes con esos parametros . Favor verificar en " <a style="cursor:pointer" data-remodal-target="buscarhistorial_modal" >Ensayos Realizados</a> "</b></p></td> </tr >
+       @endif 
 
         @else
 				<p class="bg-danger text-center" style="height:40px;padding-top:10px"><b>No se han encontrado ensayos con ese parametro</b></p>
@@ -193,7 +192,7 @@
   			<form class="form-horizontal" method="post" action="/pc/trabajabilidad_flujo/fecha">
   			 <input name="_token" type="hidden" value="{!! csrf_token() !!}" />
          <div class="form-group">
-  			<label>Fecha de Carga&nbsp;&nbsp;<input  type="text" name="Parametro"   style="cursor: pointer; background-color: white;"  required="" readonly=""  type="Text" class="form-control  datepicker"  placeholder="Ingrese una fecha" ></label></div>
+  			<label>Fecha de Ensayo&nbsp;&nbsp;<input  type="text" name="Parametro"   style="cursor: pointer; background-color: white;"  required="" readonly=""  type="Text" class="form-control  datepicker"  placeholder="Ingrese una fecha" ></label></div>
 
         <div class="form-group"> <button class="btn btn-success " >Buscar</button></div>
   			</form>
@@ -234,7 +233,7 @@
   			<form class="form-horizontal" method="post" action="/pc/trabajabilidad_flujo/fecha/historial">
   			 <input name="_token" type="hidden" value="{!! csrf_token() !!}" />
          
-  			<label>Fecha de Carga&nbsp;&nbsp;<input  type="text" name="Parametro"   style="cursor: pointer; background-color: white;"  required="" readonly=""  type="Text" class="form-control  datepicker"  placeholder="Ingrese una fecha" ></label>
+  			<label>Fecha de Ensayo&nbsp;&nbsp;<input  type="text" name="Parametro"   style="cursor: pointer; background-color: white;"  required="" readonly=""  type="Text" class="form-control  datepicker"  placeholder="Ingrese una fecha" ></label>
       
         <div class="form-group">
            <button class="btn btn-success " >Buscar</button>
@@ -316,15 +315,15 @@
        <?php date_default_timezone_set('America/Costa_Rica'); ?>
 
 		  <div class="form-group">
-		    <label for="inputEmail3" class="col-sm-6 control-label">Fecha de ensayo:</label>
+		    <label for="inputEmail3" class="col-sm-6 control-label">Fecha de Registro:</label>
 		    <div class="col-sm-6">
-		      <input value="{{date ( 'Y-m-d' )}}"  name="Fecha_Ensayo" style="cursor: pointer; background-color: white; color:#459645"  required="" readonly=""  type="Text" class="form-control "   placeholder="Fecha">
+		      <input value="{{date ( 'Y-m-d' )}}"  name="Fecha_Registro" style="cursor: pointer; background-color: white; color:#459645"  required="" readonly=""  type="Text" class="form-control "   placeholder="Fecha">
 		    </div>
 		  </div>
 		  <div class="form-group">
-		    <label for="inputPassword3" class="col-sm-6 control-label">Hora de ensayo:</label>
+		    <label for="inputPassword3" class="col-sm-6 control-label">Hora de Registro:</label>
 		    <div class="col-sm-6">
-		      <input  type="text" required="" name="Hora_Ensayo" class="form-control timepicker" id="timepicker" placeholder="Hora">
+		      <input  type="text" required="" name="Hora_Registro" class="form-control timepicker" id="timepicker" placeholder="Hora">
 		    </div>
 		  </div>
 		  
@@ -338,7 +337,10 @@
 		  </div>
 
 		  <input type="hidden" id="id_mixer" name="id_mixer">
-		  	
+      <input type="hidden" id="cod_diseño" name="Codigo_Diseño">
+      <input type="hidden" id="fecha_ensayo" name="Fecha_Ensayo">
+
+    
         <div class="form-group text-left" style="color:#459645">
          
          <input class="ensayoschk"  type="checkbox" name="vebe" value="1" checked>&nbsp;<b>Vebe</b>&nbsp;&nbsp;
@@ -456,8 +458,9 @@ $(document).ready(function(){
        var elemento = $(this).data('elemento');
        var volumen = $(this).data('volumen');
        var id_mixer = $(this).data('idmixer');
+       var cod = $(this).data('cod');
+       var fecha = $(this).data('fecha');
 
-       
 
       
 
@@ -466,6 +469,8 @@ $(document).ready(function(){
        $('#Nombre_Elemento').val(elemento);
        $('#Volumen').val(volumen);
        $('#id_mixer').val(id_mixer);
+       $('#cod_diseño').val(cod);
+       $('#fecha_ensayo').val(fecha);
 
 
       });

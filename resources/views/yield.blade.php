@@ -44,7 +44,7 @@
 				      <tr>
 				        <td>Acciones</td>
 				        <td>Numero de carga</td>
-				        <td>Fecha de carga</td>
+				        <td>Fecha de Ensayo</td>
 				        <td>Numero de boleta</td>
 				        <td>Nombre del elemento</td>
 				        <td>Codigo de diseño</td>
@@ -208,14 +208,14 @@
 	<div class="col-md-6"> 
 
 		   <div class="form-group">
-		    <label  class="col-sm-6 control-label">Fecha de carga:</label>
+		    <label  class="col-sm-6 control-label">Fecha de Ensayo:</label>
 		    <div class="col-sm-6">
-		      <input style="color:#459645" value="" name="Fecha_Carga"  readonly="" type="text" class="form-control Fecha_de_Carga resetinput"  >
+		      <input style="color:#459645" value="" name="Fecha_Ensayo"  readonly="" type="text" class="form-control Fecha_de_Carga resetinput"  >
 		    </div>
 		  </div>
 
 		  <div class="form-group">
-		    <label for="inputEmail3" class="col-sm-6 control-label">Codigo de diseño</label>
+		    <label for="inputEmail3" class="col-sm-6 control-label">Codigo de Diseño</label>
 		    <div class="col-sm-6">
 		      <input style="color:#459645" type="text" class="form-control resetinput" name="Codigo" id="Codigo_Diseño" readonly="" value="" placeholder="Elemento">
 		    </div>
@@ -224,16 +224,16 @@
 		   	 <?php date_default_timezone_set('America/Costa_Rica'); ?>
 
 		  <div class="form-group">
-		    <label for="inputEmail3" class="col-sm-6 control-label">Fecha Ensayo</label>
+		    <label for="inputEmail3" class="col-sm-6 control-label">Fecha de Registro</label>
 		    <div class="col-sm-6">
-		      <input value="{{date ( 'Y-m-d' )}}"  class="form-control " type="text" name="Fecha_Ensayo" placeholder="Seleccione una fecha" style="cursor: pointer; background-color: white; color:#459645"  required="" readonly=""   />
+		      <input value="{{date ( 'Y-m-d' )}}"  class="form-control " type="text" name="Fecha_Registro" placeholder="Seleccione una fecha" style="cursor: pointer; background-color: white; color:#459645"  required="" readonly=""   />
 		    </div>
 		   </div>
 
 		    <div class="form-group">
-		    <label for="inputEmail3" class="col-sm-6 control-label">Hora de Ensayo</label>
+		    <label for="inputEmail3" class="col-sm-6 control-label">Hora de Registro</label>
 		    <div class="col-sm-6">
-		      <input required="" type="text" class="form-control timepicker" name="Hora_Ensayo"  value="" placeholder="Hora">
+		      <input required="" type="text" class="form-control timepicker" name="Hora_Registro"  value="" placeholder="Hora">
 		    </div>
 		   </div>
 
@@ -320,7 +320,7 @@
 		   <div class="form-group">
 		    <label  class="col-sm-6 control-label">Yield (kg)</label>
 		    <div class="col-sm-6">
-		      <input required="" type="text" name="Yield" class="form-control "   placeholder="Yield">
+		      <input required="" type="number" step="0.01" name="Yield" class="form-control "   placeholder="Yield">
 		    </div>
 		  </div>
 
@@ -342,6 +342,8 @@
 		  </div>
 
 	</div>	  
+
+	<input type="hidden" id="fechaensayo">
 
 		</form>
 

@@ -16,33 +16,18 @@ class CreateVebeTable extends Migration {
 		{
 			$table->increments('id');
 
-			$table->date('Fecha');
+			$table->date('Fecha_Registro');
+			$table->date('Fecha_Ensayo');
 			$table->string('Pista');
-			$table->string('Vebe_Carga');
-			$table->string('Tarro1');
-			$table->string('Tarro2');
-			$table->string('Tarro3');
-			$table->string('Mezcla1');
-			$table->string('Mezcla2');
-			$table->string('Mezcla3');
-			$table->string('Peralte1');
-			$table->string('Peralte2');
-			$table->string('Peralte3');
-			$table->decimal('Volumen1');
-			$table->decimal('Volumen2');
-			$table->decimal('Volumen3');
-			$table->decimal('Humedad1');
-			$table->decimal('Humedad2');
-			$table->decimal('Humedad3');
-			$table->decimal('Amperimetro1');
-			$table->decimal('Amperimetro2');
-			$table->decimal('Amperimetro3');
-			$table->decimal('Vebe1');
-			$table->decimal('Vebe2');
-			$table->decimal('Vebe3');
-
-
-
+			$table->string('Numero_Carga');
+			$table->string('Tarro');
+		    $table->string('Mezcla');
+			$table->string('Peralte');
+		    $table->decimal('Volumen');
+			$table->decimal('Humedad');
+		    $table->decimal('Amperimetro');
+	        $table->decimal('Vebe');
+		
 			$table->timestamps();
 		});
 	}
@@ -54,7 +39,7 @@ class CreateVebeTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('vebes');
+		Schema::drop('vebe');
 	}
 
 }

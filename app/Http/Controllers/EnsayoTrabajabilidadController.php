@@ -37,7 +37,7 @@ class EnsayoTrabajabilidadController extends Controller {
 			public function post_trabajabilidad_flujo(Request_Trabajabilidad $request){
 				
 		       $datos = new Trabajabilidad($request->all());
-
+		       
 		       
 		        $datos->id_mixer =  $_POST['idmixer'] ;
 				$datos->Revision = 'Revisado';

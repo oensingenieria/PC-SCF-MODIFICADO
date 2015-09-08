@@ -38,7 +38,7 @@
 				      <tr>
 				        <td>Usuario</td>
 				        <td>Numero de carga</td>
-				        <td>Fecha de carga</td>
+				        <td>Fecha de registro</td>
 				        <td>Numero de boleta</td>
 				        <td>Nombre del elemento</td>
 				        <td>Codigo de diseño</td>
@@ -57,7 +57,7 @@
 
 					 	</td>	
 				     	<td>{{$carga->Numero_Carga}}</td>
-				     	<td>{{$carga->Fecha_de_Carga}}</td>
+				     	<td>{{$carga->Fecha_Registro}}</td>
 				     	<td>{{$carga->Boleta_Batida}}</td>
                         <td>{{$carga->Nombre_Proyecto}}</td>
 				     	<td>{{$carga->Codigo_Diseño}}</td>

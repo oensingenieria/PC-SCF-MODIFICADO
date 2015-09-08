@@ -45,7 +45,7 @@ class CreateFalla7Table extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('falla7s');
+		Schema::drop('falla7');
 	}
 
 }

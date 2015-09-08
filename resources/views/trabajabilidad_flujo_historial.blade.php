@@ -31,7 +31,7 @@
 				        <td>Numero carga</td>
 				        <td>Nombre de proyecto</td>
 				        <td>Nombre del elemento</td>
-				        <td>Hora de ensayo</td>
+				        <td>Hora de registro</td>
 				        <td>Trabajabilidad y flujo (cm) </td>
 				        <td>Temperatura (°C)</td>
 				        <td>Volumen (m3)</td>
@@ -55,7 +55,7 @@
 				     	<td>{{$mix->Numero_Carga}}</td>
 				     	<td>{{$mix->Nombre_Proyecto}}</td>
 				     	<td>{{$mix->Nombre_Elemento}}</td>
-				     	<td>{{$mix->Hora_Ensayo}}</td>
+				     	<td>{{$mix->Hora_Registro}}</td>
 				     	<td>{{$mix->Revenimiento}}</td>
 				     	<td>{{$mix->Temperatura}}</td>
 				     	<td>{{$mix->Volumen_de_Carga}}</td>
@@ -133,7 +133,7 @@
   			<form class="form-horizontal" method="post" action="/pc/trabajabilidad_flujo/fecha">
   			 <input name="_token" type="hidden" value="{!! csrf_token() !!}" />
          <div class="form-group">
-  			<label>Fecha de Carga&nbsp;&nbsp;<input  type="text" name="Parametro"   style="cursor: pointer; background-color: white;"  required="" readonly=""  type="Text" class="form-control  datepicker"  placeholder="Ingrese una fecha" ></label></div>
+  			<label>Fecha de Ensayo&nbsp;&nbsp;<input  type="text" name="Parametro"   style="cursor: pointer; background-color: white;"  required="" readonly=""  type="Text" class="form-control  datepicker"  placeholder="Ingrese una fecha" ></label></div>
 
         <div class="form-group"> <button class="btn btn-success " >Buscar</button></div>
   			</form>
@@ -174,7 +174,7 @@
   			<form class="form-inline" method="post" action="/pc/trabajabilidad_flujo/fecha/historial">
   			 <input name="_token" type="hidden" value="{!! csrf_token() !!}" />
          
-  			<label>Fecha de Carga&nbsp;&nbsp;<input  type="text" name="Parametro"   style="cursor: pointer; background-color: white;"  required="" readonly=""  type="Text" class="form-control  datepicker"  placeholder="Ingrese una fecha" ></label>
+  			<label>Fecha de Ensayo&nbsp;&nbsp;<input  type="text" name="Parametro"   style="cursor: pointer; background-color: white;"  required="" readonly=""  type="Text" class="form-control  datepicker"  placeholder="Ingrese una fecha" ></label>
       
         <div class="form-group">
            <button class="btn btn-success " >Buscar</button>
