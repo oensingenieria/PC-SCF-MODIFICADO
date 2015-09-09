@@ -2,129 +2,35 @@
 
 @section('content')
 
-<?php
-	
-	function calcula_resnominal($res_nominal){
-
-		if (count($res_nominal) == 0) {
-			return 0;
-		}
-		else
-		{
-
-			return count($res_nominal);
-
-		}//fin else
-
-
-	}
-
-
-    function observacion($id){ 
-    
-    $recive = null;
-    
-    $sql ="SELECT * from revenimiento WHERE id_mixer = " . $id ;
-
-    $resultado = connect_Mysql($sql);
-
-    while($data = $resultado->fetch_assoc()){
-    // $data es un arreglo asociativo con todos los campos que se pusieron en el select
-
-       $recive =  $data['Observaciones'] ;
-   
-   }
-
-    if($recive == null)
-      {
-       
-       return "";
-
-      }
-      else
-        return $recive ;
-
-   }
-
-
-   function connect_Mysql($sql){
-
-     //realizo la conexion a la base de datos
-    $db = new mysqli('localhost', 'pccompany', 'pccompany2015', 'iceberg');
-    if($db->connect_errno > 0){
-    die('Imposible conectar [' . $db->connect_error . ']');
-    }
-
-
-    //si falla la consulta
-    if(!$resultado = $db->query($sql)){
-    die('Ocurrio un error cargando el registro [' . $db->error . ']');
-    }
-
-    return $resultado;
-
-   }
-
-   function recorreEnsayo($ensayo ,$compara){
-   	$pass = true ;
-
-   	foreach ($ensayo as $e) {
-   		
-   		if($e->Numero_Carga == $compara)
-   		{
-
-   			$pass = false;
-   		}	
-
-
-   	}
-
-   		return $pass;
-
-   }
-
-
-
-
-
-  ?>
-
-
-
 <div class="container">
 	<div class="row">
 	<div class="col-md-12" style="margin-bottom:20px">
 	<button class="btn btn-success" data-remodal-target="buscarmixer_modal" >Buscar ensayo</button>
-	<button class="btn btn-success" data-remodal-target="buscarensayo_modal" >Buscar Historial</button>
+	<button class="btn btn-success" data-remodal-target="buscarhistorial_modal" >Buscar Historial</button>
 	<input class="btn btn-info pull-right" style="background-color: #32C0AC;" type="button" value="Imprimir" onClick="window.print()">
 	</div>
 	
 
 		<div class="col-md-12 ">
 			<div class="panel panel-default">
-				<div class="panel-heading text-center"> @if(isset($fecha_busqueda)) <b>FALLA 28 APARTIR DE LA FECHA : {{$fecha_busqueda}} </b>  @else <b>FALLA 28</b> @endif</div>
+				<div class="panel-heading text-center"> <b>{{$titlemesage}}</b> </div>
 				<div class="panel-body">
 				
 				<div class="row">
 				<div class="col-md-12  ">
-			@if(isset($mixer) )
-				@if(!is_null($mixer) & count($mixer) > 0  )
-				<table class="table table-bordered">
+			@if(isset($carga) )
+				@if(!is_null($carga) & count($carga) > 0  )
+				<table class="table table-bordered tablePag" >
  				
 				   <thead class="bg-success">
 				      <tr>
 				        <td>Acción</td>
-				        <td># carga</td>
-				        <td>codigo diseño</td>
-				        <td>Nombre de proyecto</td>
-				        <td>Fecha de carga</td>
-				        <td>Falla 1</td>
-				        <td>Falla 2</td>
-				        <td>Falla 3</td>
-				        <td>Promedio</td>
-				        <td>Res Nominal</td>
-				        <td>Res Porcentaje</td>
-
+				        <td>Numero Carga</td>
+				        <td>Nombre Proyecto</td>
+				        <td>Codigo Proyecto</td>
+				        <td>Nombre Elemento</td>
+				        <td>Codigo Elemento</td>
+				        <td>Fecha Ensayo</td>
 				      </tr>
 				     </thead>	
 
@@ -132,97 +38,25 @@
 				
 				     <tbody>
 
-				        @if(isset($ensayo))
+				       
 
-				     @foreach($ensayo as $mix)
+				     @foreach($carga as $mix)
 				     	<tr>
 				     	
 				     	
 
-					 	<td><button class="btn btn-info " >Realizada</button></td>
+					 	<td><button data-fechacarga="{{$mix->Fecha_de_Carga}}" data-codigo="{{$mix->Codigo_Diseño}}" data-proyecto="{{$mix->Nombre_Proyecto}}" data-elemento="{{$mix->Nombre_Elemento}}"  class="btn btn-success llenardatos" data-numerocarga="{{$mix->Numero_Carga}}" data-remodal-target="llenardatos_modal" >Seleccionar</button></td>
 				     	<td>{{$mix->Numero_Carga}}</td>
-				     	<td>{{$mix->Codigo_Diseño}}</td>
 				     	<td>{{$mix->Nombre_Proyecto}}</td>
-				     	<td>{{$mix->Fecha_Moldeo}}</td>
-				     	<td>{{$mix->Falla1}}</td>
-				     	<td>{{$mix->Falla2}}</td>
-				     	<td>{{$mix->Falla3}}</td>
-				     	<td>{{$mix->Resis_Promedio}}</td>
-				     	<td>{{$mix->Resis_Nominal}}</td>
-				     	<td>{{$mix->Resis_Porcentual}}</td>
-			
+				     	<td>{{$mix->Codigo_Proyecto}}</td>
+				     	<td>{{$mix->Nombre_Elemento}}</td>
+				     	<td>{{$mix->Codigo_Elemento}}</td>
+				     	<td>{{$mix->Fecha_Ensayo}}</td>
 				     	
-
 				     </tr>
 
 				     @endforeach
-
-				     @endif
-				     
-				     @if(isset($mixer))	
-
-				     <?php 
-				     $pass = true;
-				     $carga = null;
-
-				     
-
-				      ?>
-				     	@foreach($mixer as $mix)
-				     	<tr>
-				     	
-				     	<?php 
-				     	if ($carga != $mix->Numero_Carga ) {
-				     		$pass = true;
-				     	}  
-
-				     	?>
-
-				     	@if($pass)
-				     	<?php $carga = $mix->Numero_Carga ;
-				     		  $pass=false; 	
-				     	 ?>
-				     	@if(isset($ensayo)) 
-				     	 @if(recorreEnsayo( $ensayo , $mix->Numero_Carga))
-						 	<td><button data-fechacarga="{{$mix->Fecha_de_Carga}}" data-codigo="{{$mix->Codigo_Diseño}}" data-proyecto="{{$mix->Nombre_Proyecto}}" data-elemento="{{$mix->Nombre_Elemento}}"  class="btn btn-success llenardatos" data-numerocarga="{{$mix->Numero_Carga}}" data-remodal-target="llenardatos_modal" >Seleccionar</button></td>
-					     	<td>{{$mix->Numero_Carga}}</td>
-					     	<td>{{$mix->Codigo_Diseño}}</td>
-					     	<td>{{$mix->Nombre_Proyecto}}</td>
-					     	<td>{{$mix->Fecha_de_Carga}}</td>
-					     	<td></td>
-					     	<td></td>
-					     	<td></td>
-					     	<td></td>
-					     	<td></td>
-					     	<td></td>
-					     @endif	
-					    @endif	
-
-					  	@if(isset($comparaensayo)) 
-					      @if(recorreEnsayo( $comparaensayo , $mix->Numero_Carga))
-						 	<td><button data-fechacarga="{{$mix->Fecha_de_Carga}}" data-codigo="{{$mix->Codigo_Diseño}}" data-proyecto="{{$mix->Nombre_Proyecto}}" data-elemento="{{$mix->Nombre_Elemento}}"  class="btn btn-success llenardatos" data-numerocarga="{{$mix->Numero_Carga}}" data-remodal-target="llenardatos_modal"  >Seleccionar</button></td>
-					     	<td>{{$mix->Numero_Carga}}</td>
-					     	<td>{{$mix->Codigo_Diseño}}</td>
-					     	<td>{{$mix->Nombre_Proyecto}}</td>
-					     	<td>{{$mix->Fecha_de_Carga}}</td>
-					     	<td></td>
-					     	<td></td>
-					     	<td></td>
-					     	<td></td>
-					     	<td></td>
-					     	<td></td>
-					     @endif	
-				     	@endif
-				     	
-				     	@endif
-			
-				     	
-
-				     </tr>
-				     
-				     @endforeach
-				     @endif
-
+				
 
 				     </tbody>
 
@@ -230,20 +64,18 @@
 
 				@else
 				
-				<p class="bg-danger text-center" style="height:40px;padding-top:10px">Datos no encontrados . Por favor realize una nueva busqueda.</p>
+				<p class="bg-danger text-center" style="height:40px;padding-top:10px"><b>Datos no encontrados . Por favor realize una nueva busqueda.</b></p>
 				
 				@endif
-
-			@else
-			<p class="bg-info text-center" style="height:40px;padding-top:10px">Por favor realize una busqueda</p>		
+				
+				@else
+			<p class="bg-info text-center" style="height:40px;padding-top:10px"><b>Por favor realize una busqueda</b></p>		
 			
           @endif
 
 				</div>
 				
-				{{--$mixer->render()--}}
-			
-
+				
 			
 
 				</div>
@@ -262,60 +94,20 @@
   
 
   <div class="row">
-  
+  <div class="col-md-12">
   		<div class="col-md-12">
   			<form class="form-horizontal" method="post" action="/pc/falla28/fecha">
   			<input name="_token" type="hidden" value="{!! csrf_token() !!}" />
   			
   			<div class="form-group"> 
-  			<label>Fecha de ensayo <input required=""  class="form-control datepicker" type="text" name="fecha" placeholder="Seleccione una fecha" style="cursor: pointer; background-color: white;"  required="" readonly=""   /></label>
-  			</div>
-
-
-
-  			<div class="form-group"> 
-  			<button class="btn btn-success" style="margin-bottom:65px;">Buscar</button>
-  			</div>
-  			<div class="form-group"> 
-  			<p class="bg-info">El sistema traera el historial de ensayos pendientes correspondientes a 28 dias atras.</p>
-  			</div>
-  			
-  			</form>
-       </div>
-
- 
-
-
- 
-
-  </div>
-    
-</div> {{--Modal busqueda de ensayo--}}
-
-
-
-{{--Modal busqueda de falla--}}
-<div class="remodal" data-remodal-id="buscarensayo_modal">
-  <button data-remodal-action="close" class="remodal-close"></button>
-  <h3 class="bg-success">Filtro de busqueda para ensayos</h3>
-  <br>
-  
-
-  <div class="row">
-  <div class="col-md-12">
-  		<div class="col-md-12">
-  			<form class="form-horizontal" method="post" action="/pc/falla28/fecha/ensayo">
-  			<input name="_token" type="hidden" value="{!! csrf_token() !!}" />
-  			
-  			<div class="form-group"> 
-  			<label>Fecha de ensayo <input required=""  class="form-control datepicker" type="text" name="fecha" placeholder="Seleccione una fecha" style="cursor: pointer; background-color: white;"  required="" readonly=""   /></label>
+  			<label>Fecha <input required=""  class="form-control datepicker" type="text" name="fecha" placeholder="Seleccione una fecha" style="cursor: pointer; background-color: white;"  required="" readonly=""   /></label>
   			</div>
 
   			<div class="form-group"> 
   			<button class="btn btn-success" style="margin-bottom:65px;">Buscar</button>
   			</div>
   			<div class="form-group"> 
-  			<p  class="bg-info">El sistema traera todos los ensayos realizados correspondientes a 28 dias atras.</p>
+  			<p  class="bg-info">El sistema traera todos los ensayos correspondientes a 28 dias atras.</p>
   			</div>
   			
   			</form>
@@ -324,43 +116,84 @@
 
   </div>
 
-  	<div class="col-md-12">
-      <div class="col-md-5">
-        <form class="form-inline" >
-        <input name="_token" type="hidden" value="{!! csrf_token() !!}" />
-        <label>Mes de carga<input required  class="form-control" type="text" name="Parametro" placeholder="Digite un mes" /></label><button class="btn btn-success" style="margin-bottom:65px;">Buscar</button>
-          </form>
-       </div>
-
-
-       <div class="col-md-5 pull-right">
-        <form class="form-inline" >
-         <input name="_token" type="hidden" value="{!! csrf_token() !!}" />
-        <label>Rango de fecha:<input  type="text" name="Parametro"   style="cursor: pointer; background-color: white; margin-bottom:5px"  required="" readonly=""  type="Text" class="form-control  datepicker"  placeholder="Desde" >
-
-          <input  type="text" name="Parametro"   style="cursor: pointer; background-color: white;"  required="" readonly=""  type="Text" class="form-control  datepicker"  placeholder="Hasta" >
-
-        </label><button class="btn btn-success " >Buscar</button>
-        </form>
-
-      </div>
-     </div>	
-
   </div>
     
-</div> {{--Modal busqueda de falla--}}
+</div> {{--Modal busqueda de ensayo--}}
 
 
 
+{{--Modal busqueda de historial--}}
+<div class="remodal" data-remodal-id="buscarhistorial_modal">
+ <button data-remodal-action="close" class="remodal-close"></button>
+ <h4 class="bg-success">Seleccione un medio de busqueda </h4>
+  <br>
+  
+
+  <div class="row">
+  <div class="col-md-12">
+  		<div class="col-md-6">
+  			<form class="form-horizontal" method="post" action="/pc/falla28/carga/historial">
+  			<input name="_token" type="hidden" value="{!! csrf_token() !!}" />
+  			<div class="form-group">
+  			<label>Numero de carga <input required=""  class="form-control " type="text" name="carga" placeholder="Numero de carga" /></label>
+  			</div>
+  			
+  			<div class="form-group">
+  			<button type="submit" class="btn btn-success" >Buscar</button>
+  			</div>
+  			
+  			</form>
+  			
+  		</div>
+
+
+  		<div class="col-md-6">
+  			<form class="form-horizontal" method="post" action="/pc/falla28/fecha/historial">
+  			<input name="_token" type="hidden" value="{!! csrf_token() !!}" />
+  			<div class="form-group">
+  			<label>Fecha de ensayo <input required="" class="form-control fechaingresada datepicker" type="text" name="fecha" placeholder="Seleccione una fecha" style="cursor: pointer; background-color: white;"  required="" readonly=""  /></label>
+  		   </div>
+
+  		   <div class="form-group">
+           <button type="submit" class="btn btn-success" >Buscar</button>
+           </div>
+  			</form>
+  			
+  		</div>
+  </div>	
+
+  	<div class="col-md-12">
+     
+       
+        <form class="form-horizontal" method="post" action="/pc/falla28/rango/historial">
+         <input name="_token" type="hidden" value="{!! csrf_token() !!}" />
+        <label>Rango de fecha:<input  type="text" name="Desde"   style="cursor: pointer; background-color: white; margin-bottom:5px"  required="" readonly=""  type="Text" class="form-control  datepicker"  placeholder="Desde" >
+
+          <input  type="text" name="Hasta"   style="cursor: pointer; background-color: white;"  required="" readonly=""  type="Text" class="form-control  datepicker"  placeholder="Hasta" >
+
+        </label>
+        <div class="form-group">
+        <button class="btn btn-success " >Buscar</button>
+       </div>
+        
+        </form>
+
+     
+    </div>	
+
+  </div>
+
+ 
+</div> {{--Modal busqueda de historial--}}
 
 
 
 
 {{--Modal Llenado de datos--}}
-
+@if(isset($carga))
 <div class="remodal" data-remodal-id="llenardatos_modal">
   <button data-remodal-action="close" class="remodal-close"></button>
-  <h3 class="bg-success">Datos Requeridos&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Resultados</h3>
+  <h3 class="bg-success">Realizar Ensayo</h3>
   <br>
   
   <div class="row">
@@ -372,15 +205,8 @@
 		  		<input name="_token" type="hidden" value="{!! csrf_token() !!}" />
 
 		  	
-		   <div class="form-group">
-		    <label  class="col-sm-6 control-label">Fecha Falla:</label>
-		    <div class="col-sm-6">
-		      <input required name="Fecha_Falla" id="Fecha_Falla" style="cursor: pointer; background-color: white;"    type="text" class="form-control datepicker"  >
-		    </div>
-		  </div>
-
 		    <div class="form-group">
-		    <label for="inputEmail3" class="col-sm-6 control-label">Lugar Falla:</label>
+		    <label for="inputEmail3" class="col-sm-6 control-label">Lugar Falla: </label>
 		    <div class="col-sm-6">
 		      <input name="Lugar_Falla" required  type="Text" class="form-control "  placeholder="Lugar de la falla">
 		    </div>
@@ -388,7 +214,7 @@
 
 		  
 		   <div class="form-group">
-		    <label for="inputEmail3" class="col-sm-6 control-label">Falla 1 (kg/cm2)</label>
+		    <label for="inputEmail3" class="col-sm-6 control-label">Falla 1 (kg/cm2): </label>
 		    <div class="col-sm-6">
 		      <input type="number" id="Falla1" name="Falla1" class="form-control"  placeholder="Digite falla 1">
 		    </div>
@@ -398,63 +224,63 @@
 		
 		  
 		  <div class="form-group">
-		    <label for="inputEmail3" class="col-sm-6 control-label">Falla 2 (kg/cm2)</label>
+		    <label for="inputEmail3" class="col-sm-6 control-label">Falla 2 (kg/cm2): </label>
 		    <div class="col-sm-6">
 		      <input type="number" required id="Falla2" name="Falla2" class="form-control"  placeholder="Digite falla 2">
 		    </div>
 		  </div>
 
 
+
 		   <div class="form-group">
-		    <label for="inputEmail3" required class="col-sm-6 control-label">Falla 3 (kg/cm2)</label>
+		    <label for="inputEmail3" required class="col-sm-6 control-label">Falla 3 (kg/cm2): </label>
 		    <div class="col-sm-6">
 		      <input type="number" id="Falla3"  name="Falla3" class="form-control"  placeholder="Digite falla 3"  >
 		    </div>
 		  </div>
 
-		  <div class="form-group">
-		    <label for="inputEmail3" class="col-sm-6 control-label">Resist. Nominal (kg/cm2):</label>
+		  	<div class="form-group">
+		    <label  class="col-sm-6 control-label">Codigo Diseño: </label>
 		    <div class="col-sm-6">
-		      <select class="form-control" name="resistnom" id="calculoresnom">
-		      	
-		      	<option value="700">Autocompactante (700kg/cm2)</option>
-		      	<option value="700">CAD 700 A</option>
-		      	<option value="280">Concreto Pobre (280)</option>
-		      	<option value="350">350-Auto</option>
-		      	<option value="350">CAD PC 350</option>
-		      	<option value="420">Concreto Losalex 420</option>
-		      	<option value="420">Lex 20-25 Weiler</option>
-		      	<option value="420">CAD4 20</option>
-		      	<option value="550">SCC 550</option>
-
-		      </select>
-
-
+		      <input name="Codigo_Diseño" readonly="" id="Codigo_Diseño" type="text" class="form-control"  >
 		    </div>
-		   </div>
+		  </div>
 
-		  <div class="form-group">
-		    <label  class="col-sm-6 control-label">Nombre Proyecto:</label>
+		  
+		   <div class="form-group">
+		    <label  class="col-sm-6 control-label">Nombre Proyecto: </label>
 		    <div class="col-sm-6">
 		      <input  name="Nombre_Proyecto" readonly="" id="Nombre_Proyecto"  class="form-control"  >
 		    </div>
 		  </div>
 
 		  <div class="form-group">
-		    <label for="inputEmail3" class="col-sm-6 control-label">Nombre Elemento</label>
+		    <label for="inputEmail3" class="col-sm-6 control-label">Nombre Elemento: </label>
 		    <div class="col-sm-6">
 		      <input type="text" class="form-control" readonly="" id="Nombre_Elemento" name="Nombre_Elemento" >
 		    </div>
 		   </div>
-		 
 
+		     <div class="form-group">
+        <label for="inputEmail3" class="col-sm-6 control-label">Encargado: </label>
+        <div class="col-sm-6">
+          
+	          <select name="Encargado" class="form-control" >
+	            @foreach($encargados as $encargado)
+	            <option value="{{$encargado->nombre}}" > {{$encargado->nombre}} </option>
+	            @endforeach
+	          </select>
+
+
+	        </div>
+	      </div>
 		  
 		 
 		  <div class="form-group">
 		       
 		        <div class="col-sm-offset-6 col-sm-6">
-		           <button type="button"  class="btn btn-info calculodatos">Calcular</button>
-
+		        <button type="button"  class="btn btn-info calculodatos">Calcular</button>
+		         
 		        </div>
 		  </div>
 		</div>
@@ -468,11 +294,19 @@
 		  <div class="form-horizontal"  >
 		  		
 		  	<div class="form-group">
-		    <label  class="col-sm-6 control-label">Fecha Moldeo:</label>
+		    <label  class="col-sm-6 control-label">Fecha Ensayo:</label>
 		    <div class="col-sm-6">
-		      <input  name="Fecha_Moldeo" readonly=""  id="Fecha_Moldeo"   type="text" class="form-control"  >
+		      <input  name="Fecha_Ensayo" readonly=""  id="Fecha_Ensayo"   type="text" class="form-control"  >
 		    </div>
 		  </div>	
+
+		  <?php date_default_timezone_set('America/Costa_Rica'); ?>
+		   <div class="form-group">
+		    <label  class="col-sm-6 control-label">Fecha Registro:</label>
+		    <div class="col-sm-6">
+		      <input name="Fecha_Registro" value="{{date( 'Y-m-d' )}}" readonly=""  id="Fecha_Registro" style=" background-color: white;" type="text" class="form-control"  >
+		    </div>
+		  </div>
 
 		  <div class="form-group">
 		    <label for="inputEmail3" class="col-sm-6 control-label">Numero Dias</label>
@@ -482,14 +316,19 @@
 		   </div>
 
 
-		  	<div class="form-group">
-		    <label  class="col-sm-6 control-label">Codigo Diseño:</label>
-		    <div class="col-sm-6">
-		      <input name="Codigo_Diseño" readonly="" id="Codigo_Diseño" type="text" class="form-control"  >
-		    </div>
-		  </div>
 
-		  
+		  <div class="form-group">
+		    <label for="inputEmail3" class="col-sm-6 control-label">Resist. Nominal (kg/cm2):</label>
+		    <div class="col-sm-6">
+		      @if(isset($res_nominal))
+		      <input type="number" class="form-control" id="Resis_Nominal" name="Resis_Nominal" readonly="" value="{{calcula_resnominal($res_nominal)}}">
+		      @else
+		      <input type="number" class="form-control" id="Resis_Nominal" name="Resis_Nominal" readonly="" value="0">
+		      @endif
+
+
+		    </div>
+		   </div>
 
 		  <div class="form-group">
 		    <label for="inputEmail3" class="col-sm-6 control-label">Resist. Promedio (kg/cm2):</label>
@@ -504,13 +343,12 @@
 		    </div>
 		  </div>
 
-		  <input id="numerocarga" type="hidden" name="Numero_Carga" value="ok">
+		  <input id="numerocarga" type="hidden" name="Numero_Carga" value="">
 
 		  <div class="form-group">
 		       
 		        <div class="col-sm-offset-6 col-sm-6">
-		        <button type="submit" class="btn btn-success">Grabar</button>
-		         
+		           <button type="submit" class="btn btn-success">Grabar</button>
 		        </div>
 		  </div>
 		  
@@ -523,6 +361,8 @@
 
 </div>
 </div>
+@endif
+
 {{--Modal Llenado de datos--}}
 
 
@@ -549,7 +389,7 @@ $(document).ready(function(){
        $('#Codigo_Diseño').val(codigo);
        $('#Nombre_Proyecto').val(proyecto);
        $('#Nombre_Elemento').val(elemento);
-       $('#Fecha_Moldeo').val(fechacarga);
+       $('#Fecha_Ensayo').val(fechacarga);
        $('#numerocarga').val(numerocarga);
 
        
@@ -570,16 +410,15 @@ $(document).ready(function(){
       falla1= $('#Falla1').val();
       falla2= $('#Falla2').val();
       falla3= $('#Falla3').val();
-
+ 	  
  	  sumanumerador = parseFloat(falla1) +parseFloat(falla2)+parseFloat(falla3);	
  	  
-   	 if (falla1 > 0) { sumadenominador++; }
-   	 if (falla2 > 0) { sumadenominador++; } 
-     if (falla3 > 0) { sumadenominador++; }
-
-     var promedio = (sumanumerador / sumadenominador);
-
-
+   	  if (falla1 > 0) { sumadenominador++; }
+   	  if (falla2 > 0) { sumadenominador++; } 
+      if (falla3 > 0) { sumadenominador++; }
+    
+      var promedio = (sumanumerador / sumadenominador);
+   	 
    	  $('#Resis_Promedio').val( promedio.toFixed(2) );	
       
 
@@ -589,29 +428,27 @@ $(document).ready(function(){
        var fecha1 = "";
        var fecha2 = "";
 
-       fecha1 = $('#Fecha_Moldeo').val();
-       fecha2 = $('#Fecha_Falla').val();
+       fecha1 = $('#Fecha_Registro').val();
+       fecha2 = $('#Fecha_Ensayo').val();
 
 
       dias = calculardias(fecha1 , fecha2);
       $('#Numero_Dias').val(dias);
 
 
-      //Calculo resistencia porcentual
-
+       //Calculo resistencia porcentual
       var resisnominal = 0 ;
       var resispromedio = 0 ;
       var resisporcentual = 0 ;
       
-
-      resisnominal= $('#calculoresnom').val();
+      resisnominal= $('#Resis_Nominal').val();
       resispromedio= $('#Resis_Promedio').val();
 
-
+      if(resisnominal != 0){ 
       resisporcentual = (resispromedio / resisnominal) * 100 ;
+      }
 
       $('#Resis_Porcentual').val(resisporcentual.toFixed(2));
-
       });
 
 

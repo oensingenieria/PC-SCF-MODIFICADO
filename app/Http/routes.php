@@ -46,15 +46,19 @@ Route::post('pc/vebe/rango/historial', 'EnsayoVebeController@vebe_busqueda_rango
 
 
 Route::get('pc/falla7', 'EnsayoFalla7Controller@falla7');
-Route::post('pc/falla7/fecha/ensayo', 'EnsayoFalla7Controller@falla7_ensayo_busqueda_fecha');
 Route::post('pc/falla7/fecha', 'EnsayoFalla7Controller@falla7_busqueda_fecha');
 Route::post('pc/falla7', 'EnsayoFalla7Controller@post_falla7');
+Route::post('pc/falla7/fecha/historial', 'EnsayoFalla7Controller@falla7_historial_busqueda_fecha');
+Route::post('pc/falla7/carga/historial', 'EnsayoFalla7Controller@falla7_historial_busqueda_carga');
+Route::post('pc/falla7/rango/historial', 'EnsayoFalla7Controller@falla7_historial_busqueda_rango');
 
 
 Route::get('pc/falla28', 'EnsayoFalla28Controller@falla28');
-Route::post('pc/falla28/fecha/ensayo', 'EnsayoFalla28Controller@falla28_ensayo_busqueda_fecha');
 Route::post('pc/falla28/fecha', 'EnsayoFalla28Controller@falla28_busqueda_fecha');
 Route::post('pc/falla28', 'EnsayoFalla28Controller@post_falla28');
+Route::post('pc/falla28/fecha/historial', 'EnsayoFalla28Controller@falla28_historial_busqueda_fecha');
+Route::post('pc/falla28/carga/historial', 'EnsayoFalla28Controller@falla28_historial_busqueda_carga');
+Route::post('pc/falla28/rango/historial', 'EnsayoFalla28Controller@falla28_historial_busqueda_rango');
 
 
 

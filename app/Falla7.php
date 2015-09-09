@@ -9,8 +9,8 @@ class Falla7 extends Model {
 
 	protected $fillable = [
 	 'Numero_Carga',
-	 'Fecha_Moldeo', 
-	 'Fecha_Falla',
+	 'Fecha_Registro', 
+	 'Fecha_Ensayo',
 	 'Numero_Dias',
 	 'Lugar_Falla',
 	 'Falla1',
@@ -21,7 +21,9 @@ class Falla7 extends Model {
 	 'Nombre_Elemento',
 	 'Resis_Nominal',
 	 'Resis_Promedio',
-	 'Resis_Porcentual'
+	 'Resis_Porcentual',
+	 'Encargado',
+	 'Nombre_Cuenta'
  
 	   ];
 
