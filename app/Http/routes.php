@@ -41,6 +41,7 @@ Route::post('pc/vebe', 'EnsayoVebeController@post_vebe');
 Route::post('pc/vebe/fecha', 'EnsayoVebeController@vebe_busqueda_fecha');
 Route::post('pc/vebe/fecha/historial', 'EnsayoVebeController@vebe_busqueda_fecha_historial');
 Route::post('pc/vebe/carga/historial', 'EnsayoVebeController@vebe_busqueda_carga_historial');
+Route::post('pc/vebe/rango/historial', 'EnsayoVebeController@vebe_busqueda_rango_historial');
 
 
 
@@ -64,24 +65,6 @@ Route::post('pc/transferencia/carga/historial', 'EnsayoTransferenciaController@t
 Route::get('pc/transferencias/fecha/{carga}', 'EnsayoTransferenciaController@transferencias_carga_cilindro');
 Route::post('pc/transferencia/carga', 'EnsayoTransferenciaController@transferencias_busqueda_carga');
 Route::post('pc/transferencias', 'EnsayoTransferenciaController@post_transferencias');
-
-
-
-
-
-
-
-Route::get('pc/reportes', 'ReportController@reporte');
-Route::get('pc/reportes/resistencia', 'ReportController@reporte_resistencia');
-Route::post('pc/reportes/resistencia', 'ReportController@fecha_resistencia');
-
-Route::get('pc/reportes/consumo/agregado', 'ReportController@reporte_agregado');
-Route::get('pc/reportes/consumo/cemento', 'ReportController@reporte_cemento');
-Route::get('pc/reportes/desechos', 'ReportController@reporte_desechos');
-
-
-
-
 
 
 

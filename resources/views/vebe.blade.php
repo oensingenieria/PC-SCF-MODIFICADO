@@ -22,7 +22,7 @@
 				<div class="col-md-12  ">
 			@if(isset($carga) )
 				@if(!is_null($carga) & count($carga) > 0  )
-				<table class="table table-bordered">
+				<table class="table table-bordered tablePag">
  				
 				   <thead class="bg-success">
 				      <tr>
@@ -47,7 +47,8 @@
 				     @foreach($carga as $mix)
 				     
 				     	<tr>
-						 	<td><button  class="btn btn-success llenardatos" data-numerocarga="{{$mix->Numero_Carga}}" data-remodal-target="llenardatos_modal" >Seleccionar</button></td>
+						 	<td><button  class="btn btn-success llenardatos" data-numerocarga="{{$mix->Numero_Carga}}" 
+						 	data-fechaensayo="{{$mix->Fecha_Ensayo}}" data-volumen="{{$mix->Volumen_de_Carga}}" data-humedad="{{$mix->Humedad_Mezcla}}"	data-remodal-target="llenardatos_modal" >Seleccionar</button></td>
 					     	<td>{{$mix->Numero_Carga}}</td>
 					     	<td>{{$mix->Nombre_Proyecto}}</td>
 					     	<td>{{$mix->Codigo_Proyecto}}</td>
@@ -55,11 +56,7 @@
 					     	<td>{{$mix->Codigo_Elemento}}</td>
 					     	<td>{{$mix->Diseño}}</td>
 					     	<td>{{$mix->Codigo_Diseño}}</td>
-					     	
-					     	
-					    
-			
-
+					     
 				     	</tr>
 				     @endforeach
 
@@ -81,10 +78,7 @@
 
 				</div>
 				
-				{{--$mixer->render()--}}
-			
-
-			
+				
 
 				</div>
 				
@@ -140,42 +134,52 @@
   <div class="row">
   <div class="col-md-12">
   		<div class="col-md-6">
-  			<form class="form-inline" method="post" action="/pc/vebe/carga/historial" >
+  			<form class="form-horizontal" method="post" action="/pc/vebe/carga/historial" >
   			<input name="_token" type="hidden" value="{!! csrf_token() !!}" />
-  			<label>Numero de carga <input required  class="form-control" type="text" name="Parametro" placeholder="Numero de carga" /></label><button class="btn btn-success" style="margin-bottom:65px;">Buscar</button>
+
+  			<div class="form-group">
+  			<label>Numero de carga <input required  class="form-control" type="text" name="Parametro" placeholder="Numero de carga" /></label>
+  		   </div>
+
+  		   <div class="form-group">
+  			<button class="btn btn-success" style="margin-bottom:65px;">Buscar</button>
+  		  </div>
+
           </form>
        </div>
 
 
        <div class="col-md-6">
-  			<form class="form-inline" method="post" action="/pc/vebe/fecha/historial">
-  			 <input name="_token" type="hidden" value="{!! csrf_token() !!}" />
-  			<label>Fecha de Carga&nbsp;&nbsp;<input  type="text" name="Parametro"   style="cursor: pointer; background-color: white;"  required="" readonly=""  type="Text" class="form-control  datepicker"  placeholder="Ingrese una fecha" ></label><button class="btn btn-success " >Buscar</button>
+  			<form class="form-horizontal" method="post" action="/pc/vebe/fecha/historial">
+  			 <input name="_token" type="hidden" value="{!! csrf_token() !!}" />	
+
+  			<div class="form-group">
+  			<label>Fecha de Ensayo&nbsp;&nbsp;<input  type="text" name="Parametro"   style="cursor: pointer; background-color: white;"  required="" readonly=""  type="Text" class="form-control  datepicker"  placeholder="Ingrese una fecha" ></label>
+  			</div>
+
+  			<div class="form-group">
+  			<button class="btn btn-success " >Buscar</button>
+  			</div>
+
   			</form>
 
   		</div>
      </div>
 
-     	<div class="col-md-12">
-      <div class="col-md-5">
-        <form class="form-inline" >
-        <input name="_token" type="hidden" value="{!! csrf_token() !!}" />
-        <label>Mes de carga<input required  class="form-control" type="text" name="Parametro" placeholder="Digite un mes" /></label><button class="btn btn-success" style="margin-bottom:65px;">Buscar</button>
-          </form>
-       </div>
-
-
-       <div class="col-md-5 pull-right">
-        <form class="form-inline" >
+    <div class="col-md-12">
+    <form class="form-horizontal" method="post" action="/pc/vebe/rango/historial">
          <input name="_token" type="hidden" value="{!! csrf_token() !!}" />
-        <label>Rango de fecha:<input  type="text" name="Parametro"   style="cursor: pointer; background-color: white; margin-bottom:5px"  required="" readonly=""  type="Text" class="form-control  datepicker"  placeholder="Desde" >
+        <label>Rango de fecha:<input  type="text" name="Desde"   style="cursor: pointer; background-color: white; margin-bottom:5px"  required="" readonly=""  type="Text" class="form-control  datepicker"  placeholder="Desde" >
 
-          <input  type="text" name="Parametro"   style="cursor: pointer; background-color: white;"  required="" readonly=""  type="Text" class="form-control  datepicker"  placeholder="Hasta" >
+          <input  type="text" name="Hasta"   style="cursor: pointer; background-color: white;"  required="" readonly=""  type="Text" class="form-control  datepicker"  placeholder="Hasta" >
 
-        </label><button class="btn btn-success " >Buscar</button>
+        </label>
+        <div class="form-group">
+        <button class="btn btn-success " >Buscar</button>
+       </div>
+        
         </form>
 
-      </div>
      </div>	
 
   </div> 
@@ -187,10 +191,10 @@
 
 
 {{--Modal Llenado de datos--}}
-
+@if(isset($carga))
 <div class="remodal" data-remodal-id="llenardatos_modal">
   <button data-remodal-action="close" class="remodal-close"></button>
-  <h3 class="bg-success"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>&nbsp; Formulario</h3>
+  <h3><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>&nbsp; Formulario</h3>
   <br>
   
   <div class="row">
@@ -202,11 +206,9 @@
   		
   		<thead class="bg-success">
 				      <tr>
-
-				      <td ><input required=""  class="form-control datepicker" type="text" name="Fecha_Registro" placeholder="Ingrese fecha" style="cursor: pointer; background-color: white;"  required="" readonly=""  ></td>
-				        <td >
-                           
-				         </td>
+				      <?php date_default_timezone_set('America/Costa_Rica'); ?>
+				      <td ><input style="color:#459645" value="{{date ( 'Y-m-d' )}}"  class="form-control" type="text" name="Fecha_Registro" placeholder="Ingrese fecha" style=" background-color: white;"  required="" readonly=""  ></td>
+				        
 				         <td >
                            <select name="Pista" class="form-control"> 
                            <option  value="Pista 1">Pista 1</option>
@@ -222,13 +224,11 @@
                            </select>
 
 				         </td>
-				         <td >
-                           
-				         </td>
+				         
 
 				      </tr>
 				      <tr>
-				      <td ><input type="text" readonly="" name="Numero_Carga" id="numerocarga" class="form-control pull-left" ></td>
+				      <td ><input type="text" style="color:#459645" readonly="" name="Numero_Carga" id="numerocarga" class="form-control pull-left" ></td>
 				        <td><select name="Tarro" class="form-control" > 
 				        <option value="Tarro 1">Tarro 1</option>
 				        <option value="Tarro 2">Tarro 2</option>
@@ -266,6 +266,8 @@
 				   <tr>
 				   	 <td><strong>Peralte</strong> </td>
 				   	 <td><select name="Peralte" class="form-control" > 
+				        <option value="25">08</option>
+				        <option value="25">15</option>
 				        <option value="20">20</option>
 				        <option value="25">25</option>
 				       </select></td>
@@ -277,59 +279,26 @@
 				   <tr>
 				   	 <td><strong>Volumen</strong> </td>
 				   	 <td>
-				   	 	<input type="number" step="0.01" name="Volumen1" class="form-control" required="" placeholder="Digite volumen">
+				   	 	<input style="color:#459645" readonly="" id="volumenmix" type="number" step="0.01" name="Volumen" class="form-control" required="" placeholder="Digite volumen">
 
 				   	 </td>
-
-				   	 <td>
-				   	 	<input type="number" step="0.01" name="Volumen2" class="form-control" required="" placeholder="Digite volumen">
-
-				   	 </td>
-
-				   	 <td>
-				   	 	<input type="number" step="0.01" name="Volumen3" class="form-control" required="" placeholder="Digite volumen">
-
-				   	 </td>
-
-				   
 
 				   </tr>
 
 				   <tr>
 				   	 <td><strong>Sensor de humedad</strong> </td>
 				   	 <td>
-				   	 	<input type="number" step="0.01" name="Humedad1" class="form-control" required="" placeholder="Digite humedad">
+				   	 	<input style="color:#459645" readonly="" id="humedadmix" type="number" step="0.01" name="Humedad" class="form-control" required="" placeholder="Digite humedad">
 
 				   	 </td>
 
-				   	 <td>
-				   	 	<input type="number" step="0.01" name="Humedad2" class="form-control" required="" placeholder="Digite humedad">
-
-				   	 </td>
-
-				   	 <td>
-				   	 	<input type="number" step="0.01" name="Humedad3" class="form-control" required="" placeholder="Digite humedad">
-
-				   	 </td>
-
-				   
 
 				   </tr>
 
 				   <tr>
 				   	 <td><strong>Amperimetros</strong> </td>
 				   	 <td>
-				   	 	<input type="number" step="0.01" name="Amperimetro1" class="form-control" required="" placeholder="Digite Amperimetro">
-
-				   	 </td>
-
-				   	 <td>
-				   	 	<input type="number" step="0.01" name="Amperimetro2" class="form-control" required="" placeholder="Digite Amperimetro">
-
-				   	 </td>
-
-				   	 <td>
-				   	 	<input type="number" step="0.01" name="Amperimetro3" class="form-control" required="" placeholder="Digite Amperimetro">
+				   	 	<input type="number" step="0.01" name="Amperimetro" class="form-control" required="" placeholder="Digite Amperimetro">
 
 				   	 </td>
 
@@ -341,21 +310,24 @@
 				   <tr>
 				   	 <td><strong>Vebe</strong> </td>
 				   	 <td>
-				   	 	<input type="number" step="0.01" name="Vebe1" class="form-control" required="" placeholder="Digite Vebe">
+				   	 	<input type="number" step="0.01" name="Vebe" class="form-control" required="" placeholder="Digite Vebe">
 
 				   	 </td>
 
+
+				   </tr>
+
+				   <tr>
+				   	 <td><strong>Encargado:</strong> </td>
 				   	 <td>
-				   	 	<input type="number" step="0.01" name="Vebe2" class="form-control" required="" placeholder="Digite Vebe">
+				   	 	 <select name="Encargado" class="form-control" >
+				            @foreach($encargados as $encargado)
+				            <option value="{{$encargado->nombre}}" > {{$encargado->nombre}} </option>
+				            @endforeach
+				          </select>
 
 				   	 </td>
 
-				   	 <td>
-				   	 	<input type="number" step="0.01" name="Vebe3" class="form-control" required="" placeholder="Digite Vebe">
-
-				   	 </td>
-
-				   
 
 				   </tr>
 
@@ -363,10 +335,11 @@
 
 				     </tbody>
 
-
      	</table>
 
-     
+     	<input type="hidden" name="Fecha_Ensayo" id="fecha_ensayo">	
+
+     	
         <button type="submit" class="btn btn-success pull-right">Guardar</button>
        
       </form>
@@ -377,6 +350,7 @@
 
 </div>
 </div>
+@endif
 {{--Modal Llenado de datos--}}
 
 
@@ -396,10 +370,6 @@
      
     <li>10017415</li>
     
-
-
-    
-
 
   	</ul>
   </div>	
@@ -441,13 +411,15 @@ $(document).ready(function(){
       
       
        var numerocarga = $(this).data('numerocarga');
-    
+       var fechaensayo = $(this).data('fechaensayo');
+       var volumenmix = $(this).data('volumen');
+       var humedadmix = $(this).data('humedad');
 
        
-
        $('#numerocarga').val(numerocarga);
-
-       
+       $('#fecha_ensayo').val(fechaensayo);
+       $('#volumenmix').val(volumenmix);
+       $('#humedadmix').val(humedadmix);
 
 
       });

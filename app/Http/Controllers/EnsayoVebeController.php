@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Mixer;
 use App\Vebe;
 use App\Trabajabilidad;
+use App\Encargado;
+use Auth;
 
 use App\Http\Requests\Request_Vebe;//Solicitud Vebe
 
@@ -42,8 +44,8 @@ class EnsayoVebeController extends Controller {
 			    
 		
 				 //Filtrando registros desde trabajabilidad
-				  $carga = Trabajabilidad::where('Fecha_Ensayo', $_POST['fecha'])
-				  						->where('vebe',1)
+				  $carga = Trabajabilidad::where('revenimiento.Fecha_Ensayo', $_POST['fecha'])
+				  						->where('revenimiento.vebe',1)
 				  						->whereIn('revenimiento.Codigo_Diseño',$codigo)
 				  						->whereNotExists(function($query)
 								            {
@@ -57,11 +59,15 @@ class EnsayoVebeController extends Controller {
 								        })
 								        ->groupBy('revenimiento.Numero_Carga')
 				  						->get();
-				  				
+
+			   //Carga encargados disponibles     
+			   $encargados = Encargado::all(); 						
+				  					
 			    
 				return view('vebe' , array(
 					'carga' => $carga ,
-					'titlemesage' => 'LISTO DE ENSAYOS VEBE POR FECHA '.$_POST['fecha']
+					'encargados' =>$encargados,
+					'titlemesage' => 'LISTADO DE ENSAYOS VEBE POR FECHA '.$_POST['fecha']
 
 					 ));
 
@@ -75,39 +81,23 @@ class EnsayoVebeController extends Controller {
 			    public function post_vebe(Request_Vebe $request){
 				
 		       $datos = new Vebe($request->all());
+		       $datos->Nombre_Cuenta = Auth::user()->username;
 		       $datos->save();
 
 			   
-			   //Filtrado de codigos
-			     $codigo = array(  'L20', '7T1/2-2T3/8' ,'7 Tor, 3/8',
-								  'LP25E','03-02-10-L25','L25W',
-								  '03-10-56-LE','LP25E','5T 1/2',
-								  'LP25E','5t, 1/2.','LP25E','03-02-10-M',
-								  '03-10-56-LE','03-02-09-Lex','14122-08-Lex',
-								  '6 Tr / 3/8','7t1/2,2t3/8.','5t0.6','5 T, 1/2',
-								  '6 Tr / 3/8','5t1/2t');
+			   //Abre el historial
+			            $carga = Vebe::where('Vebe.Fecha_Ensayo',$_POST['Fecha_Ensayo']) 
+			             				->join('mixerconsumo', 'vebe.Numero_Carga', '=', 'mixerconsumo.Numero_Carga')   
+								        ->groupBy('vebe.Numero_Carga')
+								        ->get();
+						                           
 
-			    $fecha= Mixer::where('Numero_Carga' , $_POST['Vebe_Carga'])
-				               ->first();
-		       
-			    //Abre el mixer donde la fecha coincide y el codigo es encontrado
-				$datos_mixer = Mixer::where('Fecha_de_Carga','=' , $fecha->Fecha_de_Carga)
-							  ->whereIn('Codigo_Elemento',$codigo)	
-				              ->get();
-				            
-				
-				//Abre fallas con otro nombre . para comparar unicamente 
-				$datos_falla = Vebe::all();
-				              
-		            
-		       	
-				return view('vebe' , array(
-					'mixer' => $datos_mixer ,
-					'fecha_busqueda' => $fecha->Fecha_de_Carga ,
-					'comparaensayo' => $datos_falla 
-					//'res_nominal' => $res_nominal
-
-					 ));
+								 
+						return view('vebe_historial' , array(
+							'carga' => $carga ,
+							'titlemesage' => 'ENSAYO VEBE '.$_POST['Numero_Carga'].' INGRESADO CON EXITO!' 
+							
+							 ));
 
 
 			}
@@ -121,45 +111,18 @@ class EnsayoVebeController extends Controller {
 		public function vebe_busqueda_fecha_historial(){
 					    
 					    
-						 //Abre el mixer
-			             $datos_mixer =    \DB::table('mixerconsumo')
-								        ->join('vebe', function ($join) {
-
-								        	//Filtrado de codigos
-					       $codigo = array(  'L20', '7T1/2-2T3/8' ,'7 Tor, 3/8',
-										  'LP25E','03-02-10-L25','L25W',
-										  '03-10-56-LE','LP25E','5T 1/2',
-										  'LP25E','5t, 1/2.','LP25E','03-02-10-M',
-										  '03-10-56-LE','03-02-09-Lex','14122-08-Lex',
-										  '6 Tr / 3/8','7t1/2,2t3/8.','5t0.6','5 T, 1/2',
-										  '6 Tr / 3/8','5t1/2t');
-
-
-								        	//Consulta uniendo los registros
-								            $join->on('mixerconsumo.Numero_Carga', '=', 'vebe.Vebe_Carga')
-								            ->where('vebe.Fecha','=' , $_POST['Parametro']);
-		                                    
-								            
-								        })
-								        ->groupBy('vebe.Vebe_Carga')
+						 //Abre el historial
+			             $carga = Vebe::where('Vebe.Fecha_Ensayo',$_POST['Parametro']) 
+			             				->join('mixerconsumo', 'vebe.Numero_Carga', '=', 'mixerconsumo.Numero_Carga')   
+								        ->groupBy('vebe.Numero_Carga')
 								        ->get();
 						                           
 
-								        
-
-
-						//Nota mejorar consulta , no traer todos los registros vebes existentes
-						//Abre fallas con otro nombre . para comparar unicamente 
-						$datos_falla = Vebe::all();
-						              
-				            
-				       	
-						return view('vebe' , array(
-							'mixer' => $datos_mixer ,
-							'fecha_busqueda' => $_POST['Parametro'] ,
-							'comparaensayo' => $datos_falla 
-							//'res_nominal' => $res_nominal
-
+								 
+						return view('vebe_historial' , array(
+							'carga' => $carga ,
+							'titlemesage' => 'LISTADO VEBE POR FECHA '.$_POST['Parametro'] 
+							
 							 ));
 
 
@@ -171,49 +134,52 @@ class EnsayoVebeController extends Controller {
 
 		public function vebe_busqueda_carga_historial(){
 
-					     //Abre el mixer
-			             $datos_mixer =    \DB::table('mixerconsumo')
-								        ->join('vebe', function ($join) {
-
-								        	//Filtrado de codigos
-					       $codigo = array(  'L20', '7T1/2-2T3/8' ,'7 Tor, 3/8',
-										  'LP25E','03-02-10-L25','L25W',
-										  '03-10-56-LE','LP25E','5T 1/2',
-										  'LP25E','5t, 1/2.','LP25E','03-02-10-M',
-										  '03-10-56-LE','03-02-09-Lex','14122-08-Lex',
-										  '6 Tr / 3/8','7t1/2,2t3/8.','5t0.6','5 T, 1/2',
-										  '6 Tr / 3/8','5t1/2t');
-
-
-								        	//Consulta uniendo los registros
-								            $join->on('mixerconsumo.Numero_Carga', '=', 'vebe.Vebe_Carga')
-								            ->where('vebe.Vebe_Carga','=' , $_POST['Parametro']);
-		                                    
-								            
-								        })
-								        ->groupBy('vebe.Vebe_Carga')
+					    
+						 //Abre el historial
+			             $carga = Vebe::where('Vebe.Numero_Carga',$_POST['Parametro']) 
+			             				->join('mixerconsumo', 'vebe.Numero_Carga', '=', 'mixerconsumo.Numero_Carga')   
+								        ->groupBy('vebe.Numero_Carga')
 								        ->get();
 						                           
 
-
-						//Nota mejorar consulta , no traer todos los registros vebes existentes
-						//Abre fallas con otro nombre . para comparar unicamente 
-						$datos_falla = Vebe::all();
-						              
-				            
-				       	
-						return view('vebe' , array(
-							'mixer' => $datos_mixer ,
-							'fecha_busqueda' => $_POST['Parametro'] ,
-							'comparaensayo' => $datos_falla 
-							//'res_nominal' => $res_nominal
-
+								 
+						return view('vebe_historial' , array(
+							'carga' => $carga ,
+							'titlemesage' => 'LISTADO VEBE POR CARGA '.$_POST['Parametro'] 
+							
 							 ));
+
 
 
 		}
 
+		//Busqueda por rangos de fecha
+        public function vebe_busqueda_rango_historial(){
 
+	
+				$carga = \DB::table('vebe')
+			        ->join('mixerconsumo', function ($join) {
+			        	
+			        	
+
+			            $join->on('mixerconsumo.Numero_Carga', '=', 'vebe.Numero_Carga')
+			                 ->where('vebe.Fecha_Ensayo', '>=', $_POST['Desde'] )
+			                 ->where('vebe.Fecha_Ensayo', '<=', $_POST['Hasta'] );
+
+
+			        })
+			        ->groupBy('vebe.Numero_Carga')
+			        ->get();
+
+
+				return view('vebe_historial' , array(
+					'carga' => $carga ,
+					'titlemesage' => 'CONSULTA POR FECHA DESDE '.$_POST['Desde']. ' HASTA '.$_POST['Hasta'].'. ENSAYOS VEBE REALIZADOS.'
+
+
+					) );
+					
+       }
 
 
 }

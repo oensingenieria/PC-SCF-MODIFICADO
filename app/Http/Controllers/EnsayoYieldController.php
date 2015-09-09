@@ -10,6 +10,7 @@ use App\Moldes;
 use App\Mixer; // Modelo Mixer
 use App\Ensayo;
 use App\Trabajabilidad;
+use App\Encargado;
 
 use App\Http\Requests\Request_Yield; //Solicitud yield
 
@@ -101,7 +102,8 @@ class EnsayoYieldController extends Controller {
 		            ->join('mixerconsumo', 'revenimiento.Numero_Carga', '=', 'mixerconsumo.Numero_Carga')
 		            ->first();
 			    
-				    
+		       //Carga encargados disponibles     
+			   $encargados = Encargado::all();    
 
                return view('yield' , array('carga' =>$carga , 
 			    		'cemento' =>$cemento ,
@@ -109,6 +111,7 @@ class EnsayoYieldController extends Controller {
 			    		'aditivo' =>$aditivo ,
 			    		'agregado' =>$agregado ,
 			    		'molde' => $moldes ,
+			    		'encargados' => $encargados,
 			    		'titlemesage' => 'CONSULTA POR NUMERO DE CARGA '.$_POST['carga'] 
 			    		
 

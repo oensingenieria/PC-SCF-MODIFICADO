@@ -42,6 +42,7 @@
 				        <td>Numero de boleta</td>
 				        <td>Nombre del elemento</td>
 				        <td>Codigo de diseño</td>
+				        <td>Encargado</td>
 				     
 				      </tr>
 				     </thead>
@@ -60,7 +61,8 @@
 				     	<td>{{$carga->Fecha_Registro}}</td>
 				     	<td>{{$carga->Boleta_Batida}}</td>
                         <td>{{$carga->Nombre_Proyecto}}</td>
-				     	<td>{{$carga->Codigo_Diseño}}</td>
+				     	<td style="color:blue">{{$carga->Codigo_Diseño}}</td>
+				     	<td style="color:blue">{{$carga->Encargado}}</td>
 				     	
 				     	</tr>
 				     

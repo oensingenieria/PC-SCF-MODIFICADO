@@ -36,6 +36,8 @@
 				        <td>Fecha de ensayo</td>
 				        <td>Hora del registro</td>
 				        <td>Yield</td>
+				        <td>Encargado</td>
+				        <td>Usuario</td>
 				     
 				      </tr>
 				     </thead>
@@ -52,6 +54,9 @@
 				     	<td>{{$c->Fecha_Ensayo}}</td>
                         <td>{{$c->Hora_Registro}}</td>
 				     	<td>{{$c->Yield}}</td>
+				     	<td style="color:blue" >{{$c->Encargado}}</td>
+				     	<td style="color:blue">{{$c->Nombre_Cuenta}}</td>
+
 				     	
 				     	</tr>
 				     @endforeach	

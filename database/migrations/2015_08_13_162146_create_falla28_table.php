@@ -30,6 +30,8 @@ class CreateFalla28Table extends Migration {
 			$table->decimal('Resis_Nominal');
 			$table->decimal('Resis_Promedio');
 			$table->decimal('Resis_Porcentual');
+			$table->string('Encargado');
+            $table->string('Nombre_Cuenta');
 
 			$table->timestamps();
 		});

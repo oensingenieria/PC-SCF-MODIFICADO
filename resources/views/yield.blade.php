@@ -266,6 +266,20 @@
 		    </div>
 		  </div>
 
+		  <div class="form-group">
+        <label for="inputEmail3" class="col-sm-6 control-label">Encargado: </label>
+        <div class="col-sm-6">
+          
+	          <select name="Encargado" class="form-control" >
+	            @foreach($encargados as $encargado)
+	            <option value="{{$encargado->nombre}}" > {{$encargado->nombre}} </option>
+	            @endforeach
+	          </select>
+
+
+	        </div>
+	      </div>
+
 	</div>
 
 	<div class="col-md-6"> 

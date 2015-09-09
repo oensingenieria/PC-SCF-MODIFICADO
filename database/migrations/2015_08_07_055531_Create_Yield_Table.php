@@ -30,7 +30,8 @@ class CreateYieldTable extends Migration {
 			$table->decimal('Aditivo2');
 			$table->decimal('Yield');
 			$table->decimal('Volumen_Teorico');
-			$table->string('Nombre_Cuenta');
+			$table->string('Encargado');
+            $table->string('Nombre_Cuenta');
 			$table->string('Numero_Carga');
 
 

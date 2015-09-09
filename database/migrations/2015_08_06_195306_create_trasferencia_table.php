@@ -21,7 +21,8 @@ class CreateTrasferenciaTable extends Migration {
 			$table->string('id_cod_carga');
 			$table->decimal('promedio');
 			$table->string('estado');
-			$table->string('Nombre_Cuenta');
+			$table->string('Encargado');
+            $table->string('Nombre_Cuenta');
 
 			$table->timestamps();
 		});
