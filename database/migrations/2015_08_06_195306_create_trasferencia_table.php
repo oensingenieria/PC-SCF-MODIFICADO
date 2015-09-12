@@ -15,16 +15,22 @@ class CreateTrasferenciaTable extends Migration {
 		Schema::create('transferencia', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->date('fecha');
-			$table->time('hora');
-			$table->decimal('falla');
-			$table->string('id_cod_carga');
-			$table->decimal('promedio');
-			$table->string('estado');
+			$table->date('Fecha_Ensayo');
+			$table->date('Fecha_Registro');
+            $table->decimal('Falla1');
+            $table->time('Hora_f1');
+			$table->integer('Edad_f1');
+			$table->decimal('Falla2');
+			$table->time('Hora_f2');
+			$table->integer('Edad_f2');
+			$table->decimal('Falla3');
+			$table->time('Hora_f3');
+			$table->integer('Edad_f3');
+			$table->decimal('Promedio_Carga'); //Calculo con las tres fallas
+			$table->string('Numero_Carga');
 			$table->string('Encargado');
             $table->string('Nombre_Cuenta');
-
-			$table->timestamps();
+            $table->timestamps();
 		});
 	}
 

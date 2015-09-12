@@ -6,6 +6,22 @@ class Transferencias extends Model {
 
 protected $table = 'transferencia';
 
-protected $fillable = ['fecha','hora','falla','id_cod_carga','promedio','nombre_cilindro','estado','Nombre_Cuenta'];
+protected $fillable = ['Fecha_Ensayo',
+						'Fecha_Registro',
+			            'Falla1',
+			            'Hora_f1',
+						'Edad_f1',
+						'Falla2',
+						'Hora_f2',
+						'Edad_f2',
+						'Falla3',
+						'Hora_f3',
+						'Edad_f3',
+						'Promedio_Carga',
+						'Numero_Carga',
+						'Encargado',
+			           'Nombre_Cuenta'
+
+];
 
 }
