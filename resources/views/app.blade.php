@@ -15,7 +15,7 @@
 
     <link rel="stylesheet" href="/css/datepicker.css">
     <link rel="stylesheet" href="/timepick/jquery.timepicker.css">
-    <link rel="stylesheet" href="/Paginate/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="/paginate/jdataTable.css">
 
     <link rel="stylesheet" type="text/css" href="/css/sweetalert.css">
 
@@ -45,6 +45,21 @@
     .pagination li a{   display:block; padding:3px 5px; color:#fff; background-color:#44b0dd; text-decoration:none;}  
     .pagination li a.active {border:1px solid #000; color:#000; background-color:#fff;}  
     .pagination li a.inactive {background-color:#eee; color:#777; border:1px solid #ccc;}  
+
+    .form-horizontal input {
+    	font-weight: 800;color:black;
+    }
+    .form-horizontal select {
+    	font-weight: 800;color:black;
+    }
+    .form-horizontal textarea {
+    	font-weight: 800;color:black;
+    }
+
+    .remodal h3{
+    	color: rgb(224, 230, 37);
+    }
+    
 
 	</style>
 
@@ -155,6 +170,7 @@
 	<script src="/js/bootstrap.min.js"></script>
 
 	<script src="/js/remodal.min.js"></script>
+	<script type="text/javascript"></script>
 	<script src="/js/Chart.js"></script>
 
 	<script src="/js/jquery-ui.js"></script>
@@ -255,5 +271,9 @@ function(isConfirm){
 	 </script>
 
 	
+<script type="text/javascript">
+	
+</script>
+
 </body>
 </html>

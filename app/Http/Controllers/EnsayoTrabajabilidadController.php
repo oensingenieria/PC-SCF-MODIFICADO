@@ -25,15 +25,107 @@ class EnsayoTrabajabilidadController extends Controller {
 		
 	     }
 
+//Trabajabilidad y flujo 
 
-//Manejo del flujo de trabajabilidad
-
-			public function trabajabilidad_flujo(){
+public function trabajabilidad_flujo(){
 
 		        return view('trabajabilidad_flujo' , array('titlemesage' => 'TRABAJABILIDAD Y FLUJO') );
 
 			}
 
+//Consultas de ensayos
+
+
+			public function consulta_trabajabilidad_carga(){
+
+								
+				 //Filtrando registros desde trabajabilidad
+				  $carga = Mixer::where('mixerconsumo.Numero_Carga', $_POST['Parametro'])
+				  						->whereNotExists(function($query)
+								            {
+								                $query->select(\DB::raw(1))
+								                      ->from('revenimiento')
+								                      ->whereRaw('revenimiento.Numero_Carga = mixerconsumo.Numero_Carga');
+								            })
+				  						->groupBy('mixerconsumo.Numero_Carga')
+				  						->get();
+
+			   //Carga encargados disponibles     
+			   $encargados = Encargado::all();
+
+			   //Carga los Tarros
+			   $tarros = Tarros::all();
+
+				return view('trabajabilidad_flujo' , 
+					array('mixer' => $carga , 
+						  'tarros' => $tarros ,
+						  'encargados' => $encargados ,
+						  'titlemesage' => 'CONSULTA POR NUMERO DE CARGA '.$_POST['Parametro']. '. ENSAYOS NO REALIZADOS.'
+						));
+
+
+			}
+
+			public function consulta_trabajabilidad_codigo(){
+
+				//Filtrando registros desde trabajabilidad
+				  $carga = Mixer::where('mixerconsumo.Codigo_Diseño', $_POST['Parametro'])
+				  						->whereNotExists(function($query)
+								            {
+								                $query->select(\DB::raw(1))
+								                      ->from('revenimiento')
+								                      ->whereRaw('revenimiento.Numero_Carga = mixerconsumo.Numero_Carga');
+								            })
+				  						->groupBy('mixerconsumo.Numero_Carga')
+				  						->get();
+
+			   //Carga encargados disponibles     
+			   $encargados = Encargado::all();
+
+			   //Carga los Tarros
+			   $tarros = Tarros::all();
+
+				return view('trabajabilidad_flujo' , 
+					array('mixer' => $carga , 
+						  'tarros' => $tarros ,
+						  'encargados' => $encargados ,
+						  'titlemesage' => 'CONSULTA POR NUMERO DE CARGA '.$_POST['Parametro']. '. ENSAYOS NO REALIZADOS.'
+						));
+
+			}	
+
+		
+
+			public function consulta_trabajabilidad_fecha(){
+
+				//Filtrando registros desde trabajabilidad
+				  $carga = Mixer::where('mixerconsumo.Fecha_de_Carga', $_POST['Parametro'])
+				  						->whereNotExists(function($query)
+								            {
+								                $query->select(\DB::raw(1))
+								                      ->from('revenimiento')
+								                      ->whereRaw('revenimiento.Numero_Carga = mixerconsumo.Numero_Carga');
+								            })
+				  						->groupBy('mixerconsumo.Numero_Carga')
+				  						->get();
+
+			   //Carga encargados disponibles     
+			   $encargados = Encargado::all();
+
+			   //Carga los Tarros
+			   $tarros = Tarros::all();
+
+				return view('trabajabilidad_flujo' , 
+					array('mixer' => $carga , 
+						  'tarros' => $tarros ,
+						  'encargados' => $encargados ,
+						  'titlemesage' => 'CONSULTA POR NUMERO DE CARGA '.$_POST['Parametro']. '. ENSAYOS NO REALIZADOS.'
+						));
+				
+
+			}
+
+//Post 
 			public function post_trabajabilidad_flujo(Request_Trabajabilidad $request){
 				
 		       $datos = new Trabajabilidad($request->all());
@@ -44,103 +136,49 @@ class EnsayoTrabajabilidadController extends Controller {
 				$datos->Nombre_Cuenta = Auth::user()->username;
 				$datos->save();
 
-				
-				//Logic return list
-				$getdate =  Mixer::where('Numero_Carga' , $datos->Numero_Carga )->first();
-
-				$mixer = Mixer::where('Fecha_de_Carga' , $getdate->Fecha_de_Carga )->groupBy('Numero_Carga')->get();
-				$tarros = Tarros::all();
-				$encargados = Encargado::all();
-				
-				return view('trabajabilidad_flujo' , 
-					array(
-						'mixer' => $mixer ,
-						'tarros' => $tarros ,
-						'encargados' => $encargados ,
-						'titlemesage' => "ENSAYO  ".$datos->Numero_Carga ." .   REALIZADO CON EXITO!."
-
-						));
+				return redirect('pc/trabajabilidad_flujo/save/'.$datos->Fecha_Ensayo)->with('success','Ensayo ingresado');
 
 			}
 
+//Redirect
+			public function redirect_trabajabilidad_flujo($fecha){
 
-			public function consulta_trabajabilidad_carga(){
+				//Filtrando registros desde trabajabilidad
+				  $carga = Mixer::where('mixerconsumo.Fecha_de_Carga', $fecha)
+				  						->whereNotExists(function($query)
+								            {
+								                $query->select(\DB::raw(1))
+								                      ->from('revenimiento')
+								                      ->whereRaw('revenimiento.Numero_Carga = mixerconsumo.Numero_Carga');
+								            })
+				  						->groupBy('mixerconsumo.Numero_Carga')
+				  						->get();
 
-				$codigo = $_POST['Parametro'];
+			   //Carga encargados disponibles     
+			   $encargados = Encargado::all();
 
-				$mixer = Mixer::where("Numero_Carga",$codigo)->groupBy('Numero_Carga')->get();
-				$tarros = Tarros::all();
-				$encargados = Encargado::all();
-
+			   //Carga los Tarros
+			   $tarros = Tarros::all();
 
 				return view('trabajabilidad_flujo' , 
-					array('mixer' => $mixer , 
-						'tarros' => $tarros ,
-						'encargados' => $encargados ,
-						 'titlemesage' => 'CONSULTA POR NUMERO DE CARGA '.$codigo . '. ENSAYOS NO REALIZADOS.'
-
+					array('mixer' => $carga , 
+						  'tarros' => $tarros ,
+						  'encargados' => $encargados ,
+						  'titlemesage' => 'CONSULTA POR FECHA '.$fecha. '. ENSAYOS NO REALIZADOS.'
 						));
 
 
 			}
 
-			public function consulta_trabajabilidad_codigo(){
-
-				$codigo = $_POST['Parametro'];
-				
-				$mixer = Mixer::where('Codigo_Diseño' , $codigo )->groupBy('Numero_Carga')->get();
-				$tarros = Tarros::all();
-				$encargados = Encargado::all();
-				
-				return view('trabajabilidad_flujo' , 
-					array('mixer' => $mixer , 
-						'tarros' => $tarros ,
-						'encargados' => $encargados ,
-						  'titlemesage' => 'CONSULTA POR CODIGO DE DISEÑO '.$codigo . '. ENSAYOS NO REALIZADOS.'
-
-						));
-
-			}	
-
-		
-
-			public function consulta_trabajabilidad_fecha(){
-
-				$codigo = $_POST['Parametro'];
-				
-				$mixer = Mixer::where('Fecha_de_Carga' , $codigo )->groupBy('Numero_Carga')->get();
-				$tarros = Tarros::all();
-				$encargados = Encargado::all();
-				
-				return view('trabajabilidad_flujo' , 
-					array(
-						'mixer' => $mixer ,
-						'tarros' => $tarros ,
-						'encargados' => $encargados ,
-						'titlemesage' => 'CONSULTA POR FECHA '.$codigo . '. ENSAYOS NO REALIZADOS.'
-
-						));
-				
-
-			}
-
-
-// Consultas por historial
+// Consultas de ensayo por historial
 
 
 
 			public function consulta_trabajabilidad_carga_historial(){
 				
-			$mixer = \DB::table('mixerconsumo')
-			        ->join('revenimiento', function ($join) {
-			        	
-			        	
-
-			            $join->on('mixerconsumo.Numero_Carga', '=', 'revenimiento.Numero_Carga')
-			                 ->where('revenimiento.Numero_Carga', '=', $_POST['Parametro'] );
-			        })
-			        ->groupBy('revenimiento.Numero_Carga')
-			        ->get();
+			$mixer = Trabajabilidad::where('revenimiento.Numero_Carga', '=', $_POST['Parametro'] )
+										        ->groupBy('revenimiento.Numero_Carga')
+										        ->get();
 
 
 				return view('trabajabilidad_flujo_historial' , array(
@@ -155,16 +193,9 @@ class EnsayoTrabajabilidadController extends Controller {
 			
 			public function consulta_trabajabilidad_fecha_historial(){
 
-				$mixer = \DB::table('mixerconsumo')
-			        ->join('revenimiento', function ($join) {
-			        	
-			        	
-
-			            $join->on('mixerconsumo.Numero_Carga', '=', 'revenimiento.Numero_Carga')
-			                 ->where('revenimiento.Fecha_Ensayo', '=', $_POST['Parametro'] );
-			        })
-			        ->groupBy('revenimiento.Numero_Carga')
-			        ->get();
+				$mixer = Trabajabilidad::where('revenimiento.Fecha_Ensayo', '=', $_POST['Parametro'] )
+										        ->groupBy('revenimiento.Numero_Carga')
+										        ->get();
 
 
 				return view('trabajabilidad_flujo_historial' , array(
@@ -179,19 +210,12 @@ class EnsayoTrabajabilidadController extends Controller {
 
 			public function consulta_trabajabilidad_fecha_historial_rango(){
 
-				$mixer = \DB::table('mixerconsumo')
-			        ->join('revenimiento', function ($join) {
-			        	
-			        	
 
-			            $join->on('mixerconsumo.Numero_Carga', '=', 'revenimiento.Numero_Carga')
-			                 ->where('revenimiento.Fecha_Ensayo', '>=', $_POST['Desde'] )
-			                 ->where('revenimiento.Fecha_Ensayo', '<=', $_POST['Hasta'] );
+				$mixer = Trabajabilidad::where('revenimiento.Fecha_Ensayo', '>=', $_POST['Desde'] )
+			                                    ->where('revenimiento.Fecha_Ensayo', '<=', $_POST['Hasta'] )
+										        ->groupBy('revenimiento.Numero_Carga')
+										        ->get();
 
-
-			        })
-			        ->groupBy('revenimiento.Numero_Carga')
-			        ->get();
 
 
 				return view('trabajabilidad_flujo_historial' , array(
@@ -203,11 +227,6 @@ class EnsayoTrabajabilidadController extends Controller {
 				
 			}
 
-
 //Fin flujo trabajabilidad
-
-
-
-
 
 }

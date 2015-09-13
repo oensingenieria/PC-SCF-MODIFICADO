@@ -23,7 +23,8 @@ Route::post('pc/trabajabilidad_flujo/fecha', 'EnsayoTrabajabilidadController@con
 Route::post('pc/trabajabilidad_flujo/carga/historial', 'EnsayoTrabajabilidadController@consulta_trabajabilidad_carga_historial');
 Route::post('pc/trabajabilidad_flujo/fecha/historial', 'EnsayoTrabajabilidadController@consulta_trabajabilidad_fecha_historial');
 Route::post('pc/trabajabilidad_flujo/fecha_rango/historial', 'EnsayoTrabajabilidadController@consulta_trabajabilidad_fecha_historial_rango');
-
+//Redirecting
+Route::get('pc/trabajabilidad_flujo/save/{fecha}', 'EnsayoTrabajabilidadController@redirect_trabajabilidad_flujo');
 
 Route::get('pc/yield', 'EnsayoYieldController@consulta_yield');
 Route::post('pc/yield/fecha', 'EnsayoYieldController@consulta_yield_historial_fecha');
