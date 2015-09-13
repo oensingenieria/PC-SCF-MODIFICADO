@@ -24,7 +24,8 @@
 				<div class="row">
 				<div class="col-md-12  ">
 				
-				@if(isset($carga))
+			  @if(isset($carga))	
+				@if(!is_null($carga) & count($carga) > 0 )
 				 <table class="table table-bordered">
  				
 				   <thead>
@@ -68,9 +69,14 @@
 
 				</table>
 			  @else
-			  <p class="bg-info text-center" style="height:40px;padding-top:10px"><b>Por favor realize una busqueda</b></p>
 
-			  @endif
+			
+			   <p class="bg-danger text-center" style="height:40px;padding-top:10px"><b>Datos no encontrados . Por favor realize una nueva busqueda.</b></p>
+			   @endif
+
+			 @else
+			<p class="bg-info text-center" style="height:40px;padding-top:10px"><b>Por favor realize una busqueda</b></p>		
+          @endif
 
 				</div>
 				</div>
@@ -115,57 +121,69 @@
 </div> {{--Modal busqueda transferencia--}}
 
 
-
 {{--Modal busqueda de historial--}}
 <div class="remodal" data-remodal-id="buscarhistorial_modal">
-  <button data-remodal-action="close" class="remodal-close"></button>
-  <h3 class="bg-success">Busqueda de historial</h3>
+ <button data-remodal-action="close" class="remodal-close"></button>
+ <h4 class="bg-success">Seleccione un medio de busqueda </h4>
   <br>
   
 
   <div class="row">
   <div class="col-md-12">
   		<div class="col-md-6">
-  			<form class="form-inline" method="post" action="/pc/transferencia/carga/historial" >
+  			<form class="form-horizontal" method="post" action="/pc/transferencias/carga/historial">
   			<input name="_token" type="hidden" value="{!! csrf_token() !!}" />
-  			<label>Numero de carga <input required  class="form-control" type="text" name="Parametro" placeholder="Numero de carga" /></label><button  class="btn btn-success" style="margin-bottom:65px;">Buscar</button>
-          </form>
-       </div>
-
-
-       <div class="col-md-6">
-  			<form class="form-inline" method="post" action="/pc/transferencia/fecha/historial" >
-  			 <input name="_token" type="hidden" value="{!! csrf_token() !!}" />
-  			<label>Fecha de Carga&nbsp;&nbsp;<input  type="text" name="Parametro"   style="cursor: pointer; background-color: white;"  required="" readonly=""  type="Text" class="form-control  datepicker"  placeholder="Ingrese una fecha" ></label><button  class="btn btn-success " >Buscar</button>
+  			<div class="form-group">
+  			<label>Numero de carga <input required=""  class="form-control " type="text" name="carga" placeholder="Numero de carga" /></label>
+  			</div>
+  			
+  			<div class="form-group">
+  			<button type="submit" class="btn btn-success" >Buscar</button>
+  			</div>
+  			
   			</form>
-
+  			
   		</div>
-     </div>
-
-     	<div class="col-md-12">
-      <div class="col-md-5">
-        <form class="form-inline" >
-        <input name="_token" type="hidden" value="{!! csrf_token() !!}" />
-        <label>Mes de carga<input required  class="form-control" type="text" name="Parametro" placeholder="Digite un mes" /></label><button class="btn btn-success" style="margin-bottom:65px;">Buscar</button>
-          </form>
-       </div>
 
 
-       <div class="col-md-5 pull-right">
-        <form class="form-inline" >
+  		<div class="col-md-6">
+  			<form class="form-horizontal" method="post" action="/pc/transferencias/fecha/historial">
+  			<input name="_token" type="hidden" value="{!! csrf_token() !!}" />
+  			<div class="form-group">
+  			<label>Fecha de ensayo <input required="" class="form-control fechaingresada datepicker" type="text" name="fecha" placeholder="Seleccione una fecha" style="cursor: pointer; background-color: white;"  required="" readonly=""  /></label>
+  		   </div>
+
+  		   <div class="form-group">
+           <button type="submit" class="btn btn-success" >Buscar</button>
+           </div>
+  			</form>
+  			
+  		</div>
+  </div>	
+
+  	<div class="col-md-12">
+     
+       
+        <form class="form-horizontal" method="post" action="/pc/transferencias/rango/historial">
          <input name="_token" type="hidden" value="{!! csrf_token() !!}" />
-        <label>Rango de fecha:<input  type="text" name="Parametro"   style="cursor: pointer; background-color: white; margin-bottom:5px"  required="" readonly=""  type="Text" class="form-control  datepicker"  placeholder="Desde" >
+        <label>Rango de fecha:<input  type="text" name="Desde"   style="cursor: pointer; background-color: white; margin-bottom:5px"  required="" readonly=""  type="Text" class="form-control  datepicker"  placeholder="Desde" >
 
-          <input  type="text" name="Parametro"   style="cursor: pointer; background-color: white;"  required="" readonly=""  type="Text" class="form-control  datepicker"  placeholder="Hasta" >
+          <input  type="text" name="Hasta"   style="cursor: pointer; background-color: white;"  required="" readonly=""  type="Text" class="form-control  datepicker"  placeholder="Hasta" >
 
-        </label><button class="btn btn-success " >Buscar</button>
+        </label>
+        <div class="form-group">
+        <button class="btn btn-success " >Buscar</button>
+       </div>
+        
         </form>
 
-      </div>
-     </div>	
+     
+    </div>	
 
-  </div> 
-</div> {{--Modal busqueda historial--}}
+  </div>
+
+ 
+</div> {{--Modal busqueda de historial--}}
 
 
 

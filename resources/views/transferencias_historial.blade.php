@@ -11,94 +11,73 @@
 		<input class="btn btn-info pull-right" style="background-color: #32C0AC;" type="button" value="Imprimir" onClick="window.print()">
 		</div>
 			<div class="panel panel-default">
-				<div class="panel-heading text-center"><b>TRANSFERENCIAS</b></div>
+				<div class="panel-heading text-center"><b>{{$titlemesage}}</b></div>
 
 				<div class="panel-body">
 				
 				<div class="row">
 				<div class="col-md-12" >
 				
-				
-				@if(!isset($mixer) || $mixer == null)
-					
-				<p class="bg-info text-center" style="height:40px;padding-top:10px">Por favor realize una busqueda</p>
-
-
-				@endif		
-				
-
-
 				</div>
 				
-				@if(isset($mixer))
+				
 				<div class="row">
 				<div class="col-md-12  ">
+				
+			  @if(isset($carga))	
+				@if(!is_null($carga) & count($carga) > 0 )
 				 <table class="table table-bordered">
  				
 				   <thead>
 				      <tr>
-				        <td>Acciones</td>
-				        <td>Numero de carga</td>
-				        <td>Codigo de diseño</td>
+				        <td>Usuario</td>
+				        <td>Numero Carga</td>
+				        <td>Cod.Diseño</td>
 				        <td>Diseño</td>
-				        <td>Codigo del elemento</td>
-				        <td>Nombre del elemento</td>
-				        <td>Codigo del proyecto</td>
-				        <td>Nombre del proyecto</td>
-				        <td>Hora falla</td>
-				        <td>Falla </td>
-				        <td>Edad Cilindro</td>
-		     
+				        <td>Nombre Proyecto</td>
+				        <td>Falla1 | Edad</td>
+				        <td>Falla2 | Edad</td>
+				        <td>Falla3 | Edad</td>
+				        <td>Promedio Carga</td>
+				        <td>Encargado</td>
+
+				       
+				        
+				        
 				      </tr>
 				     </thead>
 				     
                    <tbody>
-                  @if(isset($cilindros)) 
-                  <?php $promedio = 0; $divisor = 0; ?>
-                   @foreach($cilindros as $cil)
+                 @foreach($carga as $c)
 				     <tr>
 				       
-				     	@if($cil->estado == "pendiente")
-				     	<td><button  data-remodal-target="llenadata_modal" class="btn btn-warning llenardatos" data-numerocarga="{{$mixer->Numero_Carga}}" data-id="{{$cil->id}}" >Pendiente</button></td>
-				     	@endif
-
-				     	@if($cil->estado == "listo")
-				     	<td><button   class="btn btn-info "  >{{$cil->Nombre_Cuenta}}</button></td>
-				     	@endif
-
-
-				     	<td>{{$mixer->Numero_Carga}}</td>
-				     	<td>{{$mixer->Codigo_Diseño}}</td>
-				     	<td>{{$mixer->Diseño}}</td>
-                        <td>{{$mixer->Codigo_Elemento}}</td>
-                        <td>{{$mixer->Nombre_Elemento}}</td>
-				     	<td>{{$mixer->Codigo_Proyecto}}</td>
-				     	<td>{{$mixer->Nombre_Proyecto}}</td>
-				     	<td>{{$cil->hora}}</td>
-				     	<td>{{$cil->falla}}</td>
-				     	<td>
-				     		@if($cil->estado == "listo")
-				     		<?php  
-				     		$Hora = (strtotime($cil->hora) - strtotime($mixer->Hora_de_Carga))*24;
-                            echo date('H',$Hora);
-                            ?>
-				     		@endif
-
-				     	</td>
+				     	<td>{{$c->Nombre_Cuenta}}</td>
+				     	<td>{{$c->Numero_Carga}}</td>
+				     	<td>{{$c->Codigo_Diseño}}</td>
+                        <td>{{$c->Diseño}}</td>
+                        <td>{{$c->Nombre_Proyecto}}</td>
+				     	<td>{{$c->Falla1}} | {{$c->Edad_f1}}</td>
+				     	<td>{{$c->Falla2}} | {{$c->Edad_f2}}</td>
+				     	<td>{{$c->Falla3}} | {{$c->Edad_f3}}</td>
+				     	<td>{{$c->Promedio_Carga}}</td>
+				     	<td>{{$c->Encargado}}</td>
+				    
+				     </tr>
+                 @endforeach
 				     	
-				     	</tr>	
-				     <?php $promedio = $promedio + $cil->falla ; 
-                           if($cil->falla > 0 ){ $divisor++; }
-				       ?>
-				     	 @endforeach 
-				     	 @endif
 				     </tbody>
 
 
 				</table>
-			   <?php if($divisor == 0 ){ $divisor = 1;} ?>
-		       <p style="margin: 0px 0px 10px;color: blue;font-weight: initial;margin-left: 10px;">PROMEDIO DE LA CARGA : <b> {{number_format((float)$promedio/$divisor, 2, '.', '')}} </b> </p>
-				@endif
+			  @else
+
+			
+			   <p class="bg-danger text-center" style="height:40px;padding-top:10px"><b>Datos no encontrados . Por favor realize una nueva busqueda.</b></p>
+			   @endif
+
+			 @else
+			<p class="bg-info text-center" style="height:40px;padding-top:10px"><b>Por favor realize una busqueda</b></p>		
+          @endif
 
 				</div>
 				</div>
@@ -114,7 +93,6 @@
 </div>
 </div>
 </div>
-
 
 {{--Modal busqueda transferencia--}}
 <div class="remodal" data-remodal-id="buscarensayo_modal">
@@ -143,135 +121,68 @@
 </div> {{--Modal busqueda transferencia--}}
 
 
-
 {{--Modal busqueda de historial--}}
 <div class="remodal" data-remodal-id="buscarhistorial_modal">
-  <button data-remodal-action="close" class="remodal-close"></button>
-  <h3 class="bg-success">Busqueda de historial</h3>
+ <button data-remodal-action="close" class="remodal-close"></button>
+ <h4 class="bg-success">Seleccione un medio de busqueda </h4>
   <br>
   
 
   <div class="row">
   <div class="col-md-12">
   		<div class="col-md-6">
-  			<form class="form-inline" method="post" action="/pc/transferencia/carga/historial" >
+  			<form class="form-horizontal" method="post" action="/pc/transferencias/carga/historial">
   			<input name="_token" type="hidden" value="{!! csrf_token() !!}" />
-  			<label>Numero de carga <input required  class="form-control" type="text" name="Parametro" placeholder="Numero de carga" /></label><button  class="btn btn-success" style="margin-bottom:65px;">Buscar</button>
-          </form>
-       </div>
-
-
-       <div class="col-md-6">
-  			<form class="form-inline" method="post" action="/pc/transferencia/fecha/historial" >
-  			 <input name="_token" type="hidden" value="{!! csrf_token() !!}" />
-  			<label>Fecha de Carga&nbsp;&nbsp;<input  type="text" name="Parametro"   style="cursor: pointer; background-color: white;"  required="" readonly=""  type="Text" class="form-control  datepicker"  placeholder="Ingrese una fecha" ></label><button  class="btn btn-success " >Buscar</button>
+  			<div class="form-group">
+  			<label>Numero de carga <input required=""  class="form-control " type="text" name="carga" placeholder="Numero de carga" /></label>
+  			</div>
+  			
+  			<div class="form-group">
+  			<button type="submit" class="btn btn-success" >Buscar</button>
+  			</div>
+  			
   			</form>
-
+  			
   		</div>
-     </div>
-
-     	<div class="col-md-12">
-      <div class="col-md-5">
-        <form class="form-inline" >
-        <input name="_token" type="hidden" value="{!! csrf_token() !!}" />
-        <label>Mes de carga<input required  class="form-control" type="text" name="Parametro" placeholder="Digite un mes" /></label><button class="btn btn-success" style="margin-bottom:65px;">Buscar</button>
-          </form>
-       </div>
 
 
-       <div class="col-md-5 pull-right">
-        <form class="form-inline" >
+  		<div class="col-md-6">
+  			<form class="form-horizontal" method="post" action="/pc/transferencias/fecha/historial">
+  			<input name="_token" type="hidden" value="{!! csrf_token() !!}" />
+  			<div class="form-group">
+  			<label>Fecha de ensayo <input required="" class="form-control fechaingresada datepicker" type="text" name="fecha" placeholder="Seleccione una fecha" style="cursor: pointer; background-color: white;"  required="" readonly=""  /></label>
+  		   </div>
+
+  		   <div class="form-group">
+           <button type="submit" class="btn btn-success" >Buscar</button>
+           </div>
+  			</form>
+  			
+  		</div>
+  </div>	
+
+  	<div class="col-md-12">
+     
+       
+        <form class="form-horizontal" method="post" action="/pc/transferencias/rango/historial">
          <input name="_token" type="hidden" value="{!! csrf_token() !!}" />
-        <label>Rango de fecha:<input  type="text" name="Parametro"   style="cursor: pointer; background-color: white; margin-bottom:5px"  required="" readonly=""  type="Text" class="form-control  datepicker"  placeholder="Desde" >
+        <label>Rango de fecha:<input  type="text" name="Desde"   style="cursor: pointer; background-color: white; margin-bottom:5px"  required="" readonly=""  type="Text" class="form-control  datepicker"  placeholder="Desde" >
 
-          <input  type="text" name="Parametro"   style="cursor: pointer; background-color: white;"  required="" readonly=""  type="Text" class="form-control  datepicker"  placeholder="Hasta" >
+          <input  type="text" name="Hasta"   style="cursor: pointer; background-color: white;"  required="" readonly=""  type="Text" class="form-control  datepicker"  placeholder="Hasta" >
 
-        </label><button class="btn btn-success " >Buscar</button>
+        </label>
+        <div class="form-group">
+        <button class="btn btn-success " >Buscar</button>
+       </div>
+        
         </form>
 
-      </div>
-     </div>	
-
-  </div> 
-</div> {{--Modal busqueda historial--}}
-
-
-
-
-
-{{--Modal Llenado de datos--}}
-
-<div class="remodal" data-remodal-id="llenadata_modal">
-  <button data-remodal-action="close" class="remodal-close"></button>
-  <h3 class="bg-success">Datos de la falla</h3>
-  <br>
-  
-  <div class="row">
-  		<div class="col-md-12">
-  		
-		  		<form class="form-horizontal" method="post" action="/pc/transferencias">
-		  		<input name="_token" type="hidden" value="{!! csrf_token() !!}" />
-		   <div class="form-group">
-  			<label>Fecha de ingreso <input  class="form-control  datepicker" type="text" name="fecha" placeholder="Seleccione una fecha" style="cursor: pointer; background-color: white;"  required="" readonly=""  /></label>
-           </div>	
-
-            <div class="form-group">
-  			<label>Hora de falla <input  class="form-control fechaingresada timepicker" type="text" name="hora" placeholder="Hora"  /></label>
-           </div>
-
-              <div class="form-group">
-  			<label>Falla (kg/cm2) <input  class="form-control" type="number" step="0.01" name="falla" placeholder="Ingrese falla"  /></label>
-           </div>
-
-
-           <input type="hidden" class="numerocarga" name="id_cod_carga">
-           <input type="hidden" class="idunique" name="id">
-
-          
-		  <div class="form-group">
-		  
-
-		     
-		      <button type="submit" class="btn btn-success">Grabar</button>
-		   
-		      
-		    </form>
-		  </div>
-		  </div>
-		
-
-
-       </div>
-
-</div>
-</div>
-{{--Modal Llenado de datos--}}
-
-
-@endsection
-
-@section('script')
-
-<script type="text/javascript">
-	
-$(document).ready(function(){
-
-  $(".llenardatos").click(function() {
-      
-       var numerocarga = $(this).data('numerocarga');
-       var id = $(this).data('id');
      
-       $('.idunique').val(id);
-       
+    </div>	
 
+  </div>
 
-      });
-
-    });
-
-
-</script>
-
-
+ 
+</div> {{--Modal busqueda de historial--}}
 
 @endsection

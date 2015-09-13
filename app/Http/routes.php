@@ -63,13 +63,11 @@ Route::post('pc/falla28/rango/historial', 'EnsayoFalla28Controller@falla28_histo
 
 
 Route::get('pc/transferencias', 'EnsayoTransferenciaController@transferencias');
-Route::post('pc/transferencia/fecha', 'EnsayoTransferenciaController@transferencias_busqueda_fecha');
-Route::post('pc/transferencia/fecha/historial', 'EnsayoTransferenciaController@transferencias_busqueda_fecha_historial');
-Route::post('pc/transferencia/carga/historial', 'EnsayoTransferenciaController@transferencias_busqueda_carga_historial');
-Route::get('pc/transferencias/fecha/{carga}', 'EnsayoTransferenciaController@transferencias_carga_cilindro');
-Route::post('pc/transferencia/carga', 'EnsayoTransferenciaController@transferencias_busqueda_carga');
+Route::post('pc/transferencias/fecha', 'EnsayoTransferenciaController@transferencias_busqueda_fecha');
 Route::post('pc/transferencias', 'EnsayoTransferenciaController@post_transferencias');
-
+Route::post('pc/transferencias/fecha/historial', 'EnsayoTransferenciaController@transferencia_historial_busqueda_fecha');
+Route::post('pc/transferencias/carga/historial', 'EnsayoTransferenciaController@transferencia_historial_busqueda_carga');
+Route::post('pc/transferencias/rango/historial', 'EnsayoTransferenciaController@transferencia_historial_busqueda_rango');
 
 
 
