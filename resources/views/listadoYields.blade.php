@@ -28,7 +28,7 @@
 				<div class="col-md-12  ">
 				 <table class="table table-bordered tablePag">
  				
-				   <thead>
+				   <thead class="bg-success ">
 				      <tr>
 				        <td>Acciones</td>
 				        <td>Numero de carga</td>
@@ -90,11 +90,10 @@
 </div>{{--End Container--}}
 
 
-
 {{--Modal busqueda de Ensayo--}}
 <div class="remodal" data-remodal-id="buscarensayo_modal">
  <button data-remodal-action="close" class="remodal-close"></button>
- <h4 class="bg-success">Digite un numero de carga </h4>
+ <h4 >Buscar un Ensayo </h4>
   <br>
   
 
@@ -116,13 +115,15 @@
   </div>
 
  
-</div> {{--Modal busqueda de ensayo--}}
+</div> 
+{{--Modal busqueda de ensayo--}}
+
 
 
 {{--Modal busqueda de historial--}}
 <div class="remodal" data-remodal-id="buscarhistorial_modal">
  <button data-remodal-action="close" class="remodal-close"></button>
- <h4 class="bg-success">Seleccione un medio de busqueda </h4>
+ <h4 >Seleccione un medio de busqueda </h4>
   <br>
   
 

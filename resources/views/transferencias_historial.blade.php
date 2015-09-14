@@ -26,9 +26,9 @@
 				
 			  @if(isset($carga))	
 				@if(!is_null($carga) & count($carga) > 0 )
-				 <table class="table table-bordered">
+				 <table class="table table-bordered tablePag">
  				
-				   <thead>
+				   <thead class="bg-success">
 				      <tr>
 				        <td>Usuario</td>
 				        <td>Numero Carga</td>
@@ -51,7 +51,7 @@
                  @foreach($carga as $c)
 				     <tr>
 				       
-				     	<td>{{$c->Nombre_Cuenta}}</td>
+				     	<td><button class="btn btn-info">{{$c->Nombre_Cuenta}}</button></td>
 				     	<td>{{$c->Numero_Carga}}</td>
 				     	<td>{{$c->Codigo_Diseño}}</td>
                         <td>{{$c->Diseño}}</td>
@@ -60,7 +60,7 @@
 				     	<td>{{$c->Falla2}} | {{$c->Edad_f2}}</td>
 				     	<td>{{$c->Falla3}} | {{$c->Edad_f3}}</td>
 				     	<td>{{$c->Promedio_Carga}}</td>
-				     	<td>{{$c->Encargado}}</td>
+				     	<td style="color:blue">{{$c->Encargado}}</td>
 				    
 				     </tr>
                  @endforeach
@@ -97,16 +97,16 @@
 {{--Modal busqueda transferencia--}}
 <div class="remodal" data-remodal-id="buscarensayo_modal">
  <button data-remodal-action="close" class="remodal-close"></button>
- <h4 class="bg-success">Busqueda de ensayo </h4>
+ <h4 >Busqueda de ensayo </h4>
   <br>
   
 
   <div class="row">
   <div class="col-md-12">
-  		<form class="form-horizontal" method="post" action="/pc/transferencia/fecha">
+  		<form class="form-horizontal" method="post" action="/pc/transferencias/fecha">
   			<input name="_token" type="hidden" value="{!! csrf_token() !!}" />
   			<div class="col-md-12">
-  			<label>Fecha de ensayo <input required=""  class="form-control datepicker" type="text" name="Parametro" placeholder="Seleccione una fecha" style="cursor: pointer; background-color: white;"  required="" readonly=""  /></label>
+  			<label>Fecha de ensayo <input  class="form-control datepicker" type="text" name="Parametro" placeholder="Seleccione una fecha" style="cursor: pointer; background-color: white;"  required="" readonly=""  /></label>
   			</div>
 
   			<div class="col-md-12">
@@ -124,7 +124,7 @@
 {{--Modal busqueda de historial--}}
 <div class="remodal" data-remodal-id="buscarhistorial_modal">
  <button data-remodal-action="close" class="remodal-close"></button>
- <h4 class="bg-success">Seleccione un medio de busqueda </h4>
+ <h4 >Seleccione un medio de busqueda </h4>
   <br>
   
 

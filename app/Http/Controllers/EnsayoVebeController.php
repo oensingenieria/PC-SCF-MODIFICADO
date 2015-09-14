@@ -26,7 +26,6 @@ class EnsayoVebeController extends Controller {
 
 	// flujo vebe
 
-
 			public function vebe(){
 
 				return view('vebe' , array('titlemesage' => 'VEBE'));
@@ -84,21 +83,7 @@ class EnsayoVebeController extends Controller {
 		       $datos->Nombre_Cuenta = Auth::user()->username;
 		       $datos->save();
 
-			   
-			   //Abre el historial
-			            $carga = Vebe::where('Vebe.Fecha_Ensayo',$_POST['Fecha_Ensayo']) 
-			             				->join('mixerconsumo', 'vebe.Numero_Carga', '=', 'mixerconsumo.Numero_Carga')   
-								        ->groupBy('vebe.Numero_Carga')
-								        ->get();
-						                           
-
-								 
-						return view('vebe_historial' , array(
-							'carga' => $carga ,
-							'titlemesage' => 'ENSAYO VEBE '.$_POST['Numero_Carga'].' INGRESADO CON EXITO!' 
-							
-							 ));
-
+			return redirect('/pc/yield/save/'.$datos->Fecha_Ensayo)->with('success','Ensayo ingresado');
 
 			}
 
@@ -111,11 +96,14 @@ class EnsayoVebeController extends Controller {
 		public function vebe_busqueda_fecha_historial(){
 					    
 					    
-						 //Abre el historial
-			             $carga = Vebe::where('Vebe.Fecha_Ensayo',$_POST['Parametro']) 
-			             				->join('mixerconsumo', 'vebe.Numero_Carga', '=', 'mixerconsumo.Numero_Carga')   
-								        ->groupBy('vebe.Numero_Carga')
-								        ->get();
+						  //Abre el historial
+						$carga = \DB::table('vebe')
+				        ->join('mixerconsumo', function ($join) {
+				        	$join->on('mixerconsumo.Numero_Carga', '=', 'vebe.Numero_Carga')
+				                 ->where('vebe.Fecha_Ensayo', '=', $_POST['Parametro'] );
+				            })
+				        ->groupBy('vebe.Numero_Carga')
+				        ->get();
 						                           
 
 								 
@@ -136,13 +124,15 @@ class EnsayoVebeController extends Controller {
 
 					    
 						 //Abre el historial
-			             $carga = Vebe::where('Vebe.Numero_Carga',$_POST['Parametro']) 
-			             				->join('mixerconsumo', 'vebe.Numero_Carga', '=', 'mixerconsumo.Numero_Carga')   
-								        ->groupBy('vebe.Numero_Carga')
-								        ->get();
-						                           
+						$carga = \DB::table('vebe')
+				        ->join('mixerconsumo', function ($join) {
+				        	$join->on('mixerconsumo.Numero_Carga', '=', 'vebe.Numero_Carga')
+				                 ->where('vebe.Numero_Carga', '=', $_POST['Parametro'] );
+				            })
+				        ->groupBy('vebe.Numero_Carga')
+				        ->get();
 
-								 
+	 
 						return view('vebe_historial' , array(
 							'carga' => $carga ,
 							'titlemesage' => 'LISTADO VEBE POR CARGA '.$_POST['Parametro'] 
@@ -180,6 +170,26 @@ class EnsayoVebeController extends Controller {
 					) );
 					
        }
+
+//redirect
+
+             public function redirect_vebe($fecha){
+
+	               //Abre el historial
+			             $carga = Vebe::where('Fecha_Ensayo',$fecha) 
+			             				->join('mixerconsumo', 'vebe.Numero_Carga', '=', 'mixerconsumo.Numero_Carga')   
+								        ->groupBy('vebe.Numero_Carga')
+								        ->get();
+						                           
+
+								 
+						return view('vebe_historial' , array(
+							'carga' => $carga ,
+							'titlemesage' => 'LISTADO VEBE POR FECHA '.$fecha
+							
+							 ));
+
+                }       
 
 
 }

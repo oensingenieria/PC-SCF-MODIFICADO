@@ -91,7 +91,7 @@
 {{--Modal busqueda en mixer--}}
 <div class="remodal" data-remodal-id="buscarmixer_modal">
   <button data-remodal-action="close" class="remodal-close"></button>
-  <h3 class="bg-success">Seleccione una fecha</h3>
+  <h3>Seleccione una fecha</h3>
   <br>
   
 
@@ -107,9 +107,6 @@
 
   			<div class="form-group"> 
   			<button class="btn btn-success" style="margin-bottom:65px;">Buscar</button>
-  			</div>
-  			<div class="form-group"> 
-  			<p  class="bg-info">El sistema traera los registros que coincidan con esta fecha.</p>
   			</div>
   			
   			</form>
@@ -127,7 +124,7 @@
 {{--Modal busqueda de historial--}}
 <div class="remodal" data-remodal-id="buscarhistorial_modal">
   <button data-remodal-action="close" class="remodal-close"></button>
-  <h3 class="bg-success">Busqueda de historial</h3>
+  <h3 >Busqueda de historial</h3>
   <br>
   
 
@@ -199,12 +196,12 @@
   
   <div class="row">
   	<div class="col-md-12">
-  		<form method="post" action="/pc/vebe"> 		
+  		<form method="post" action="/pc/vebe" class="form-vebe"> 		
   		<input name="_token" type="hidden" value="{!! csrf_token() !!}" />
   
   	 <table class="table table-bordered" >
   		
-  		<thead class="bg-success">
+  		<thead >
 				      <tr>
 				      <?php date_default_timezone_set('America/Costa_Rica'); ?>
 				      <td ><input style="color:#459645" value="{{date ( 'Y-m-d' )}}"  class="form-control" type="text" name="Fecha_Registro" placeholder="Ingrese fecha" style=" background-color: white;"  required="" readonly=""  ></td>
@@ -279,7 +276,7 @@
 				   <tr>
 				   	 <td><strong>Volumen</strong> </td>
 				   	 <td>
-				   	 	<input style="color:#459645" readonly="" id="volumenmix" type="number" step="0.01" name="Volumen" class="form-control" required="" placeholder="Digite volumen">
+				   	 	<input  readonly="" id="volumenmix" type="number" step="0.01" name="Volumen" class="form-control" required="" placeholder="Digite volumen">
 
 				   	 </td>
 
@@ -288,7 +285,7 @@
 				   <tr>
 				   	 <td><strong>Sensor de humedad</strong> </td>
 				   	 <td>
-				   	 	<input style="color:#459645" readonly="" id="humedadmix" type="number" step="0.01" name="Humedad" class="form-control" required="" placeholder="Digite humedad">
+				   	 	<input  readonly="" id="humedadmix" type="number" step="0.01" name="Humedad" class="form-control" required="" placeholder="Digite humedad">
 
 				   	 </td>
 
@@ -357,7 +354,7 @@
 {{--Modal Info--}}
 <div class="remodal" data-remodal-id="infovebe_modal">
   <button data-remodal-action="close" class="remodal-close"></button>
-  <h3 class="bg-success">Funcionamiento</h3>
+  <h3 >Funcionamiento</h3>
   <br>
   
   <div class="row">

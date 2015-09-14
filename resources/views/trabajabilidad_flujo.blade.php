@@ -252,13 +252,13 @@
        <?php date_default_timezone_set('America/Costa_Rica'); ?>
 
       <div class="form-group">
-        <label for="inputEmail3" class="col-sm-6 control-label">Fecha de Registro:</label>
+        <label for="inputEmail3" class="col-sm-6 control-label">Fecha de Ensayo:</label>
         <div class="col-sm-6">
           <input value="{{date ( 'Y-m-d' )}}"  name="Fecha_Registro" style="cursor: pointer; background-color: white;"  required="" readonly=""  type="Text" class="form-control "   placeholder="Fecha">
         </div>
       </div>
       <div class="form-group">
-        <label for="inputPassword3" class="col-sm-6 control-label">Hora de Registro:</label>
+        <label for="inputPassword3" class="col-sm-6 control-label">Hora de Ensayo:</label>
         <div class="col-sm-6">
           <input  type="text" required="" name="Hora_Registro" class="form-control timepicker" id="timepicker" placeholder="Hora">
         </div>
@@ -364,7 +364,7 @@
       <div class="form-group">
         <div class="col-sm-offset-6 col-sm-6">
          
-          <button type="submit" class="btn btn-success" style="background-color: rgb(224, 230, 37);color: #1313D4;font-weight: bold;">Almacenar</button>
+          <button type="submit" class="btn btn-success">Almacenar</button>
            
         </div>
       </div>

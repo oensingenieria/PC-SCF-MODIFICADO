@@ -68,7 +68,7 @@ class EnsayoFalla7Controller extends Controller {
 				return view('falla7' , array(
 					'carga' => $carga ,
 					'encargados' =>$encargados,
-					'titlemesage' => 'LISTADO DE ENSAYOS FALLA 7 DESDE '.$fecha7.' HASTA '.$fecha12
+					'titlemesage' => 'LISTADO DE ENSAYOS FALLA 7 ENTRE '.$fecha7.' Y '.$fecha12
 
 					 ));
 
@@ -86,19 +86,7 @@ class EnsayoFalla7Controller extends Controller {
 				
 				$falla7->save();
 
-			
-				//Abre el historial
-			             $carga = Falla7::where('falla7.Fecha_Ensayo',$falla7->Fecha_Ensayo)  
-								        ->groupBy('falla7.Numero_Carga')
-								        ->get();
-						                           
-
-								 
-						return view('falla7_historial' , array(
-							'carga' => $carga ,
-							'titlemesage' => 'ENSAYO  '.$falla7->Numero_Carga . ' AGREGADO CORRECTAMENTE!' 
-							
-							));
+				return redirect('/pc/falla7/save/'.$falla7->Fecha_Ensayo)->with('success','Ensayo ingresado');
 			    
 			}    
 
@@ -167,7 +155,25 @@ class EnsayoFalla7Controller extends Controller {
 
 
 
+//Redirect
 
+			 public function redirect_falla7($fecha){
+
+			 	     //Abre el historial
+			             $carga = Falla7::where('falla7.Fecha_Ensayo',$fecha)  
+								        ->groupBy('falla7.Numero_Carga')
+								        ->get();
+						                           
+
+								 
+						return view('falla7_historial' , array(
+							'carga' => $carga ,
+							'titlemesage' => 'LISTADO FALLA 7 POR FECHA '.$fecha
+							
+							 ));
+
+
+			 }
 
 //Fin flujo falla 7
 

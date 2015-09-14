@@ -89,7 +89,7 @@
 {{--Modal busqueda Ensayo--}}
 <div class="remodal" data-remodal-id="buscarmixer_modal">
   <button data-remodal-action="close" class="remodal-close"></button>
-  <h3 class="bg-success">Seleccione una fecha</h3>
+  <h3>Seleccione una fecha</h3>
   <br>
   
 
@@ -100,14 +100,14 @@
   			<input name="_token" type="hidden" value="{!! csrf_token() !!}" />
   			
   			<div class="form-group"> 
-  			<label>Fecha <input required=""  class="form-control datepicker" type="text" name="fecha" placeholder="Seleccione una fecha" style="cursor: pointer; background-color: white;"  required="" readonly=""   /></label>
+  			<label>Fecha <input  class="form-control datepicker" type="text" name="fecha" placeholder="Seleccione una fecha" style="cursor: pointer; background-color: white;"  required="" readonly=""   /></label>
   			</div>
 
   			<div class="form-group"> 
   			<button class="btn btn-success" style="margin-bottom:65px;">Buscar</button>
   			</div>
   			<div class="form-group"> 
-  			<p  class="bg-info">El sistema traera todos los ensayos correspondientes a 7 dias atras.</p>
+  			<p>El sistema traera todos los ensayos correspondientes a 7 dias atras.</p>
   			</div>
   			
   			</form>
@@ -125,7 +125,7 @@
 {{--Modal busqueda de historial--}}
 <div class="remodal" data-remodal-id="buscarhistorial_modal">
  <button data-remodal-action="close" class="remodal-close"></button>
- <h4 class="bg-success">Seleccione un medio de busqueda </h4>
+ <h4 >Seleccione un medio de busqueda </h4>
   <br>
   
 
@@ -179,8 +179,11 @@
         </form>
 
      
-    </div>	
-
+    </div>
+    
+<div class="form-group"> 
+  			<p>El sistema traera los ensayos en falla 7 realizados.</p>
+  			</div>	
   </div>
 
  
@@ -193,7 +196,7 @@
 @if(isset($carga))
 <div class="remodal" data-remodal-id="llenardatos_modal">
   <button data-remodal-action="close" class="remodal-close"></button>
-  <h3 class="bg-success">Realizar Ensayo</h3>
+  <h3 >Realizar Ensayo</h3>
   <br>
   
   <div class="row">
@@ -279,7 +282,7 @@
 		  <div class="form-group">
 		       
 		        <div class="col-sm-offset-6 col-sm-6">
-		        <button type="button"  class="btn btn-info calculodatos">Calcular</button>
+		        <button type="button"  class="btn btn-info calculodatos" style="background-color:green;">Calcular</button>
 		         
 		        </div>
 		  </div>
@@ -294,7 +297,7 @@
 		  <div class="form-horizontal"  >
 		  		
 		  	<div class="form-group">
-		    <label  class="col-sm-6 control-label">Fecha Ensayo:</label>
+		    <label  class="col-sm-6 control-label">Fecha Carga:</label>
 		    <div class="col-sm-6">
 		      <input  name="Fecha_Ensayo" readonly=""  id="Fecha_Ensayo"   type="text" class="form-control"  >
 		    </div>
@@ -302,7 +305,7 @@
 
 		  <?php date_default_timezone_set('America/Costa_Rica'); ?>
 		   <div class="form-group">
-		    <label  class="col-sm-6 control-label">Fecha Registro:</label>
+		    <label  class="col-sm-6 control-label">Fecha Ensayo:</label>
 		    <div class="col-sm-6">
 		      <input name="Fecha_Registro" value="{{date( 'Y-m-d' )}}" readonly=""  id="Fecha_Registro" style=" background-color: white;" type="text" class="form-control"  >
 		    </div>

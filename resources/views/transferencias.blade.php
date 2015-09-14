@@ -28,7 +28,7 @@
 				@if(!is_null($carga) & count($carga) > 0 )
 				 <table class="table table-bordered">
  				
-				   <thead>
+				   <thead class="bg-success">
 				      <tr>
 				        <td>Acciones</td>
 				        <td>Numero Carga</td>
@@ -49,13 +49,13 @@
                  @foreach($carga as $c)
 				     <tr>
 				       
-				     	<td><button  data-remodal-target="llenadata_modal" class="btn btn-warning llenardatos" data-numerocarga="{{$c->Numero_Carga}}" data-horacarga="{{$c->Hora_Registro}}" data-fechacarga="{{$c->Fecha_de_Carga}}" >Pendiente</button></td>
+				     	<td><button  data-remodal-target="llenadata_modal" class="btn btn-success llenardatos" data-numerocarga="{{$c->Numero_Carga}}" data-horacarga="{{$c->Hora_Registro}}" data-fechacarga="{{$c->Fecha_de_Carga}}" >Realizar</button></td>
 				     	
 				     	<td>{{$c->Numero_Carga}}</td>
 				     	<td>{{$c->Fecha_Ensayo}}</td>
 				     	<td>{{$c->Hora_Registro}}</td>
-                        <td>{{$c->Codigo_Diseño}}</td>
-                        <td>{{$c->Diseño}}</td>
+              <td>{{$c->Codigo_Diseño}}</td>
+              <td>{{$c->Diseño}}</td>
 				     	<td>{{$c->Codigo_Elemento}}</td>
 				     	<td>{{$c->Nombre_Elemento}}</td>
 				     	<td>{{$c->Codigo_Proyecto}}</td>
@@ -97,16 +97,16 @@
 {{--Modal busqueda transferencia--}}
 <div class="remodal" data-remodal-id="buscarensayo_modal">
  <button data-remodal-action="close" class="remodal-close"></button>
- <h4 class="bg-success">Busqueda de ensayo </h4>
+ <h4 >Busqueda de ensayo </h4>
   <br>
   
 
   <div class="row">
   <div class="col-md-12">
-  		<form class="form-horizontal" method="post" action="/pc/transferencia/fecha">
+  		<form class="form-horizontal" method="post" action="/pc/transferencias/fecha">
   			<input name="_token" type="hidden" value="{!! csrf_token() !!}" />
   			<div class="col-md-12">
-  			<label>Fecha de ensayo <input required=""  class="form-control datepicker" type="text" name="Parametro" placeholder="Seleccione una fecha" style="cursor: pointer; background-color: white;"  required="" readonly=""  /></label>
+  			<label>Fecha de ensayo <input  class="form-control datepicker" type="text" name="Parametro" placeholder="Seleccione una fecha" style="cursor: pointer; background-color: white;"  required="" readonly=""  /></label>
   			</div>
 
   			<div class="col-md-12">
@@ -124,7 +124,7 @@
 {{--Modal busqueda de historial--}}
 <div class="remodal" data-remodal-id="buscarhistorial_modal">
  <button data-remodal-action="close" class="remodal-close"></button>
- <h4 class="bg-success">Seleccione un medio de busqueda </h4>
+ <h4 >Seleccione un medio de busqueda </h4>
   <br>
   
 
@@ -192,30 +192,33 @@
 @if(isset($carga))
 <div class="remodal" data-remodal-id="llenadata_modal">
   <button data-remodal-action="close" class="remodal-close"></button>
-  <h3 class="bg-success">Datos de la falla</h3>
+  <h3 >Datos de la falla</h3>
   <br>
   
   <div class="row">
-  		<div class="col-md-12">
-  		      
-  		      <?php date_default_timezone_set('America/Costa_Rica'); ?>
+  		<?php date_default_timezone_set('America/Costa_Rica'); ?>
 
-		  		<form class="form-horizontal" method="post" action="/pc/transferencias">
-		  		<input name="_token" type="hidden" value="{!! csrf_token() !!}" />
+          <form class="form-horizontal" method="post" action="/pc/transferencias">
+          <input name="_token" type="hidden" value="{!! csrf_token() !!}" />
+
+      <div class="col-md-12">
+  		          
 		   <div class="form-group">
-  			<label>Fecha de ingreso <input value="{{date ( 'Y-m-d' )}}"  name="Fecha_Registro" style="cursor: pointer; background-color: white; color:#459645"  required="" readonly=""  type="Text" class="form-control "   placeholder="Fecha"></label>
+  			<label>Fecha de ingreso <input value="{{date ( 'Y-m-d' )}}"  name="Fecha_Registro" style="cursor: pointer; background-color: white;"  required="" readonly=""  type="Text" class="form-control "   placeholder="Fecha"></label>
            </div>	
        </div>
        <div class="col-md-6">
 		  <div class="form-group">
-	  			<label>Falla 1 (kg/cm2) <input  class="form-control" type="number" step="0.01" name="Falla1" placeholder="Ingrese falla 1"  />
+	  			<label>Falla 1 (kg/cm2) <input required="" class="form-control" type="number" step="0.01" name="Falla1" placeholder="Ingrese falla 1"  />
+          <br>
 	  			<input  type="text" required="" name="Hora_f1" class="form-control timepicker" id="timepicker" placeholder="Hora Falla 1">
 	  			</label>
 	  			
 	           </div>
 
 	           <div class="form-group">
-	  			<label>Falla 2 (kg/cm2) <input  class="form-control" type="number" step="0.01" name="Falla2" placeholder="Ingrese falla 2"  />
+	  			<label>Falla 2 (kg/cm2) <input required="" class="form-control" type="number" step="0.01" name="Falla2" placeholder="Ingrese falla 2"  />
+          <br>
 	  			<input  type="text" required="" name="Hora_f2" class="form-control timepicker" id="timepicker" placeholder="Hora Falla 2">
 	  			</label>
 	  			
@@ -225,7 +228,8 @@
            
         <div class="col-md-6">
            	<div class="form-group">
-  			<label>Falla 3 (kg/cm2) <input  class="form-control" type="number" step="0.01" name="Falla3" placeholder="Ingrese falla 3"  />
+  			<label>Falla 3 (kg/cm2) <input required="" class="form-control" type="number" step="0.01" name="Falla3" placeholder="Ingrese falla 3"  />
+        <br>
   			<input  type="text" required="" name="Hora_f3" class="form-control timepicker" id="timepicker" placeholder="Hora Falla 3">
   			</label>
   			

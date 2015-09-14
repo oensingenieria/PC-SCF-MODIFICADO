@@ -59,6 +59,19 @@
     .remodal h3{
     	color: rgb(224, 230, 37);
     }
+
+    .remodal h4{
+    	color: rgb(224, 230, 37);
+    }
+
+    .remodal .btn{
+    	background-color: #BEC32D;
+        border-color: #B1B195;
+    }
+
+    .form-vebe select {
+    	font-weight: 800;color:black;
+    }
     
 
 	</style>

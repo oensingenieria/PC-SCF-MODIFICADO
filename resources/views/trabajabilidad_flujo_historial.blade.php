@@ -58,7 +58,7 @@
 				     	<td>{{$mix->Hora_Registro}}</td>
 				     	<td>{{$mix->Revenimiento}}</td>
 				     	<td>{{$mix->Temperatura}}</td>
-				     	<td>{{$mix->Volumen_de_Carga}}</td>
+				     	<td>{{$mix->Volumen}}</td>
 				     	<td>{{$mix->Codigo_Tarro}}</td>
 				     	<td style="color:blue">{{$mix->Encargado}}</td>
 			      </tr>

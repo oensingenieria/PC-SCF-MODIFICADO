@@ -26,14 +26,14 @@ class EnsayoYieldController extends Controller {
 		
 	     }
 
-
-	//Flujo de yield
-
-			public function consulta_yield(){
+	     public function consulta_yield(){
 
 				return view('yield' , array('titlemesage' => 'YIELD' ));
 
 			}
+
+
+	//Ensayos pendientes 
 
 			
 			  public function consulta_yield_ensayo_carga(){
@@ -41,7 +41,7 @@ class EnsayoYieldController extends Controller {
 			   //Comprobando si el ensayo ya se a realizado en yield
 			    $carga_yield = Ensayo::where('Numero_Carga' , '=' , $_POST['carga'] )->first();
 
-				    if(!is_null($carga_yield)){
+				    if(!is_null($carga_yield) || count($carga_yield) > 0){
 
 				    //Uniendo el registro del mixer con la informacion del ensayo
 				   $carga = \DB::table('yield')
@@ -65,7 +65,7 @@ class EnsayoYieldController extends Controller {
 			    $carga = Trabajabilidad::where('Numero_Carga' , '=' , $_POST['carga'] )->first();
 
 			   //Si la carga fue nula , no existe el ensayo realizado en trabajabilidad
-			    if(is_null($carga)){
+			    if(is_null($carga) || count($carga) == 0 ){
 			    	return view('yield' , 
 			    	array('carga'=>$carga ,
 			    		   'bad' =>1,
@@ -95,10 +95,11 @@ class EnsayoYieldController extends Controller {
 
 			        $moldes = Moldes::all();                   
 
-			        
+			       
 
 			   //Uniendo el registro del mixer con la informacion del ensayo
 			   $carga = \DB::table('revenimiento')
+			        ->where('revenimiento.Numero_Carga' , $_POST['carga'])
 		            ->join('mixerconsumo', 'revenimiento.Numero_Carga', '=', 'mixerconsumo.Numero_Carga')
 		            ->first();
 			    
@@ -125,109 +126,88 @@ class EnsayoYieldController extends Controller {
 			  }//End Ensayo por numero de carga
 
 
-			public function yield_post(Request_Yield $request){
+	
+//Fin de flujo yield
+
+
+//Post
+
+			  public function yield_post(Request_Yield $request){
 
 				$yield = new Ensayo($request->all());
                 $yield->Nombre_Cuenta = Auth::user()->username;
                 $yield->save();
 
-				
-				//Uniendo el registro del mixer con la informacion del ensayo
-			   $carga = \DB::table('yield')
-		            ->join('mixerconsumo', 'yield.Numero_Carga', '=', 'mixerconsumo.Numero_Carga')
-		            ->where('yield.Numero_Carga' , '=' , $_POST['Numero_Carga'] )
-		            ->groupBy('yield.Numero_Carga')
-		            ->first();
-
-			 
-			    return view('yield_historial' , array(
-			    	'carga' =>$carga , 
-			    	'titlemesage' => 'ENSAYO  '.$_POST['Numero_Carga'] .'  REALIZADO!'
-			    		
-			    		 ));
+				return redirect('/pc/yield/historial/'.$yield->Numero_Carga)->with('success','Ensayo ingresado');
+			
 			}
-
-
-//Fin de flujo yield
-
 
 
 //Busqueda historial yield
 
 
-public function consulta_yield_historial_fecha(){
+			public function consulta_yield_historial_fecha(){
 
- //Uniendo el registro del mixer con la informacion del ensayo
-			   $carga = \DB::table('yield')
-		            ->join('mixerconsumo', 'yield.Numero_Carga', '=', 'mixerconsumo.Numero_Carga')
-		            ->where('yield.Fecha_Ensayo' , '=' , $_POST['fecha'])
-		            ->groupBy('yield.Numero_Carga')
-		            ->get(); 
+			 //Uniendo el registro del mixer con la informacion del ensayo
+						   $carga = Ensayo::where('Fecha_Ensayo'  , $_POST['fecha'])
+					            ->groupBy('Numero_Carga')
+					            ->get(); 
 
-return view('listadoYields' , array('carga' => $carga , 'titlemesage' => 'LISTA POR FECHA ' .$_POST['fecha'] . ' YIELD REALIZADOS'));
+			return view('listadoYields' , array('carga' => $carga , 'titlemesage' => 'LISTA POR FECHA ' .$_POST['fecha'] . ' YIELD REALIZADOS'));
 
-}
+			}
 
 
-public function consulta_yield_historial_carga(){
+			public function consulta_yield_historial_carga(){
 
-	//Uniendo el registro del mixer con la informacion del ensayo
-			   $carga = \DB::table('yield')
-		            ->join('mixerconsumo', 'yield.Numero_Carga', '=', 'mixerconsumo.Numero_Carga')
-		            ->where('yield.Numero_Carga' , '=' , $_POST['carga'])
-		            ->groupBy('yield.Numero_Carga')
-		            ->first(); 
+				//Uniendo el registro del mixer con la informacion del ensayo
+						   $carga = Ensayo::where('yield.Numero_Carga' , '=' , $_POST['carga'])
+						        ->join('mixerconsumo', 'yield.Numero_Carga', '=', 'mixerconsumo.Numero_Carga')
+					            ->groupBy('yield.Numero_Carga')
+					            ->first(); 
 
-   
-	return view('yield_historial' , array('carga' => $carga , 'titlemesage' => 'LISTA POR CARGA ' .$_POST['carga'] . ' YIELD REALIZADOS'));
-
-
-}
-
-//Busqueda por rangos de fecha
-public function consulta_yield_historial_rango(){
-
-	
-				$carga = \DB::table('yield')
-			        ->join('mixerconsumo', function ($join) {
-			        	
-			        	
-
-			            $join->on('mixerconsumo.Numero_Carga', '=', 'yield.Numero_Carga')
-			                 ->where('yield.Fecha_Ensayo', '>=', $_POST['Desde'] )
-			                 ->where('yield.Fecha_Ensayo', '<=', $_POST['Hasta'] );
+			   
+				return view('yield_historial' , array('carga' => $carga , 'titlemesage' => 'LISTA POR CARGA ' .$_POST['carga'] . ' YIELD REALIZADOS'));
 
 
-			        })
-			        ->groupBy('yield.Numero_Carga')
-			        ->get();
+			}
+
+			//Busqueda por rangos de fecha
+			public function consulta_yield_historial_rango(){
+
+				
+							$carga = Ensayo::where('Fecha_Ensayo', '>=', $_POST['Desde'] )
+						         ->where('Fecha_Ensayo', '<=', $_POST['Hasta'] )
+                                 ->groupBy('Numero_Carga')
+						         ->get();
 
 
-				return view('listadoYields' , array(
-					'carga' => $carga ,
-					'titlemesage' => 'CONSULTA POR FECHA DESDE '.$_POST['Desde']. ' HASTA '.$_POST['Hasta'].'. ENSAYOS YIELD REALIZADOS.'
+							return view('listadoYields' , array(
+								'carga' => $carga ,
+								'titlemesage' => 'CONSULTA POR FECHA DESDE '.$_POST['Desde']. ' HASTA '.$_POST['Hasta'].'. ENSAYOS YIELD REALIZADOS.'
 
 
-					) );
-					
-}
-
-public function muestra_historial_yield($cod){
-
-//Uniendo el registro del mixer con la informacion del ensayo
-			   $carga = \DB::table('yield')
-		            ->join('mixerconsumo', 'yield.Numero_Carga', '=', 'mixerconsumo.Numero_Carga')
-		            ->where('yield.Numero_Carga' , '=' , $cod)
-		            ->groupBy('yield.Numero_Carga')
-		            ->first(); 
-
-   
-	return view('yield_historial' , array('carga' => $carga , 'titlemesage' => 'LISTA POR CARGA ' .$cod . ' YIELD REALIZADOS'));
+								) );
+								
+			}
 
 
-}
+//Redirect 
+
+		public function muestra_historial_yield($cod){
+
+		//Uniendo el registro del mixer con la informacion del ensayo
+					   $carga = \DB::table('yield')
+				            ->join('mixerconsumo', 'yield.Numero_Carga', '=', 'mixerconsumo.Numero_Carga')
+				            ->where('yield.Numero_Carga' , '=' , $cod)
+				            ->groupBy('yield.Numero_Carga')
+				            ->first(); 
+
+		   
+			return view('yield_historial' , array('carga' => $carga , 'titlemesage' => 'LISTA POR CARGA ' .$cod . ' YIELD REALIZADOS'));
 
 
-//End busqueda historial
+		}
+
 
 }

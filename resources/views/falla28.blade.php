@@ -89,7 +89,7 @@
 {{--Modal busqueda Ensayo--}}
 <div class="remodal" data-remodal-id="buscarmixer_modal">
   <button data-remodal-action="close" class="remodal-close"></button>
-  <h3 class="bg-success">Seleccione una fecha</h3>
+  <h3 >Seleccione una fecha</h3>
   <br>
   
 
@@ -107,7 +107,7 @@
   			<button class="btn btn-success" style="margin-bottom:65px;">Buscar</button>
   			</div>
   			<div class="form-group"> 
-  			<p  class="bg-info">El sistema traera todos los ensayos correspondientes a 28 dias atras.</p>
+  			<p >El sistema traera todos los ensayos correspondientes a 28 dias atras.</p>
   			</div>
   			
   			</form>
@@ -125,7 +125,7 @@
 {{--Modal busqueda de historial--}}
 <div class="remodal" data-remodal-id="buscarhistorial_modal">
  <button data-remodal-action="close" class="remodal-close"></button>
- <h4 class="bg-success">Seleccione un medio de busqueda </h4>
+ <h4 >Seleccione un medio de busqueda </h4>
   <br>
   
 
@@ -181,6 +181,9 @@
      
     </div>	
 
+    <div class="form-group"> 
+  			<p >El sistema traera todos los ensayos correspondientes a 28 dias atras.</p>
+  			</div>
   </div>
 
  
@@ -193,7 +196,7 @@
 @if(isset($carga))
 <div class="remodal" data-remodal-id="llenardatos_modal">
   <button data-remodal-action="close" class="remodal-close"></button>
-  <h3 class="bg-success">Realizar Ensayo</h3>
+  <h3 >Realizar Ensayo</h3>
   <br>
   
   <div class="row">
@@ -216,7 +219,7 @@
 		   <div class="form-group">
 		    <label for="inputEmail3" class="col-sm-6 control-label">Falla 1 (kg/cm2): </label>
 		    <div class="col-sm-6">
-		      <input type="number" id="Falla1" name="Falla1" class="form-control"  placeholder="Digite falla 1">
+		      <input required type="number" id="Falla1" name="Falla1" class="form-control"  placeholder="Digite falla 1">
 		    </div>
 		  </div>
 
@@ -235,7 +238,7 @@
 		   <div class="form-group">
 		    <label for="inputEmail3" required class="col-sm-6 control-label">Falla 3 (kg/cm2): </label>
 		    <div class="col-sm-6">
-		      <input type="number" id="Falla3"  name="Falla3" class="form-control"  placeholder="Digite falla 3"  >
+		      <input required type="number" id="Falla3"  name="Falla3" class="form-control"  placeholder="Digite falla 3"  >
 		    </div>
 		  </div>
 
@@ -294,7 +297,7 @@
 		  <div class="form-horizontal"  >
 		  		
 		  	<div class="form-group">
-		    <label  class="col-sm-6 control-label">Fecha Ensayo:</label>
+		    <label  class="col-sm-6 control-label">Fecha Carga:</label>
 		    <div class="col-sm-6">
 		      <input  name="Fecha_Ensayo" readonly=""  id="Fecha_Ensayo"   type="text" class="form-control"  >
 		    </div>
@@ -302,7 +305,7 @@
 
 		  <?php date_default_timezone_set('America/Costa_Rica'); ?>
 		   <div class="form-group">
-		    <label  class="col-sm-6 control-label">Fecha Registro:</label>
+		    <label  class="col-sm-6 control-label">Fecha Ensayo:</label>
 		    <div class="col-sm-6">
 		      <input name="Fecha_Registro" value="{{date( 'Y-m-d' )}}" readonly=""  id="Fecha_Registro" style=" background-color: white;" type="text" class="form-control"  >
 		    </div>

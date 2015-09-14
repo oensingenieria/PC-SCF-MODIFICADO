@@ -136,7 +136,7 @@ public function trabajabilidad_flujo(){
 				$datos->Nombre_Cuenta = Auth::user()->username;
 				$datos->save();
 
-				return redirect('pc/trabajabilidad_flujo/save/'.$datos->Fecha_Ensayo)->with('success','Ensayo ingresado');
+				return redirect('/pc/trabajabilidad_flujo/save/'.$datos->Fecha_Ensayo)->with('success','Ensayo ingresado');
 
 			}
 

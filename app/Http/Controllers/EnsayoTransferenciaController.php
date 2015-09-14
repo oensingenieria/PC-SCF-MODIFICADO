@@ -59,13 +59,12 @@ class EnsayoTransferenciaController extends Controller {
 				  						->get();
 
 			   //Carga encargados disponibles     
-			   $encargados = Encargado::all(); 						
-				  					
+			   $encargados = Encargado::all(); 
 			    
 				return view('transferencias' , array(
 					'carga' => $carga ,
 					'encargados' =>$encargados,
-					'titlemesage' => 'LISTADO DE ENSAYOS TRASNFERENCIA APARTIR DE '.$_POST['Parametro']
+					'titlemesage' => 'LISTADO DE ENSAYOS TRANSFERENCIA APARTIR DE '.$_POST['Parametro']
 
 					 ));
 
@@ -125,18 +124,7 @@ class EnsayoTransferenciaController extends Controller {
 				 $transferencia->save();
 
 
-				 $carga = Transferencias::where('transferencia.Fecha_Ensayo' , $_POST['Fecha_Ensayo'])
-				                          ->join('mixerconsumo', 'transferencia.Numero_Carga', '=', 'mixerconsumo.Numero_Carga')
-				 						  ->groupBy('transferencia.Numero_Carga')
-				 						  ->get();
-
-				 return view('transferencias_historial' , array(
-				 	'titlemesage' => 'ENSAYO TRANSFERENCIA '.$_POST['Numero_Carga'].' INGRESADO CON EXITO!',
-				 	'carga' => $carga
-
-
-				 	));						  
-				
+				 return redirect('/pc/transferencias/save/'.$transferencia->Fecha_Ensayo)->with('success','Ensayo ingresado');
 
 			}
 
@@ -145,27 +133,24 @@ class EnsayoTransferenciaController extends Controller {
 //Busqueda historial
 
 
-//Busqueda por historial fecha
+	 			public function transferencia_historial_busqueda_fecha(){
+				 	 
+				 
+				 	
+							 //Abre el historial
+				             $carga = Transferencias::where('transferencia.Fecha_Ensayo' , $_POST['fecha'])
+					                          ->join('mixerconsumo', 'transferencia.Numero_Carga', '=', 'mixerconsumo.Numero_Carga')
+					 						  ->groupBy('transferencia.Numero_Carga')
+					 						  ->get();
+						
+									 
+							return view('transferencias_historial' , array(
+								'carga' => $carga ,
+								'titlemesage' => 'LISTADO TRASFERENCIAS POR FECHA '.$_POST['fecha'] 
+								
+								 ));
 
-	
- public function transferencia_historial_busqueda_fecha(){
-			 	 
-			 
-			 	
-						 //Abre el historial
-			             $carga = Transferencias::where('transferencia.Fecha_Ensayo' , $_POST['fecha'])
-				                          ->join('mixerconsumo', 'transferencia.Numero_Carga', '=', 'mixerconsumo.Numero_Carga')
-				 						  ->groupBy('transferencia.Numero_Carga')
-				 						  ->get();
-					
-								 
-						return view('transferencias_historial' , array(
-							'carga' => $carga ,
-							'titlemesage' => 'LISTADO TRASFERENCIAS POR FECHA '.$_POST['fecha'] 
-							
-							 ));
-
-			 }   
+				 }   
 				
 
 			 	 public function transferencia_historial_busqueda_carga(){
@@ -215,12 +200,30 @@ class EnsayoTransferenciaController extends Controller {
 
 //Metodo para restar las diferentes horas 
 
-private function restahoras ($hora1,$hora2){
+			private function restahoras ($hora1,$hora2){
 
-return abs($hora1 - $hora2);
+			return abs($hora1 - $hora2);
 
-}
+			}
 
+
+//redirect
+
+			public function redirect_transferencia($fecha){
+				//Abre el historial
+			             $carga = Transferencias::where('transferencia.Fecha_Ensayo' , $fecha)
+				                          ->join('mixerconsumo', 'transferencia.Numero_Carga', '=', 'mixerconsumo.Numero_Carga')
+				 						  ->groupBy('transferencia.Numero_Carga')
+				 						  ->get();
+					
+								 
+						return view('transferencias_historial' , array(
+							'carga' => $carga ,
+							'titlemesage' => 'LISTADO TRASFERENCIAS POR FECHA '.$fecha 
+							
+							 ));
+
+			}
 
 
 }

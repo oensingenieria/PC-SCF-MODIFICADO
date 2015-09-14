@@ -86,7 +86,7 @@
 {{--Modal busqueda en mixer--}}
 <div class="remodal" data-remodal-id="buscarmixer_modal">
   <button data-remodal-action="close" class="remodal-close"></button>
-  <h3 class="bg-success">Seleccione una fecha</h3>
+  <h3>Seleccione una fecha</h3>
   <br>
   
 
@@ -102,9 +102,6 @@
 
         <div class="form-group"> 
         <button class="btn btn-success" style="margin-bottom:65px;">Buscar</button>
-        </div>
-        <div class="form-group"> 
-        <p  class="bg-info">El sistema traera los registros que coincidan con esta fecha.</p>
         </div>
         
         </form>
@@ -122,7 +119,7 @@
 {{--Modal busqueda de historial--}}
 <div class="remodal" data-remodal-id="buscarhistorial_modal">
   <button data-remodal-action="close" class="remodal-close"></button>
-  <h3 class="bg-success">Busqueda de historial</h3>
+  <h3 >Busqueda de historial</h3>
   <br>
   
 
@@ -187,43 +184,45 @@
 {{--Modal Info--}}
 <div class="remodal" data-remodal-id="infovebe_modal">
   <button data-remodal-action="close" class="remodal-close"></button>
-  <h3 class="bg-success">Funcionamiento</h3>
+  <h3 >Funcionamiento</h3>
   <br>
   
   <div class="row">
   <div class="col-md-12">
-  	<p class="text-justify">El sistema Vebe traéra los registros que coincidan con el parametro de busqueda especificado , pero ademas los registros serán filtrados para aquellos que contengan cualquiera de los siguientes codigo de elemento.
+    <p class="text-justify">El sistema Vebe traéra los registros que coincidan con el parametro de busqueda especificado , pero ademas los registros serán filtrados para aquellos que contengan cualquiera de los siguientes codigo de elemento.
 
-  	</p>	
+    </p>  
   <div class="col-md-5 text-left">
-  	<ul>
+    <ul>
      
     <li>10017415</li>
     
 
-  	</ul>
-  </div>	
+    </ul>
+  </div>  
 
   <div class="col-md-5 text-left">
-  	<ul>
+    <ul>
      
     <li>10017414</li>
-  
+   
 
-  	</ul>
+
+    </ul>
   </div>
   <br>
 
   </div>
 
 <div class="col-md-12">
-	<br>
+  <br>
   <p class="text-justify"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> En cuyo caso Vebe encuentre registros que coincidan con el parametro de la busqueda , pero dichos registros no poseen algun codigo de elemento previamente definido , vebe lo omitira.</p>
 </div>
 
   </div>
     
 </div> {{--Modal info--}}
+
 
 
 @endsection

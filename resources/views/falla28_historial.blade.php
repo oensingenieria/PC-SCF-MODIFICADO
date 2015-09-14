@@ -97,7 +97,7 @@
 {{--Modal busqueda Ensayo--}}
 <div class="remodal" data-remodal-id="buscarmixer_modal">
   <button data-remodal-action="close" class="remodal-close"></button>
-  <h3 class="bg-success">Seleccione una fecha</h3>
+  <h3 >Seleccione una fecha</h3>
   <br>
   
 
@@ -115,7 +115,7 @@
   			<button class="btn btn-success" style="margin-bottom:65px;">Buscar</button>
   			</div>
   			<div class="form-group"> 
-  			<p  class="bg-info">El sistema traera todos los ensayos correspondientes a 28 dias atras.</p>
+  			<p >El sistema traera todos los ensayos correspondientes a 28 dias atras.</p>
   			</div>
   			
   			</form>
@@ -133,7 +133,7 @@
 {{--Modal busqueda de historial--}}
 <div class="remodal" data-remodal-id="buscarhistorial_modal">
  <button data-remodal-action="close" class="remodal-close"></button>
- <h4 class="bg-success">Seleccione un medio de busqueda </h4>
+ <h4 >Seleccione un medio de busqueda </h4>
   <br>
   
 
@@ -189,11 +189,12 @@
      
     </div>	
 
+    <div class="form-group"> 
+  			<p >El sistema traera todos los ensayos correspondientes a 28 dias atras.</p>
+  			</div>
   </div>
 
  
 </div> {{--Modal busqueda de historial--}}
-
-
 
 @endsection

@@ -34,7 +34,7 @@
 				<div class="col-md-12  ">
 				 <table class="table table-bordered tablePag">
  				
-				   <thead>
+				   <thead class="bg-success ">
 				      <tr>
 				        <td>Usuario</td>
 				        <td>Numero de carga</td>
@@ -144,6 +144,9 @@
 			<?php 
 
 			 $volumen_mixer = $carga->Volumen_de_Carga;
+			 if($volumen_mixer == 0){
+			 	$volumen_mixer = 1;
+			 }
 
 			 $Rendimiento_real =  100 * ($volumen_real/$volumen_mixer);
 
@@ -215,7 +218,7 @@
 {{--Modal busqueda de Ensayo--}}
 <div class="remodal" data-remodal-id="buscarensayo_modal">
  <button data-remodal-action="close" class="remodal-close"></button>
- <h4 class="bg-success">Buscar un Ensayo </h4>
+ <h4 >Buscar un Ensayo </h4>
   <br>
   
 
@@ -242,11 +245,10 @@
 
 
 
-
 {{--Modal busqueda de historial--}}
 <div class="remodal" data-remodal-id="buscarhistorial_modal">
  <button data-remodal-action="close" class="remodal-close"></button>
- <h4 class="bg-success">Seleccione un medio de busqueda </h4>
+ <h4 >Seleccione un medio de busqueda </h4>
   <br>
   
 

@@ -88,19 +88,8 @@ public function __construct()
 				$falla28->Nombre_Cuenta= Auth::user()->username;
 				
 				$falla28->save();
-
-                        //Abre el historial
-			             $carga = Falla28::where('falla28.Fecha_Ensayo',$falla28->Fecha_Ensayo)  
-								        ->groupBy('falla28.Numero_Carga')
-								        ->get();
-						                           
-
-								 
-						return view('falla28_historial' , array(
-							'carga' => $carga ,
-							'titlemesage' => 'ENSAYO  '.$falla28->Numero_Carga . ' AGREGADO CORRECTAMENTE!' 
-							
-							));
+  
+  				return redirect('/pc/falla28/save/'.$falla28->Fecha_Ensayo)->with('success','Ensayo ingresado');
 
 			}
 
@@ -164,6 +153,26 @@ public function __construct()
 					) );
 
 			 }  
+
+
+//Redirect
+
+			 public function redirect_falla28($fecha){
+
+			 	 //Abre el historial
+			             $carga = Falla28::where('falla28.Fecha_Ensayo',$fecha)  
+								        ->groupBy('falla28.Numero_Carga')
+								        ->get();
+						                           
+
+								 
+						return view('falla28_historial' , array(
+							'carga' => $carga ,
+							'titlemesage' => 'LISTADO FALLA 28 POR FECHA '.$fecha 
+							
+							 ));
+
+			 }
 
 
 //Fin flujo falla 28
