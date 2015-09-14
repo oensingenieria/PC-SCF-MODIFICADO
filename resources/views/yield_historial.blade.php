@@ -13,6 +13,7 @@
 		
 		<input class="btn btn-info pull-right" style="background-color: #32C0AC;" type="button" value="Imprimir" onClick="window.print()">
         
+        <button style="margin-right:20px" class="btn btn-info pull-right" data-remodal-target="infoyield_modal" > <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span></button>
         </div>
 				
 
@@ -309,5 +310,27 @@
  
 </div> {{--Modal busqueda de historial--}}
 
+{{--Modal Info--}}
+<div class="remodal" data-remodal-id="infoyield_modal">
+  <button data-remodal-action="close" class="remodal-close"></button>
+  <h3 >Funcionamiento</h3>
+  <br>
+  
+  <div class="row">
+  <div class="col-md-12">
+    <p class="text-justify">Los ensayos yield no se ven afectados por los permisos , pueden acceder al registro completo de ensayos “realizados” en trabajabilidad y flujo .
+    </p>  
+    <br>
+    <p class="text-justify">La selección de moldes al momento de llenar los datos puede editarse en la sección de configuración del sistema , eliminar , modificar y predefinir sus valores.
+   </p> 
+   <br>
+    <p class="text-justify">La plataforma calculara los datos de Densidad real , Volumen Real , y Rendimiento real una vez que el ensayo yield sea ingresado con éxito.
+   </p> 
+ 
+  </div>
+
+  </div>
+    
+</div> {{--Modal info--}}
 
 @endsection

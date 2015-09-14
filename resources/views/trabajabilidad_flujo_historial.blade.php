@@ -9,7 +9,7 @@
 	<button class="btn btn-success" data-remodal-target="buscarmixer_modal" >Buscar ensayo</button>
 	<button class="btn btn-success" data-remodal-target="buscarhistorial_modal" >Buscar historial</button>
 	<input class="btn btn-info pull-right" style="background-color: #32C0AC;" type="button" value="Imprimir" onClick="window.print()">
-	
+    <button style="margin-right:20px" class="btn btn-info pull-right" data-remodal-target="infotrabajabilidad_modal" > <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span></button>
 	
 	</div>
 	
@@ -208,6 +208,28 @@
 </div> 
  
 </div> {{--Modal busqueda historial--}}
+
+{{--Modal Info--}}
+<div class="remodal" data-remodal-id="infotrabajabilidad_modal">
+  <button data-remodal-action="close" class="remodal-close"></button>
+  <h3 >Funcionamiento</h3>
+  <br>
+  
+  <div class="row">
+  <div class="col-md-12">
+    <p class="text-justify">El sistema de trabajabilidad y flujo se conecta  a los registro disponible del mixer , según el parámetro de búsqueda que se ingrese. El usuario podrá ver los datos resultantes en una lista ordenada con varios filtros disponibles que podrá utilizar para su comodidad.
+
+    </p>  
+    <br>
+    <p class="text-justify">Al momento de ingresar los datos  el usuario puede otorgar los permisos de ese ensayo , para que estos puedan ser trabajados posteriormente por otros ensayos tales como vebe , transferencias , falla 7 y falla 8 , o incluso podrá marcar el ensayo como desecho según lo requiera.
+
+    </p> 
+ 
+  </div>
+
+  </div>
+    
+</div> {{--Modal info--}}
 
 
 @endsection

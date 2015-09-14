@@ -83,7 +83,7 @@
 <body>
   @if (!Auth::guest())
        <div class="row">
-			<img src="/banner.png">
+			<img style="width:100%" src="/banner.png">
 		</div> 
 @endif 
 
@@ -96,7 +96,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" id="navpc" class="btn btn-primary" href="/">PC</a>
+				<a href="/"><img style="height: 30px;opacity: 0.8; margin-top: 10px;" alt="pc logo" src="/logo.png"></a>
 			</div>
 
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">

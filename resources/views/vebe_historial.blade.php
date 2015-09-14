@@ -189,7 +189,7 @@
   
   <div class="row">
   <div class="col-md-12">
-    <p class="text-justify">El sistema Vebe traéra los registros que coincidan con el parametro de busqueda especificado , pero ademas los registros serán filtrados para aquellos que contengan cualquiera de los siguientes codigo de elemento.
+    <p class="text-justify">El sistema Vebe traéra los registros que coincidan con el parámetro de búsqueda especificado y según los permisos que se hallan agregado en trabajabilidad y flujo, pero además los registros serán filtrados para aquellos que contengan cualquiera de los siguientes código de elemento.
 
     </p>  
   <div class="col-md-5 text-left">
@@ -216,7 +216,11 @@
 
 <div class="col-md-12">
   <br>
-  <p class="text-justify"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> En cuyo caso Vebe encuentre registros que coincidan con el parametro de la busqueda , pero dichos registros no poseen algun codigo de elemento previamente definido , vebe lo omitira.</p>
+  <p class="text-justify"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> En cuyo caso Vebe encuentre registros que coincidan con el parámetro de la búsqueda , pero dichos registros no poseen algún código de elemento previamente definido , vebe lo omitirá.</p>
+
+  <br>
+  <p class="text-justify"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Si en trababilidad y flujo no se otorgan los permisos de acceso al ensayo vebe también quedaran omitidos.</p>
+
 </div>
 
   </div>

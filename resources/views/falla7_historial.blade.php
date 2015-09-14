@@ -8,6 +8,7 @@
 	<button class="btn btn-success" data-remodal-target="buscarmixer_modal" >Buscar ensayo</button>
 	<button class="btn btn-success" data-remodal-target="buscarhistorial_modal" >Buscar Historial</button>
 	<input class="btn btn-info pull-right" style="background-color: #32C0AC;" type="button" value="Imprimir" onClick="window.print()">
+	<button style="margin-right:20px" class="btn btn-info pull-right" data-remodal-target="infofalla7_modal" > <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span></button>
 	</div>
 	
 
@@ -197,5 +198,24 @@
  
 </div> {{--Modal busqueda de historial--}}
 
+<div class="remodal" data-remodal-id="infofalla7_modal">
+  <button data-remodal-action="close" class="remodal-close"></button>
+  <h3 >Funcionamiento</h3>
+  <br>
+  
+  <div class="row">
+  <div class="col-md-12">
+    <p class="text-justify">Falla 7 necesita de los permisos respectivos para acceder a los registros que encuentren disponibles , su filtro es ha 7 días atrás de la fecha en la que se ensayo con un alcance máximo de 5 días .
+    </p>  
+    <br>
+    <p class="text-justify">Al momento de ingresar los datos del registro el usuario dispone de la opción calcular la cual determina el numero de días existentes entre la fecha de carga y la fecha de ensayo , calcula la resistencia nominal y la resistencia porcentual así como la resistencia promedio que depende de los datos en las fallas.
+   </p> 
+   
+ 
+  </div>
+
+  </div>
+    
+</div> {{--Modal info--}}
 
 @endsection

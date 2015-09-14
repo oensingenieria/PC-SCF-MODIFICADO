@@ -9,6 +9,7 @@
 		<button class="btn btn-success"  data-remodal-target="buscarensayo_modal" >Buscar ensayo</button>
 		<button class="btn btn-success" data-remodal-target="buscarhistorial_modal" >Buscar historial</button>
 		<input class="btn btn-info pull-right" style="background-color: #32C0AC;" type="button" value="Imprimir" onClick="window.print()">
+		<button style="margin-right:20px" class="btn btn-info pull-right" data-remodal-target="infotransferencia_modal" > <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span></button>
 		</div>
 			<div class="panel panel-default">
 				<div class="panel-heading text-center"><b>{{$titlemesage}}</b></div>
@@ -184,5 +185,28 @@
 
  
 </div> {{--Modal busqueda de historial--}}
+
+{{--Modal Info--}}
+<div class="remodal" data-remodal-id="infotransferencia_modal">
+  <button data-remodal-action="close" class="remodal-close"></button>
+  <h3 >Funcionamiento</h3>
+  <br>
+  
+  <div class="row">
+  <div class="col-md-12">
+    <p class="text-justify">El sistema de transferencias se filtra según los ensayos a los cuales se les otorgo el permiso respectivo en trabajabilidad y flujo , se traen lo ensayos del día anterior a la fecha ingresada con un alcance de cinco días atrás .
+
+    </p>  
+    <br>
+    <p class="text-justify">La edad de los cilindros sera calculada por el sistema automáticamente cuando un ensayo de transferencia sea ingresado con éxito 
+
+    </p> 
+ 
+  </div>
+
+  </div>
+    
+</div> {{--Modal info--}}
+
 
 @endsection
