@@ -19,8 +19,9 @@ class CreateRevenimientoTable extends Migration {
 		    $table->string('Nombre_Proyecto');
 		    $table->string('Nombre_Elemento');
 		    $table->date('Fecha_Ensayo');
+		    $table->date('Fecha_Carga');
 		    $table->date('Fecha_Registro');
-		    $table->time('Hora_Registro');
+		    $table->time('Hora_Ensayo');
 		    $table->decimal('Revenimiento');
 		    $table->decimal('Temperatura');
 		    $table->decimal('Volumen');
@@ -37,11 +38,8 @@ class CreateRevenimientoTable extends Migration {
 		    $table->string('Codigo_Tarro');
 		    $table->string('Observaciones');
 		    $table->string('Nombre_Cuenta');
-		    $table->enum('Revision',['Revisado',
-		    	                   'Pendiente']);
 		    $table->string('Codigo_Diseño');
-		    $table->integer('id_mixer');
-
+		  
 		    $table->tinyInteger('vebe');
 		    $table->tinyInteger('falla');
 		    $table->tinyInteger('transferencia');

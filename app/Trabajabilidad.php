@@ -11,7 +11,8 @@ protected $fillable = ['Numero_Carga' ,
 'Nombre_Elemento',
 'Fecha_Ensayo',
 'Fecha_Registro',
-'Hora_Registro',
+'Fecha_Carga',
+'Hora_Ensayo',
 'Revenimiento',
 'Temperatura',
 'Volumen',
@@ -20,12 +21,10 @@ protected $fillable = ['Numero_Carga' ,
  'Nombre_Cuenta',
 'Codigo_Tarro',
 'Observaciones',
-'Revision',
 'vebe',
 'falla',
 'transferencia',
 'desecho',
-'Codigo_Diseño',
-'id_mixer'];
+'Codigo_Diseño'];
 
 }

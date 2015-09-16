@@ -55,7 +55,7 @@
 				     	<td>{{$mix->Numero_Carga}}</td>
 				     	<td>{{$mix->Nombre_Proyecto}}</td>
 				     	<td>{{$mix->Nombre_Elemento}}</td>
-				     	<td>{{$mix->Hora_Registro}}</td>
+				     	<td>{{$mix->Hora_Ensayo}}</td>
 				     	<td>{{$mix->Revenimiento}}</td>
 				     	<td>{{$mix->Temperatura}}</td>
 				     	<td>{{$mix->Volumen}}</td>
@@ -174,7 +174,7 @@
         <form class="form-horizontal" method="post" action="/pc/trabajabilidad_flujo/fecha/historial">
          <input name="_token" type="hidden" value="{!! csrf_token() !!}" />
          
-        <label>Fecha de Ensayo&nbsp;&nbsp;<input  type="text" name="Parametro"   style="cursor: pointer; background-color: white;"  required="" readonly=""  type="Text" class="form-control  datepicker"  placeholder="Ingrese una fecha" ></label>
+        <label>Fecha de Carga&nbsp;&nbsp;<input  type="text" name="Parametro"   style="cursor: pointer; background-color: white;"  required="" readonly=""  type="Text" class="form-control  datepicker"  placeholder="Ingrese una fecha" ></label>
       
         <div class="form-group">
            <button class="btn btn-success " >Buscar</button>

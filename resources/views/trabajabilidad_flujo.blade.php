@@ -18,8 +18,8 @@
         <div class="panel-heading text-center" ><b>{{$titlemesage}}</b></div>
         <div class="panel-body">
         
-      @if(isset($mixer))  
-        @if(!is_null($mixer) & count($mixer) > 0) 
+      @if(isset($mixer) || isset($historial) )  
+        @if(!is_null($mixer) & count($mixer) > 0 || !is_null($historial) & count($historial)) 
         <table class="table table-bordered tablePag ">
         
            <thead class="bg-success " style="font-weight:bold" >
@@ -41,7 +41,34 @@
              <div> 
         
              <tbody >
-             
+                 
+                 @if(isset($historial))
+                    @if( count($historial) > 0 )
+
+                       @foreach($historial as $mix)
+                               
+                               <tr >
+                                    <td><button  class="btn btn-info"  >{{$mix->Nombre_Cuenta}}</button></td>
+
+
+                                      <td>{{$mix->Numero_Carga}}</td>
+                                      <td>{{$mix->Nombre_Proyecto}}</td>
+                                      <td>{{$mix->Nombre_Elemento}}</td>
+                                      <td>{{$mix->Hora_Ensayo}}</td>
+                                      <td>{{$mix->Revenimiento}}</td>
+                                      <td>{{$mix->Temperatura}}</td>
+                                      <td>{{$mix->Volumen}}</td>
+                                      <td>{{$mix->Codigo_Tarro}}</td>
+                                      <td style="color:blue">{{$mix->Encargado}}</td>
+                               </tr>
+                              
+                              
+                            @endforeach
+
+
+                    @endif
+
+                 @endif    
       
         @foreach($mixer as $mix)
            
@@ -52,12 +79,12 @@
               <td>{{$mix->Numero_Carga}}</td>
               <td>{{$mix->Nombre_Proyecto}}</td>
               <td>{{$mix->Nombre_Elemento}}</td>
-              <td></td>
-              <td></td>
-              <td></td>
+              <td>{{$mix->Hora_Ensayo}}</td>
+              <td>{{$mix->Revenimiento}}</td>
+              <td>{{$mix->Temperatura}}</td>
               <td>{{$mix->Volumen_de_Carga}}</td>
-              <td></td>
-              <td></td>
+              <td>{{$mix->Codigo_Tarro}}</td>
+              <td>{{$mix->Encargado}}</td>
             </tr>
           
           
@@ -95,7 +122,7 @@
   <div class="row">
   <div class="col-md-12">
       <div class="col-md-6">
-        <form class="form-horizontal" method="post" action="/pc/trabajabilidad_flujo/carga">
+        <form class="form-horizontal form-validate" method="post" action="/pc/trabajabilidad_flujo/carga">
         <input name="_token" type="hidden" value="{!! csrf_token() !!}" />
         <div class="form-group">
         <label>Numero de carga <input required  class="form-control" type="text" name="Parametro" placeholder="Numero de carga" /></label>
@@ -130,7 +157,7 @@
         <form class="form-horizontal" method="post" action="/pc/trabajabilidad_flujo/fecha">
          <input name="_token" type="hidden" value="{!! csrf_token() !!}" />
          <div class="form-group">
-        <label>Fecha de Ensayo&nbsp;&nbsp;<input  type="text" name="Parametro"   style="cursor: pointer; background-color: white;"  required="" readonly=""  type="Text" class="form-control  datepicker"  placeholder="Ingrese una fecha" ></label></div>
+        <label>Fecha de Carga&nbsp;&nbsp;<input  type="text" name="Parametro"   style="cursor: pointer; background-color: white;"  required="" readonly=""  type="Text" class="form-control  datepicker"  placeholder="Ingrese una fecha" ></label></div>
 
         <div class="form-group"> <button class="btn btn-success " >Buscar</button></div>
         </form>
@@ -153,7 +180,7 @@
   <div class="row">
   <div class="col-md-12">
       <div class="col-md-6">
-        <form class="form-horizontal" method="post" action="/pc/trabajabilidad_flujo/carga/historial">
+        <form class="form-horizontal" method="post" action="/pc/trabajabilidad_flujo/carga/historial" >
         <input name="_token" type="hidden" value="{!! csrf_token() !!}" />
         
         <label>Numero de carga <input required  class="form-control" type="text" name="Parametro" placeholder="Numero de carga" /></label>
@@ -211,19 +238,19 @@
 @if(isset($mixer))
 <div class="remodal" data-remodal-id="llenardatos_modal">
   <button data-remodal-action="close" class="remodal-close"></button>
-  <h4 style="color: rgb(224, 230, 37);"><b>Realizar Ensayo</b></h4>
+  <h4><b>Realizar Ensayo</b></h4>
   <br>
   
-  <form class="form-horizontal" method="post" action="/pc/trabajabilidad_flujo">
+  <form class="form-horizontal formvalidate" method="post" action="/pc/trabajabilidad_flujo" name="formvalidate">
     <input name="_token" type="hidden" value="{!! csrf_token() !!}" />
   <div class="row">
       <div class="col-md-6">
        
 
         <div class="form-group" >
-        <label  class="col-sm-6 control-label">ID:</label>
+        <label  class="col-sm-6 control-label">Fecha de Carga:</label>
         <div class="col-sm-6">
-          <input required="" value="" name="idmixer"  id="id_mixer"  readonly="" type="number" class="form-control"  >
+          <input  id="fecha_carga"  name="Fecha_Carga" class="form-control"  style="cursor: pointer; background-color: white;"  required="" readonly=""  type="Text" >
         </div>
       </div>
 
@@ -253,24 +280,23 @@
        <?php date_default_timezone_set('America/Costa_Rica'); ?>
 
       <div class="form-group">
-        <label for="inputEmail3" class="col-sm-6 control-label">Fecha de Ensayo:</label>
+        <label for="inputEmail3" class="col-sm-6 control-label">Fecha de Registro:</label>
         <div class="col-sm-6">
           <input value="{{date ( 'Y-m-d' )}}"  name="Fecha_Registro" style="cursor: pointer; background-color: white;"  required="" readonly=""  type="Text" class="form-control "   placeholder="Fecha">
         </div>
       </div>
-      <div class="form-group">
-        <label for="inputPassword3" class="col-sm-6 control-label">Hora de Ensayo:</label>
+     
+     <div class="form-group">
+        <label for="inputEmail3" class="col-sm-6 control-label" >Fecha de Ensayo</label>
         <div class="col-sm-6">
-          <input  type="text" required="" name="Hora_Registro" class="form-control timepicker" id="timepicker" placeholder="Hora">
+          <input  name="Fecha_Ensao"   style="cursor: pointer; background-color: white;"  required="" readonly=""  type="Text" class="form-control  datepicker"  placeholder="Ingrese una fecha" >
         </div>
       </div>
       
-     
-      
       <div class="form-group">
-        <label for="inputEmail3" class="col-sm-6 control-label">Revenimiento (cm):</label>
+        <label for="inputPassword3" class="col-sm-6 control-label">Hora de Ensayo:</label>
         <div class="col-sm-6">
-          <input type="number" step="0.01" name="Revenimiento" class="form-control" id="inputEmail3" placeholder="CM">
+          <input  type="text" required="" name="Hora_Ensayo" class="form-control timepicker" id="timepicker" placeholder="Hora">
         </div>
       </div>
 
@@ -279,22 +305,30 @@
       <input type="hidden" id="fecha_ensayo" name="Fecha_Ensayo">
 
     
-        <div class="form-group text-left" style="color: rgb(224, 230, 37);">
+        <div class="form-group text-left" >
          
-         <input class="ensayoschk"  type="checkbox" name="vebe" value="1" checked>&nbsp;<b>Vebe</b>&nbsp;&nbsp;
+         <input class="ensayoschk"  type="checkbox" name="vebe" value="1" >&nbsp;<b>Vebe</b>&nbsp;&nbsp;
          <input class="ensayoschk" type="checkbox" name="falla" value="1">&nbsp;<b>Falla 7 y 28</b>&nbsp;&nbsp;
      
        </div>
 
-       <div class="form-group text-left" style="color: rgb(224, 230, 37);">
+       <div class="form-group text-left" >
        <input class="ensayoschk" type="checkbox" name="transferencia" value="1">&nbsp;<b>Transferencia</b>&nbsp;&nbsp;
        <input id="desechoschk" type="checkbox" name="desecho" value="1">&nbsp;<b>Desecho</b>&nbsp;&nbsp;
+       <input id="ningunochk" type="checkbox" name="ninguno" >&nbsp;<b>Ninguno</b>&nbsp;&nbsp;
        </div>
   
   </div>
 
 
    <div class="col-md-6">
+
+     <div class="form-group">
+        <label for="inputEmail3" class="col-sm-6 control-label">Revenimiento (cm):</label>
+        <div class="col-sm-6">
+          <input type="number" step="0.01" name="Revenimiento" class="form-control" id="inputEmail3" placeholder="CM">
+        </div>
+      </div>
         
          <div class="form-group">
         <label for="inputEmail3" class="col-sm-6 control-label">Temperatura (°C):</label>
@@ -365,7 +399,7 @@
       <div class="form-group">
         <div class="col-sm-offset-6 col-sm-6">
          
-          <button type="submit" class="btn btn-success">Almacenar</button>
+          <button type="button" id="submitform" class="btn btn-success">Almacenar</button>
            
         </div>
       </div>
@@ -424,20 +458,65 @@ $(document).ready(function(){
        $('#Volumen').val(volumen);
        $('#id_mixer').val(id_mixer);
        $('#cod_diseño').val(cod);
-       $('#fecha_ensayo').val(fecha);
+       $('#fecha_carga').val(fecha);
       });
 //checkbox logic
     $('#desechoschk').on('change', function() {
     
     $('.ensayoschk').not(this).prop('checked', false);  
+    $('#ningunochk').not(this).prop('checked', false);
      });
+
     $('.ensayoschk').on('change', function() {
     
+    $('#desechoschk').not(this).prop('checked', false); 
+    $('#ningunochk').not(this).prop('checked', false); 
+     });
+
+    $('#ningunochk').on('change', function() {
+    
+    $('.ensayoschk').not(this).prop('checked', false); 
     $('#desechoschk').not(this).prop('checked', false);  
+
      });
 //checkbox logic
     
     });
+
+//submit form
+ $("#submitform").click(function() {
+      
+     if(
+       formvalidate.vebe.checked == false &&
+       formvalidate.falla.checked == false &&
+       formvalidate.transferencia.checked == false &&
+       formvalidate.desecho.checked == false &&
+       formvalidate.ninguno.checked == false 
+
+      ){
+
+    
+     var msj = 'Asignar los permisos para este ensayo';
+
+      swal({   
+      title: msj ,  
+      text: "©PC",  
+      timer: 1400,  
+      showConfirmButton: false,
+      type: "error" 
+         });
+
+      
+
+     }
+     else
+     {
+       $(".formvalidate").submit();
+     }
+
+
+      });
+
 
 </script>
 

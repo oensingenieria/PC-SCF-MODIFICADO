@@ -21,7 +21,6 @@ class EnsayoTrabajabilidadController extends Controller {
 	public function __construct()
 	    {
 		$this->middleware('auth');
-		set_time_limit(600); //60 seconds = 1 minute
 		
 	     }
 
@@ -56,10 +55,16 @@ public function trabajabilidad_flujo(){
 			   //Carga los Tarros
 			   $tarros = Tarros::all();
 
+			   //Obteniendo los realizados
+			   $historial = Trabajabilidad::where('revenimiento.Numero_Carga', '=', $_POST['Parametro'] )
+										        ->groupBy('revenimiento.Numero_Carga')
+										        ->get();
+
 				return view('trabajabilidad_flujo' , 
 					array('mixer' => $carga , 
 						  'tarros' => $tarros ,
 						  'encargados' => $encargados ,
+						  'historial' => $historial,
 						  'titlemesage' => 'CONSULTA POR NUMERO DE CARGA '.$_POST['Parametro']. '. ENSAYOS NO REALIZADOS.'
 						));
 
@@ -85,10 +90,17 @@ public function trabajabilidad_flujo(){
 			   //Carga los Tarros
 			   $tarros = Tarros::all();
 
+			   //Obteniendo los realizados
+			   $historial = Trabajabilidad::where('revenimiento.Codigo_Diseño', '=', $_POST['Parametro'] )
+										        ->groupBy('revenimiento.Numero_Carga')
+										        ->get();
+
+
 				return view('trabajabilidad_flujo' , 
 					array('mixer' => $carga , 
 						  'tarros' => $tarros ,
 						  'encargados' => $encargados ,
+						  'historial' => $historial,
 						  'titlemesage' => 'CONSULTA POR NUMERO DE CARGA '.$_POST['Parametro']. '. ENSAYOS NO REALIZADOS.'
 						));
 
@@ -115,10 +127,16 @@ public function trabajabilidad_flujo(){
 			   //Carga los Tarros
 			   $tarros = Tarros::all();
 
+			   //Obteniendo los realizados
+			   $historial = Trabajabilidad::where('revenimiento.Fecha_Carga', '=', $_POST['Parametro'] )
+										        ->groupBy('revenimiento.Numero_Carga')
+										        ->get();
+
 				return view('trabajabilidad_flujo' , 
 					array('mixer' => $carga , 
 						  'tarros' => $tarros ,
 						  'encargados' => $encargados ,
+						  'historial' => $historial,
 						  'titlemesage' => 'CONSULTA POR NUMERO DE CARGA '.$_POST['Parametro']. '. ENSAYOS NO REALIZADOS.'
 						));
 				
@@ -129,14 +147,11 @@ public function trabajabilidad_flujo(){
 			public function post_trabajabilidad_flujo(Request_Trabajabilidad $request){
 				
 		       $datos = new Trabajabilidad($request->all());
-		       
-		       
-		        $datos->id_mixer =  $_POST['idmixer'] ;
-				$datos->Revision = 'Revisado';
-				$datos->Nombre_Cuenta = Auth::user()->username;
+		       $datos->Fecha_Ensayo = $_POST['Fecha_Ensao']; 
+		       $datos->Nombre_Cuenta = Auth::user()->username;
 				$datos->save();
 
-				return redirect('/pc/trabajabilidad_flujo/save/'.$datos->Fecha_Ensayo)->with('success','Ensayo ingresado');
+				return redirect('/pc/trabajabilidad_flujo/save/'.$datos->Fecha_Carga)->with('success','Ensayo ingresado');
 
 			}
 
@@ -157,6 +172,11 @@ public function trabajabilidad_flujo(){
 			   //Carga encargados disponibles     
 			   $encargados = Encargado::all();
 
+			   //Obteniendo los realizados
+			   $historial = Trabajabilidad::where('revenimiento.Fecha_Carga', '=', $fecha )
+										        ->groupBy('revenimiento.Numero_Carga')
+										        ->get();
+
 			   //Carga los Tarros
 			   $tarros = Tarros::all();
 
@@ -164,6 +184,7 @@ public function trabajabilidad_flujo(){
 					array('mixer' => $carga , 
 						  'tarros' => $tarros ,
 						  'encargados' => $encargados ,
+						  'historial' => $historial ,
 						  'titlemesage' => 'CONSULTA POR FECHA '.$fecha. '. ENSAYOS NO REALIZADOS.'
 						));
 

@@ -59,8 +59,8 @@
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 
-   color: rgba(249, 249, 249, 0.94);
-    background: rgba(43, 45, 93, 0.84);
+   color: rgb(72, 80, 140);
+    background: rgb(255, 255, 255);
 }
 
 .remodal.remodal-is-opening,

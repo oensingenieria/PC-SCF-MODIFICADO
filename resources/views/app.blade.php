@@ -1,6 +1,4 @@
-﻿<?php set_time_limit(0); ?>
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8">
@@ -46,32 +44,19 @@
     .pagination li a.active {border:1px solid #000; color:#000; background-color:#fff;}  
     .pagination li a.inactive {background-color:#eee; color:#777; border:1px solid #ccc;}  
 
-    .form-horizontal input {
-    	font-weight: 800;color:black;
+    .form-horizontal label {
+    	font-weight: 500;color:black;
     }
-    .form-horizontal select {
-    	font-weight: 800;color:black;
-    }
-    .form-horizontal textarea {
-    	font-weight: 800;color:black;
-    }
+   
 
     .remodal h3{
-    	color: rgb(224, 230, 37);
+    	color: rgb(92, 184, 92);
     }
 
     .remodal h4{
-    	color: rgb(224, 230, 37);
+    	color: rgb(92, 184, 92);
     }
 
-    .remodal .btn{
-    	background-color: #BEC32D;
-        border-color: #B1B195;
-    }
-
-    .form-vebe select {
-    	font-weight: 800;color:black;
-    }
     
 
 	</style>

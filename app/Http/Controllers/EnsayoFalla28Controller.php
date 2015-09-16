@@ -19,9 +19,7 @@ class EnsayoFalla28Controller extends Controller {
 
 public function __construct()
 	{
-		$this->middleware('auth');
-		set_time_limit(600); //60 seconds = 1 minute
-		
+		$this->middleware('auth');	
 	}
 
 
