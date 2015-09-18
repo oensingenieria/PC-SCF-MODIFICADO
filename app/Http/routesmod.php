@@ -85,14 +85,5 @@ Route::controllers([
 	'password' => 'Auth\PasswordController',
 ]);
 
-//Setting
-Route::get('pc/configuracion' , 'configuracionController@index');
-Route::post('/pc/configuracion/busqueda/carga' , 'configuracionController@buscar_carga');
-Route::post('pc/configuracion/actualizar/trabajabilidad', 'configuracionController@actualiza_trababilidad');
-Route::post('pc/configuracion/actualizar/vebe', 'configuracionController@actualiza_vebe');
-Route::post('pc/configuracion/actualizar/yield', 'configuracionController@actualiza_yield');
-Route::post('pc/configuracion/actualizar/transferencia', 'configuracionController@actualiza_transferencia');
-Route::post('pc/configuracion/actualizar/falla7', 'configuracionController@actualiza_falla7');
-Route::post('pc/configuracion/actualizar/falla28', 'configuracionController@actualiza_falla28');
 
 Route::get('/pc/getdata/excel/loadmixer', 'excelController@get_data');

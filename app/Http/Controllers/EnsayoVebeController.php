@@ -58,6 +58,23 @@ class EnsayoVebeController extends Controller {
 								        ->groupBy('revenimiento.Numero_Carga')
 				  						->get();
 
+				 //Obteniendo los realizados
+
+			  //Obteniendo los realizados
+
+				$fechacarga = Trabajabilidad::where('Fecha_Ensayo', $_POST['fecha'])->first();						
+				  if(count($fechacarga) > 0 ) { 
+					  	   $historial = Vebe::where('vebe.Fecha_Carga', '=', $fechacarga->Fecha_Carga)
+										        ->join('revenimiento', 'revenimiento.Numero_Carga', '=', 'vebe.Numero_Carga')
+										        ->join('mixerconsumo', 'mixerconsumo.Numero_Carga', '=', 'vebe.Numero_Carga')
+										        ->groupBy('vebe.Numero_Carga')
+										        ->get();
+												}        
+					else{
+						$historial = null ;
+					}							
+
+
 			   //Carga encargados disponibles     
 			   $encargados = Encargado::all(); 						
 				  					
@@ -65,6 +82,7 @@ class EnsayoVebeController extends Controller {
 				return view('vebe' , array(
 					'carga' => $carga ,
 					'encargados' =>$encargados,
+					'historial' =>  $historial,
 					'titlemesage' => 'LISTADO DE ENSAYOS VEBE POR FECHA '.$_POST['fecha']
 
 					 ));
@@ -80,9 +98,10 @@ class EnsayoVebeController extends Controller {
 				
 		       $datos = new Vebe($request->all());
 		       $datos->Nombre_Cuenta = Auth::user()->username;
+
 		       $datos->save();
 
-			return redirect('/pc/yield/save/'.$datos->Fecha_Ensayo)->with('success','Ensayo ingresado');
+			return redirect('/pc/yield/save/'.$datos->Fecha_Carga)->with('success','Ensayo ingresado');
 
 			}
 
@@ -174,16 +193,44 @@ class EnsayoVebeController extends Controller {
 
              public function redirect_vebe($fecha){
 
-	               //Abre el historial
-			             $carga = Vebe::where('Fecha_Ensayo',$fecha) 
-			             				->join('mixerconsumo', 'vebe.Numero_Carga', '=', 'mixerconsumo.Numero_Carga')   
-								        ->groupBy('vebe.Numero_Carga')
-								        ->get();
-						                           
+	             //Establece los codigos permitidos
+			    $codigo = array(  '10017415', '10017414');
+		       
+			    
+		
+				 //Filtrando registros desde trabajabilidad
+				  $carga = Trabajabilidad::where('revenimiento.Fecha_Carga', $fecha)
+				  						->where('revenimiento.vebe',1)
+				  						->whereIn('revenimiento.Codigo_Diseño',$codigo)
+				  						->whereNotExists(function($query)
+								            {
+								                $query->select(\DB::raw(1))
+								                      ->from('vebe')
+								                      ->whereRaw('vebe.Numero_Carga = revenimiento.Numero_Carga');
+								            })
+				  						->join('mixerconsumo', function ($join) {
+								            $join->on('mixerconsumo.Numero_Carga', '=', 'revenimiento.Numero_Carga');
+								                
+								        })
+								        ->groupBy('revenimiento.Numero_Carga')
+				  						->get();
+
+				 //Obteniendo los realizados
+
+			   $historial = Vebe::where('vebe.Fecha_Carga', '=', $fecha)
+										        ->join('revenimiento', 'revenimiento.Numero_Carga', '=', 'vebe.Numero_Carga')
+										        ->join('mixerconsumo', 'mixerconsumo.Numero_Carga', '=', 'vebe.Numero_Carga')
+										        ->groupBy('vebe.Numero_Carga')
+										        ->get();
+						                           									        
+				//Carga encargados disponibles     
+			   $encargados = Encargado::all(); 	
 
 								 
-						return view('vebe_historial' , array(
+						return view('vebe' , array(
 							'carga' => $carga ,
+							'encargados' => $encargados,
+							'historial' => $historial,
 							'titlemesage' => 'LISTADO VEBE POR FECHA '.$fecha
 							
 							 ));

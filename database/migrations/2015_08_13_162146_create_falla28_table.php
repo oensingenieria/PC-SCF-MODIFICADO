@@ -19,6 +19,7 @@ class CreateFalla28Table extends Migration {
 			$table->string('Numero_Carga');
 			$table->date('Fecha_Ensayo');
 			$table->date('Fecha_Registro');
+			$table->date('Fecha_Carga');
 			$table->integer('Numero_Dias');
 			$table->string('Lugar_Falla');
 			$table->decimal('Falla1');

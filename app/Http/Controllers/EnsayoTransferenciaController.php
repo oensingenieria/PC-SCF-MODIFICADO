@@ -57,12 +57,30 @@ class EnsayoTransferenciaController extends Controller {
 								        ->groupBy('revenimiento.Numero_Carga')
 				  						->get();
 
+
+
+				//Obteniendo los realizados
+
+				$fechacarga = Trabajabilidad::where('Fecha_Ensayo', $fecha1)->first();						
+				  if(count($fechacarga) > 0 ) { 
+					  	   $historial = Transferencias::where('transferencia.Fecha_Carga', '=', $fechacarga->Fecha_Carga)
+										        ->join('revenimiento', 'revenimiento.Numero_Carga', '=', 'transferencia.Numero_Carga')
+										        ->join('mixerconsumo', 'mixerconsumo.Numero_Carga', '=', 'transferencia.Numero_Carga')
+										        ->groupBy('transferencia.Numero_Carga')
+										        ->get();
+												}        
+					else{
+						$historial = null ;
+					}			  						
+
+
 			   //Carga encargados disponibles     
 			   $encargados = Encargado::all(); 
 			    
 				return view('transferencias' , array(
 					'carga' => $carga ,
 					'encargados' =>$encargados,
+					'historial' =>$historial,
 					'titlemesage' => 'LISTADO DE ENSAYOS TRANSFERENCIA APARTIR DE '.$_POST['Parametro']
 
 					 ));
@@ -80,29 +98,31 @@ class EnsayoTransferenciaController extends Controller {
 				//Calculos de edades
 				 
 				 //edad falla1 (hora falla - hora carga * (24 *(Fecha falla - Fecha carga)) )
-				 $difhoras = $this->restahoras($_POST['Hora_Carga'] , $_POST['Hora_f1'] ); // hora falla - hora carga
-					 $fecha_carga = new \DateTime($_POST['Fecha_Ensayo']);
-	                 $fecha_falla = new \DateTime($_POST['Fecha_Registro']);
-				 $diffechas = $fecha_falla->diff( $fecha_carga)->d; // Fecha falla - Fecha carga
+				 $difhoras = $this->restahoras($_POST['Hora_Carga'] , $_POST['Hora_Carga'] ); // hora falla - hora carga
+					 $fecha_ensayo = new \DateTime($_POST['Fecha_Ensayo']);
+	                 $fecha_carga = new \DateTime($_POST['Fecha_Carga']);
+				 $diffechas = $fecha_ensayo->diff( $fecha_carga)->d; // Fecha falla - Fecha carga
 
-				 $EdadFalla1= abs($difhoras - (24*($diffechas)));
+				
+
+				 $EdadFalla1= abs($difhoras + (24 * $diffechas));
 			    
 				
-				 //edad falla1 (hora falla - hora carga * (24 *(Fecha falla - Fecha carga)) )
-				 $difhoras = $this->restahoras($_POST['Hora_Carga'] , $_POST['Hora_f2'] ); // hora falla - hora carga
-					 $fecha_carga = new \DateTime($_POST['Fecha_Ensayo']);
-	                 $fecha_falla = new \DateTime($_POST['Fecha_Registro']);
-				 $diffechas = $fecha_falla->diff( $fecha_carga)->d; // Fecha falla - Fecha carga
+				 //edad falla2 (hora falla - hora carga * (24 *(Fecha falla - Fecha carga)) )
+				 $difhoras = $this->restahoras($_POST['Hora_f2'] , $_POST['Hora_Carga'] ); // hora falla - hora carga
+					 $fecha_ensayo = new \DateTime($_POST['Fecha_Ensayo']);
+	                 $fecha_carga = new \DateTime($_POST['Fecha_Carga']);
+				 $diffechas = $fecha_ensayo->diff( $fecha_carga)->d; // Fecha falla - Fecha carga
 
-				 $EdadFalla2= abs($difhoras - (24*($diffechas)));
+				 $EdadFalla2= abs($difhoras + (24 * $diffechas));
 
-				 //edad falla1 (hora falla - hora carga * (24 *(Fecha falla - Fecha carga)) )
-				 $difhoras = $this->restahoras($_POST['Hora_Carga'] , $_POST['Hora_f3'] ); // hora falla - hora carga
-					 $fecha_carga = new \DateTime($_POST['Fecha_Ensayo']);
-	                 $fecha_falla = new \DateTime($_POST['Fecha_Registro']);
-				 $diffechas = $fecha_falla->diff( $fecha_carga)->d; // Fecha falla - Fecha carga
+				//edad falla3 (hora falla - hora carga * (24 *(Fecha falla - Fecha carga)) )
+				 $difhoras = $this->restahoras($_POST['Hora_f3'] , $_POST['Hora_Carga'] ); // hora falla - hora carga
+					 $fecha_ensayo = new \DateTime($_POST['Fecha_Ensayo']);
+	                 $fecha_carga = new \DateTime($_POST['Fecha_Carga']);
+				 $diffechas = $fecha_ensayo->diff( $fecha_carga)->d; // Fecha falla - Fecha carga
 
-				 $EdadFalla3= abs($difhoras - (24*($diffechas)));
+				 $EdadFalla3= abs($difhoras + (24 * $diffechas));
 
 				 //Salvando calculos
 				 $transferencia->Edad_f1 = $EdadFalla1;
@@ -117,13 +137,17 @@ class EnsayoTransferenciaController extends Controller {
 				 if ($indice == 0 ) { $indice = 1; }
 				 $promedio = ($transferencia->Falla1 + $transferencia->Falla2 + $transferencia->Falla3)/$indice;
 
+				  
+
 				 //Salvando promedio
 				 $transferencia->Promedio_Carga = $promedio;
-				
+					
+					
+
 				 $transferencia->save();
 
 
-				 return redirect('/pc/transferencias/save/'.$transferencia->Fecha_Ensayo)->with('success','Ensayo ingresado');
+				 return redirect('/pc/transferencias/save/'.$transferencia->Fecha_Carga)->with('success','Ensayo ingresado');
 
 			}
 
@@ -209,18 +233,46 @@ class EnsayoTransferenciaController extends Controller {
 //redirect
 
 			public function redirect_transferencia($fecha){
-				//Abre el historial
-			             $carga = Transferencias::where('transferencia.Fecha_Ensayo' , $fecha)
-				                          ->join('mixerconsumo', 'transferencia.Numero_Carga', '=', 'mixerconsumo.Numero_Carga')
-				 						  ->groupBy('transferencia.Numero_Carga')
-				 						  ->get();
-					
-								 
-						return view('transferencias_historial' , array(
-							'carga' => $carga ,
-							'titlemesage' => 'LISTADO TRASFERENCIAS POR FECHA '.$fecha 
-							
-							 ));
+				
+
+			 	//Filtrando registros desde trabajabilidad
+				  $carga = Trabajabilidad::where('revenimiento.Fecha_Carga','<=' ,$fecha)
+				  						->where('revenimiento.transferencia',1)
+				  						->whereNotExists(function($query)
+								            {
+								                $query->select(\DB::raw(1))
+								                      ->from('transferencia')
+								                      ->whereRaw('transferencia.Numero_Carga = revenimiento.Numero_Carga');
+								            })
+				  						->join('mixerconsumo', function ($join) {
+								            $join->on('mixerconsumo.Numero_Carga', '=', 'revenimiento.Numero_Carga');
+								                
+								        })
+								        ->groupBy('revenimiento.Numero_Carga')
+				  						->get();
+
+
+
+				//Obteniendo los realizados
+
+					  	   $historial = Transferencias::where('transferencia.Fecha_Carga', '=', $fecha)
+										        ->join('revenimiento', 'revenimiento.Numero_Carga', '=', 'transferencia.Numero_Carga')
+										        ->join('mixerconsumo', 'mixerconsumo.Numero_Carga', '=', 'transferencia.Numero_Carga')
+										        ->groupBy('transferencia.Numero_Carga')
+										        ->get();
+														  						
+
+
+			   //Carga encargados disponibles     
+			   $encargados = Encargado::all(); 
+			    
+				return view('transferencias' , array(
+					'carga' => $carga ,
+					'encargados' =>$encargados,
+					'historial' =>$historial,
+					'titlemesage' => 'LISTADO DE ENSAYOS TRANSFERENCIA APARTIR DE '.$fecha
+
+					 ));
 
 			}
 

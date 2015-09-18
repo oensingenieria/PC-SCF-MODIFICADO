@@ -61,6 +61,21 @@ public function __construct()
 								        ->groupBy('revenimiento.Numero_Carga')
 				  						->get();
 
+				//Obteniendo los realizados
+
+				$fechacarga = Trabajabilidad::where('revenimiento.Fecha_Ensayo','<=' ,$fecha28)
+                                             ->where('revenimiento.Fecha_Ensayo','>=' ,$fecha33)
+                                             ->first();						
+				  if(count($fechacarga) > 0 ) { 
+					  	    //Abre el historial
+			             $historial = Falla28::where('falla28.Fecha_Carga',$fechacarga->Fecha_Carga)  
+								        ->groupBy('falla28.Numero_Carga')
+								        ->get();
+												}        
+					else{
+						$historial = null ;
+					}	  						
+
 			   //Carga encargados disponibles     
 			   $encargados = Encargado::all(); 						
 				  					
@@ -68,6 +83,7 @@ public function __construct()
 				return view('falla28' , array(
 					'carga' => $carga ,
 					'encargados' =>$encargados,
+					'historial' => $historial,
 					'titlemesage' => 'LISTADO DE ENSAYOS FALLA 28 DESDE '.$fecha28.' HASTA '.$fecha33
 
 					 ));
@@ -87,7 +103,7 @@ public function __construct()
 				
 				$falla28->save();
   
-  				return redirect('/pc/falla28/save/'.$falla28->Fecha_Ensayo)->with('success','Ensayo ingresado');
+  				return redirect('/pc/falla28/save/'.$falla28->Fecha_Carga)->with('success','Ensayo ingresado');
 
 			}
 
@@ -157,18 +173,47 @@ public function __construct()
 
 			 public function redirect_falla28($fecha){
 
-			 	 //Abre el historial
-			             $carga = Falla28::where('falla28.Fecha_Ensayo',$fecha)  
+			 	 //Filtrando registros desde trabajabilidad
+				  $carga = Trabajabilidad::where('revenimiento.Fecha_Carga','=' ,$fecha)
+				  						->where('revenimiento.falla',1)
+				  						->whereNotExists(function($query)
+								            {
+								                $query->select(\DB::raw(1))
+								                      ->from('falla28')
+								                      ->whereRaw('falla28.Numero_Carga = revenimiento.Numero_Carga');
+								            })
+				  						->join('mixerconsumo', function ($join) {
+								            $join->on('mixerconsumo.Numero_Carga', '=', 'revenimiento.Numero_Carga');
+								                
+								        })
+								        ->groupBy('revenimiento.Numero_Carga')
+				  						->get();
+
+				//Obteniendo los realizados
+
+				$fechacarga = Trabajabilidad::where('revenimiento.Fecha_Carga','<=' ,$fecha)
+                                             ->first();						
+				  if(count($fechacarga) > 0 ) { 
+					  	    //Abre el historial
+			             $historial = Falla28::where('falla28.Fecha_Carga',$fechacarga->Fecha_Carga)  
 								        ->groupBy('falla28.Numero_Carga')
 								        ->get();
-						                           
+												}        
+					else{
+						$historial = null ;
+					}	  						
 
-								 
-						return view('falla28_historial' , array(
-							'carga' => $carga ,
-							'titlemesage' => 'LISTADO FALLA 28 POR FECHA '.$fecha 
-							
-							 ));
+			   //Carga encargados disponibles     
+			   $encargados = Encargado::all(); 						
+				  					
+			    
+				return view('falla28' , array(
+					'carga' => $carga ,
+					'encargados' =>$encargados,
+					'historial' => $historial,
+					'titlemesage' => 'LISTADO DE ENSAYOS FALLA 28 PENDIENTES '
+
+					 ));
 
 			 }
 

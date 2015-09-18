@@ -18,6 +18,7 @@ class CreateVebeTable extends Migration {
 
 			$table->date('Fecha_Registro');
 			$table->date('Fecha_Ensayo');
+			$table->date('Fecha_Carga');
 			$table->string('Encargado');
             $table->string('Nombre_Cuenta');
 			$table->string('Pista');

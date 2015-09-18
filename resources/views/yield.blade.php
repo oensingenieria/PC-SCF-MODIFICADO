@@ -63,7 +63,7 @@
 						
 					 	</td>	
 				     	<td>{{$carga->Numero_Carga}}</td>
-				     	<td>{{$carga->Fecha_de_Carga}}</td>
+				     	<td>{{$carga->Fecha_Ensayo}}</td>
 				     	<td>{{$carga->Boleta_Batida}}</td>
                         <td>{{$carga->Nombre_Proyecto}}</td>
 				     	<td>{{$carga->Codigo_Diseño}}</td>
@@ -211,7 +211,7 @@
 		   <div class="form-group">
 		    <label  class="col-sm-6 control-label">Fecha de Carga:</label>
 		    <div class="col-sm-6">
-		      <input  value="" name="Fecha_Ensayo"  readonly="" type="text" class="form-control Fecha_de_Carga resetinput"  >
+		      <input  value="" name="Fecha_Carga"  readonly="" type="text" class="form-control Fecha_de_Carga resetinput"  >
 		    </div>
 		  </div>
 
@@ -225,16 +225,23 @@
 		   	 <?php date_default_timezone_set('America/Costa_Rica'); ?>
 
 		  <div class="form-group">
-		    <label for="inputEmail3" class="col-sm-6 control-label">Fecha de Ensayo:</label>
+		    <label for="inputEmail3" class="col-sm-6 control-label">Fecha de Registro:</label>
 		    <div class="col-sm-6">
 		      <input value="{{date ( 'Y-m-d' )}}"  class="form-control " type="text" name="Fecha_Registro" placeholder="Seleccione una fecha" style="cursor: pointer; background-color: white; "  required="" readonly=""   />
 		    </div>
 		   </div>
 
+		   <div class="form-group">
+        <label for="inputEmail3" class="col-sm-6 control-label" >Fecha de Ensayo</label>
+           <div class="col-sm-6">
+            <input  name="Fecha_Ensayo"   style="cursor: pointer; background-color: white;"  required="" readonly=""  type="Text" class="form-control  datepicker"  placeholder="Ingrese una fecha" >
+           </div>
+         </div>
+
 		    <div class="form-group">
 		    <label for="inputEmail3" class="col-sm-6 control-label">Hora de Ensayo:</label>
 		    <div class="col-sm-6">
-		      <input required="" type="text" class="form-control timepicker" name="Hora_Registro"  value="" placeholder="Hora">
+		      <input required="" type="text" class="form-control timepicker" name="Hora_Ensayo"  value="" placeholder="Hora">
 		    </div>
 		   </div>
 
@@ -267,20 +274,7 @@
 		    </div>
 		  </div>
 
-		  <div class="form-group">
-        <label for="inputEmail3" class="col-sm-6 control-label">Encargado:</label>
-        <div class="col-sm-6">
-          
-	          <select name="Encargado" class="form-control" >
-	            @foreach($encargados as $encargado)
-	            <option value="{{$encargado->nombre}}" > {{$encargado->nombre}} </option>
-	            @endforeach
-	          </select>
-
-
-	        </div>
-	      </div>
-
+		  
 	</div>
 
 	<div class="col-md-6"> 
@@ -345,13 +339,27 @@
 		      <input  type="text" readonly="" name="Volumen_Teorico" id="Volumen_de_Carga" class="form-control resetinput"  >
 		    </div>
 		  </div>
+
+		  <div class="form-group">
+        <label for="inputEmail3" class="col-sm-6 control-label">Encargado:</label>
+        <div class="col-sm-6">
+          
+	          <select name="Encargado" class="form-control" >
+	            @foreach($encargados as $encargado)
+	            <option value="{{$encargado->nombre}}" > {{$encargado->nombre}} </option>
+	            @endforeach
+	          </select>
+
+
+	        </div>
+	      </div>
 		  
 		 <input type="hidden" readonly="" name="Numero_Carga" id="Numero_Carga" class="form-control"  >
 		  
 		  <div class="form-group">
 		    <div class="col-sm-offset-6 col-sm-6">
 		     
-		      <button type="submit" class="btn btn-success">Almacenar:</button>
+		      <button type="submit" class="btn btn-success">Grabar</button>
 		      
 		    </div>
 		  </div>

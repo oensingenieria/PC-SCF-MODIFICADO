@@ -60,13 +60,32 @@ class EnsayoFalla7Controller extends Controller {
 								        ->groupBy('revenimiento.Numero_Carga')
 				  						->get();
 
+
+			//Obteniendo los realizados
+
+				$fechacarga = Trabajabilidad::where('revenimiento.Fecha_Ensayo','<=' ,$fecha7)
+                                             ->where('revenimiento.Fecha_Ensayo','>=' ,$fecha12)
+                                             ->first();						
+				  if(count($fechacarga) > 0 ) { 
+					  	    //Abre el historial
+			             $historial = Falla7::where('falla7.Fecha_Carga',$fechacarga->Fecha_Carga)  
+								        ->groupBy('falla7.Numero_Carga')
+								        ->get();
+												}        
+					else{
+						$historial = null ;
+					}	  						
+
+
 			   //Carga encargados disponibles     
 			   $encargados = Encargado::all(); 						
 				  					
+
 			    
 				return view('falla7' , array(
 					'carga' => $carga ,
 					'encargados' =>$encargados,
+					'historial' => $historial,
 					'titlemesage' => 'LISTADO DE ENSAYOS FALLA 7 ENTRE '.$fecha7.' Y '.$fecha12
 
 					 ));
@@ -82,10 +101,9 @@ class EnsayoFalla7Controller extends Controller {
 				$falla7 = new Falla7($request->all());
 				$falla7->Numero_Carga = $_POST['Numero_Carga'];
 				$falla7->Nombre_Cuenta= Auth::user()->username;
-				
 				$falla7->save();
 
-				return redirect('/pc/falla7/save/'.$falla7->Fecha_Ensayo)->with('success','Ensayo ingresado');
+				return redirect('/pc/falla7/save/'.$falla7->Fecha_Carga)->with('success','Ensayo ingresado');
 			    
 			}    
 
@@ -158,18 +176,51 @@ class EnsayoFalla7Controller extends Controller {
 
 			 public function redirect_falla7($fecha){
 
-			 	     //Abre el historial
-			             $carga = Falla7::where('falla7.Fecha_Ensayo',$fecha)  
+			 	   //Filtrando registros desde trabajabilidad
+				  $carga = Trabajabilidad::where('revenimiento.Fecha_Carga','=' ,$fecha)
+				  						->where('revenimiento.falla',1)
+				  						->whereNotExists(function($query)
+								            {
+								                $query->select(\DB::raw(1))
+								                      ->from('falla7')
+								                      ->whereRaw('falla7.Numero_Carga = revenimiento.Numero_Carga');
+								            })
+				  						->join('mixerconsumo', function ($join) {
+								            $join->on('mixerconsumo.Numero_Carga', '=', 'revenimiento.Numero_Carga');
+								                
+								        })
+								        ->groupBy('revenimiento.Numero_Carga')
+				  						->get();
+
+
+			
+			//Obteniendo los realizados
+
+				$fechacarga = Trabajabilidad::where('revenimiento.Fecha_Carga','<=' ,$fecha)
+                                             ->first();						
+				  if(count($fechacarga) > 0 ) { 
+					  	    //Abre el historial
+			             $historial = Falla7::where('falla7.Fecha_Carga',$fechacarga->Fecha_Carga)  
 								        ->groupBy('falla7.Numero_Carga')
 								        ->get();
-						                           
+												}        
+					else{
+						$historial = null ;
+					}	  				  						
 
-								 
-						return view('falla7_historial' , array(
-							'carga' => $carga ,
-							'titlemesage' => 'LISTADO FALLA 7 POR FECHA '.$fecha
-							
-							 ));
+
+			   //Carga encargados disponibles     
+			   $encargados = Encargado::all(); 						
+				  					
+
+			    
+				return view('falla7' , array(
+					'carga' => $carga ,
+					'encargados' =>$encargados,
+					'historial' => $historial,
+					'titlemesage' => 'LISTADO DE ENSAYOS FALLA 7 PENDIENTES'
+
+					 ));
 
 
 			 }

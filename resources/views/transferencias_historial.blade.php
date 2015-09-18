@@ -57,9 +57,9 @@
 				     	<td>{{$c->Codigo_Diseño}}</td>
                         <td>{{$c->Diseño}}</td>
                         <td>{{$c->Nombre_Proyecto}}</td>
-				     	<td>{{$c->Falla1}} | {{$c->Edad_f1}}</td>
-				     	<td>{{$c->Falla2}} | {{$c->Edad_f2}}</td>
-				     	<td>{{$c->Falla3}} | {{$c->Edad_f3}}</td>
+				     	<td>{{$c->Falla1}} <b>|</b> {{$c->Edad_f1}}</td>
+				     	<td>{{$c->Falla2}} <b>|</b> {{$c->Edad_f2}}</td>
+				     	<td>{{$c->Falla3}} <b>|</b> {{$c->Edad_f3}}</td>
 				     	<td>{{$c->Promedio_Carga}}</td>
 				     	<td style="color:blue">{{$c->Encargado}}</td>
 				    

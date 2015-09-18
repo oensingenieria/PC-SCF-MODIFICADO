@@ -17,6 +17,7 @@ class CreateTrasferenciaTable extends Migration {
 			$table->increments('id');
 			$table->date('Fecha_Ensayo');
 			$table->date('Fecha_Registro');
+			$table->date('Fecha_Carga');
             $table->decimal('Falla1');
             $table->time('Hora_f1');
 			$table->integer('Edad_f1');
@@ -30,6 +31,7 @@ class CreateTrasferenciaTable extends Migration {
 			$table->string('Numero_Carga');
 			$table->string('Encargado');
             $table->string('Nombre_Cuenta');
+            $table->string('Codigo_Diseño');
             $table->timestamps();
 		});
 	}

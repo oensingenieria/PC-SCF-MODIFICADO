@@ -11,6 +11,7 @@ class Falla28 extends Model {
 	 'Numero_Carga',
 	 'Fecha_Ensayo', 
 	 'Fecha_Registro',
+	 'Fecha_Carga',
 	 'Numero_Dias',
 	 'Lugar_Falla',
 	 'Falla1',

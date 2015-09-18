@@ -17,7 +17,7 @@ class CreateMoldeTable extends Migration {
 			$table->increments('id');
 			$table->string('Nombre_Molde');
 			$table->decimal('Peso_Molde');
-			$table->decimal('Volumen_Molde');
+			$table->decimal('Volumen_Molde', 3, 3);
 			$table->timestamps();
 		});
 	}

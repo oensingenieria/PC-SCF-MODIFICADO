@@ -135,6 +135,24 @@ class EnsayoYieldController extends Controller {
 
 				$yield = new Ensayo($request->all());
                 $yield->Nombre_Cuenta = Auth::user()->username;
+                $yield->Fecha_Ensayo = $_POST['Fecha_Ensayo'];
+
+                //Densidad real
+                $densidad_real = ($yield->Yield - $yield->Peso_Molde) /$yield->Volumen_Molde ;
+                $densidad_real = number_format( (float)$densidad_real, 2, '.', ''); 
+                $yield->Densidad_Real = abs($densidad_real);
+
+                //Volumen real
+                $volumen_real = ($yield->Agregado+$yield->Cemento+$yield->Aditivo1+$yield->Aditivo2+$yield->Agua) / $densidad_real;
+                $volumen_real = number_format((float)$volumen_real, 2, '.', '');
+                $yield->Volumen_Real = abs($volumen_real);
+
+                
+                //Rendimiento real
+                 $Rendimiento_real =  100 * ($volumen_real/$yield->Volumen_Teorico);
+                 $Rendimiento_real =  number_format((float)$Rendimiento_real, 2, '.', '');
+                 $yield->Rendimiento_Real = abs($Rendimiento_real);
+
                 $yield->save();
 
 				return redirect('/pc/yield/historial/'.$yield->Numero_Carga)->with('success','Ensayo ingresado');

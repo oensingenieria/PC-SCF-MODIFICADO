@@ -28,7 +28,7 @@
 				        <td>Usuario</td>
 				        <td>Numero Carga</td>
 				        <td>Codigo Diseño</td>
-				        <td>Fecha Registro</td>
+				        <td>Fecha Ensayo</td>
 				        <td>Dias</td>
 				        <td>Falla 1</td>
 				        <td>Falla 2</td>
@@ -51,7 +51,7 @@
 					 	<td><button class="btn btn-info " >{{$mix->Nombre_Cuenta}}</button></td>
 				     	<td>{{$mix->Numero_Carga}}</td>
 				     	<td>{{$mix->Codigo_Diseño}}</td>
-				     	<td>{{$mix->Fecha_Registro}}</td>
+				     	<td>{{$mix->Fecha_Ensayo}}</td>
 				     	<td>{{$mix->Numero_Dias}}</td>
 				     	<td>{{$mix->Falla1}}</td>
 				     	<td>{{$mix->Falla2}}</td>

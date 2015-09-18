@@ -25,6 +25,7 @@
 				
 				
 		@if(isset($carga))
+      @if(count($carga) > 0 )
 				
 				<div class="col-md-12  ">
 				 <table class="table table-bordered tablePag">
@@ -35,7 +36,7 @@
 				        <td>Numero de carga</td>
 				        <td>Fecha de registro</td>
 				        <td>Fecha de ensayo</td>
-				        <td>Hora del registro</td>
+				        <td>Hora del ensayo</td>
 				        <td>Yield</td>
 				        <td>Encargado</td>
 				        <td>Usuario</td>
@@ -53,7 +54,7 @@
 				     	<td>{{$c->Numero_Carga}}</td>
 				     	<td>{{$c->Fecha_Registro}}</td>
 				     	<td>{{$c->Fecha_Ensayo}}</td>
-                        <td>{{$c->Hora_Registro}}</td>
+              <td>{{$c->Hora_Ensayo}}</td>
 				     	<td>{{$c->Yield}}</td>
 				     	<td style="color:blue" >{{$c->Encargado}}</td>
 				     	<td style="color:blue">{{$c->Nombre_Cuenta}}</td>
@@ -70,16 +71,17 @@
 
 
 				</table>
+
+        @else
+<p class="bg-danger text-center" style="height:40px;padding-top:10px"><b>Datos no encontrados . Por favor realize una nueva busqueda.</b></p>
+        @endif
 				
 				</div>{{--End Col-md-12 --}}
-
+   
 
 	 	@endif
 
-	 	
-
-	 	
-				
+	 
 				</div>{{--End Row--}}
 			
 

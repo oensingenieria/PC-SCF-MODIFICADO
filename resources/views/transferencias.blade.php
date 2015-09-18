@@ -25,42 +25,73 @@
 				<div class="row">
 				<div class="col-md-12  ">
 				
-			  @if(isset($carga))	
-				@if(!is_null($carga) & count($carga) > 0 )
+			  @if(isset($carga) || isset($historial) )	
+				@if(!is_null($carga) & count($carga) > 0 || !is_null($historial) & count($historial) > 0)
 				 <table class="table table-bordered tablePag">
  				
-				   <thead class="bg-success">
-				      <tr>
-				        <td>Acciones</td>
-				        <td>Numero Carga</td>
-				        <td>Fecha Carga</td>
-				        <td>Hora Carga</td>
-				        <td>Codigo Diseño</td>
-				        <td>Diseño</td>
-				        <td>Codigo Elemento</td>
-				        <td>Nombre Elemento</td>
-				        <td>Codigo Proyecto</td>
-				        <td>Nombre Proyecto</td>
-				        
-				        
-				      </tr>
-				     </thead>
+				  <thead class="bg-success">
+              <tr>
+                <td>Acciones</td>
+                <td>Numero Carga</td>
+                <td>Diseño</td>
+                <td>Nombre Elemento</td>
+                <td>Fecha Ensayo</td>
+                <td>Falla1 | Hora | Edad</td>
+                <td>Falla 2 | Hora | Edad</td>
+                <td>Falla 3 | Hora | Edad</td>
+                <td>Promedio Carga</td>
+                <td>Encargado</td>
+                
+                
+              </tr>
+             </thead>
 				     
                    <tbody>
+
+                @if(isset($historial))
+                    @if( count($historial) > 0 )
+
+                       @foreach($historial as $mix)
+                       
+                         <tr>
+               
+                            <td><button class="btn btn-info">{{$mix->Nombre_Cuenta}}</button></td>
+                            <td>{{$mix->Numero_Carga}}</td>
+                            <td>{{$mix->Diseño}}</td>
+                            <td>{{$mix->Nombre_Elemento}}</td>
+                            <td>{{$mix->Fecha_Ensayo}}</td>
+                            <td>{{$mix->Falla1}} <b>|</b> {{$mix->Hora_f1}} <b>|</b> {{$mix->Edad_f1}}</td>
+                            <td>{{$mix->Falla2}} <b>|</b> {{$mix->Hora_f2}} <b>|</b> {{$mix->Edad_f2}}</td>
+                            <td>{{$mix->Falla3}} <b>|</b> {{$mix->Hora_f3}} <b>|</b> {{$mix->Edad_f3}}</td>
+                            <td>{{$mix->Promedio_Carga}}</td>
+                            <td style="color:blue">{{$mix->Encargado}}</td>
+                      
+                       </tr>
+
+
+                       @endforeach
+
+
+                      @endif
+
+                   @endif   
+      
+
+
                  @foreach($carga as $c)
 				     <tr>
 				       
-				     	<td><button  data-remodal-target="llenadata_modal" class="btn btn-success llenardatos" data-numerocarga="{{$c->Numero_Carga}}" data-horacarga="{{$c->Hora_Registro}}" data-fechacarga="{{$c->Fecha_de_Carga}}" >Realizar</button></td>
+				     	<td><button  data-remodal-target="llenadata_modal" class="btn btn-success llenardatos" data-numerocarga="{{$c->Numero_Carga}}" data-horacarga="{{$c->Hora_de_Carga}}" data-fechacarga="{{$c->Fecha_de_Carga}}" data-codigodiseno="{{$c->Codigo_Diseño}}">Realizar</button></td>
 				     	
 				     	<td>{{$c->Numero_Carga}}</td>
-				     	<td>{{$c->Fecha_Ensayo}}</td>
-				     	<td>{{$c->Hora_Registro}}</td>
-              <td>{{$c->Codigo_Diseño}}</td>
-              <td>{{$c->Diseño}}</td>
-				     	<td>{{$c->Codigo_Elemento}}</td>
+				     	<td>{{$c->Diseño}}</td>
 				     	<td>{{$c->Nombre_Elemento}}</td>
-				     	<td>{{$c->Codigo_Proyecto}}</td>
-				     	<td>{{$c->Nombre_Proyecto}}</td>
+              <td></td>
+              <td></td>
+				     	<td></td>
+				     	<td></td>
+				     	<td></td>
+				     	<td></td>
 				    
 				     </tr>
                  @endforeach
@@ -205,8 +236,13 @@
       <div class="col-md-12">
   		          
 		   <div class="form-group">
-  			<label>Fecha de ingreso <input value="{{date ( 'Y-m-d' )}}"  name="Fecha_Registro" style="cursor: pointer; background-color: white;"  required="" readonly=""  type="Text" class="form-control "   placeholder="Fecha"></label>
+  			<label>Fecha de Registro <input value="{{date ( 'Y-m-d' )}}"  name="Fecha_Registro" style="cursor: pointer; background-color: white;"  required="" readonly=""  type="Text" class="form-control "   placeholder="Fecha"></label>
            </div>	
+
+        <div class="form-group">
+        <label>Fecha de Ensayo <input  name="Fecha_Ensayo"   style="cursor: pointer; background-color: white;"  required="" readonly=""  type="Text" class="form-control  datepicker"  placeholder="Ingrese una fecha" ></label>
+           </div> 
+
        </div>
        <div class="col-md-6">
 		  <div class="form-group">
@@ -251,7 +287,8 @@
           
            <input type="hidden" class="numerocarga" name="Numero_Carga">
            <input type="hidden" class="horacarga" name="Hora_Carga">
-           <input type="hidden" class="fechacarga" name="Fecha_Ensayo">
+           <input type="hidden" class="fechacarga" name="Fecha_Carga">
+           <input type="hidden" class="codigodiseño" name="Codigo_Diseño">
           
       </div>
           
@@ -306,11 +343,13 @@ $(document).ready(function(){
        var numerocarga = $(this).data('numerocarga');
        var horacarga = $(this).data('horacarga');
        var fechacarga = $(this).data('fechacarga');
-       
+       var codigodiseño = $(this).data('codigodiseno');
+    
            
        $('.numerocarga').val(numerocarga);
        $('.horacarga').val(horacarga);
        $('.fechacarga').val(fechacarga)
+       $('.codigodiseño').val(codigodiseño)
        
       });
 

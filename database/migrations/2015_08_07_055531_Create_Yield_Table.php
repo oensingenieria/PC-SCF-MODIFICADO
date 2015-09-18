@@ -17,8 +17,9 @@ class CreateYieldTable extends Migration {
 			$table->increments('id');
 			$table->date('Fecha_Ensayo');
 			$table->date('Fecha_Registro');
+			$table->date('Fecha_Carga');
 			$table->string('Codigo');
-			$table->time('Hora_Registro');
+			$table->time('Hora_Ensayo');
 			
 			$table->string('Molde');
 			$table->decimal('Peso_Molde');
@@ -33,7 +34,9 @@ class CreateYieldTable extends Migration {
 			$table->string('Encargado');
             $table->string('Nombre_Cuenta');
 			$table->string('Numero_Carga');
-
+			$table->decimal('Densidad_Real');
+			$table->decimal('Volumen_Real');
+			$table->decimal('Rendimiento_Real');
 
 			$table->timestamps();
 		});

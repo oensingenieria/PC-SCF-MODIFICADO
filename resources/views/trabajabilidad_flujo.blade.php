@@ -308,14 +308,14 @@
         <div class="form-group text-left" >
          
          <input class="ensayoschk"  type="checkbox" name="vebe" value="1" >&nbsp;<b>Vebe</b>&nbsp;&nbsp;
-         <input class="ensayoschk" type="checkbox" name="falla" value="1">&nbsp;<b>Falla 7 y 28</b>&nbsp;&nbsp;
-     
+         <input class="ensayoschk" type="checkbox" name="transferencia" value="1">&nbsp;<b>Transferencia</b>
+        
        </div>
 
        <div class="form-group text-left" >
-       <input class="ensayoschk" type="checkbox" name="transferencia" value="1">&nbsp;<b>Transferencia</b>&nbsp;&nbsp;
+        <input class="ensayoschk" type="checkbox" name="falla" value="1">&nbsp;<b>Falla 7 y 28</b>&nbsp;&nbsp;
        <input id="desechoschk" type="checkbox" name="desecho" value="1">&nbsp;<b>Desecho</b>&nbsp;&nbsp;
-       <input id="ningunochk" type="checkbox" name="ninguno" >&nbsp;<b>Ninguno</b>&nbsp;&nbsp;
+       <input id="ningunochk" type="checkbox" name="ninguno" >&nbsp;<b>Ninguno</b>
        </div>
   
   </div>

@@ -119,7 +119,7 @@
 						<li class="dropdown">
 							<a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-user" style="color:blue"></span>&nbsp;{{ Auth::user()->username }} <span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu"  id="navitem">
-							
+							    <li><a href="/pc/configuracion">Configuracion</a></li>
 								<li><a href="/auth/logout">Salir</a></li>
 							</ul>
 						</li>

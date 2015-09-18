@@ -19,19 +19,24 @@
 				
 				<div class="row">
 				<div class="col-md-12  ">
-			@if(isset($carga) )
-				@if(!is_null($carga) & count($carga) > 0  )
+			@if(isset($carga) || isset($historial)  )
+				@if(!is_null($carga) & count($carga) > 0  || !is_null($historial) & count($historial) > 0 )
 				<table class="table table-bordered tablePag" >
  				
 				   <thead class="bg-success">
 				      <tr>
-				        <td>Acción</td>
-				        <td>Numero Carga</td>
-				        <td>Nombre Proyecto</td>
-				        <td>Codigo Proyecto</td>
-				        <td>Nombre Elemento</td>
-				        <td>Codigo Elemento</td>
-				        <td>Fecha Ensayo</td>
+				       <td>Acciones</td>
+		                <td>Numero Carga</td>
+		                <td>Codigo Diseño</td>
+		                <td>Nombre Elemento</td>
+		                <td>Fecha Ensayo</td>
+		                <td>Falla 1</td>
+		                <td>Falla 2</td>
+		                <td>Falla 3</td>
+		                <td>Resist. Nominal</td>
+		                <td>Resist. Promedio</td>
+		                <td>Resist. Porcentual</td>
+		                <td>Encargado</td>
 				      </tr>
 				     </thead>	
 
@@ -39,6 +44,35 @@
 				
 				     <tbody>
 
+				  @if(isset($historial))
+                    @if( count($historial) > 0 )
+
+                       @foreach($historial as $mix)
+                       
+                         <tr>
+               
+                            <td><button class="btn btn-info">{{$mix->Nombre_Cuenta}}</button></td>
+                            <td>{{$mix->Numero_Carga}}</td>
+                            <td>{{$mix->Codigo_Diseño}}</td>
+                            <td>{{$mix->Nombre_Elemento}}</td>
+                            <td>{{$mix->Fecha_Ensayo}}</td>
+                            <td>{{$mix->Falla1}}</td>
+                            <td>{{$mix->Falla2}}</td>
+                            <td>{{$mix->Falla3}}</td>
+                            <td>{{$mix->Resis_Nominal}}</td>
+                            <td>{{$mix->Resis_Promedio}}</td>
+                            <td>{{$mix->Resis_Porcentual}}</td>
+                            <td style="color:blue">{{$mix->Encargado}}</td>
+                      
+                       </tr>
+
+
+                       @endforeach
+
+
+                      @endif
+
+                   @endif 	
 				       
 
 				     @foreach($carga as $mix)
@@ -48,11 +82,16 @@
 
 					 	<td><button data-fechacarga="{{$mix->Fecha_de_Carga}}" data-codigo="{{$mix->Codigo_Diseño}}" data-proyecto="{{$mix->Nombre_Proyecto}}" data-elemento="{{$mix->Nombre_Elemento}}"  class="btn btn-success llenardatos" data-numerocarga="{{$mix->Numero_Carga}}" data-remodal-target="llenardatos_modal" >Seleccionar</button></td>
 				     	<td>{{$mix->Numero_Carga}}</td>
-				     	<td>{{$mix->Nombre_Proyecto}}</td>
-				     	<td>{{$mix->Codigo_Proyecto}}</td>
-				     	<td>{{$mix->Nombre_Elemento}}</td>
+				     	<td>{{$mix->Codigo_Diseño}}</td>
 				     	<td>{{$mix->Codigo_Elemento}}</td>
 				     	<td>{{$mix->Fecha_Ensayo}}</td>
+				     	<td></td>
+				     	<td></td>
+				     	<td></td>
+				     	<td></td>
+				     	<td></td>
+				     	<td></td>
+				     	<td></td>
 				     	
 				     </tr>
 
@@ -216,6 +255,12 @@
 		    </div>
 		  </div>
 
+		  <div class="form-group">
+        <label class="col-sm-6 control-label" >Fecha de Ensayo </label> 
+        <div class="col-sm-6">
+        <input  name="Fecha_Ensayo"   style="cursor: pointer; background-color: white;"  required="" readonly=""  type="Text" class="form-control  datepicker"  placeholder="Ingrese una fecha" >
+        </div>
+           </div> 
 		  
 		   <div class="form-group">
 		    <label for="inputEmail3" class="col-sm-6 control-label">Falla 1 (kg/cm2): </label>
@@ -243,13 +288,7 @@
 		    </div>
 		  </div>
 
-		  	<div class="form-group">
-		    <label  class="col-sm-6 control-label">Codigo Diseño: </label>
-		    <div class="col-sm-6">
-		      <input name="Codigo_Diseño" readonly="" id="Codigo_Diseño" type="text" class="form-control"  >
-		    </div>
-		  </div>
-
+		  
 		  
 		   <div class="form-group">
 		    <label  class="col-sm-6 control-label">Nombre Proyecto: </label>
@@ -300,17 +339,25 @@
 		  	<div class="form-group">
 		    <label  class="col-sm-6 control-label">Fecha Carga:</label>
 		    <div class="col-sm-6">
-		      <input  name="Fecha_Ensayo" readonly=""  id="Fecha_Ensayo"   type="text" class="form-control"  >
+		      <input  name="Fecha_Carga" readonly=""  id="Fecha_Ensayo"   type="text" class="form-control"  >
 		    </div>
 		  </div>	
 
 		  <?php date_default_timezone_set('America/Costa_Rica'); ?>
 		   <div class="form-group">
-		    <label  class="col-sm-6 control-label">Fecha Ensayo:</label>
+		    <label  class="col-sm-6 control-label">Fecha Registro:</label>
 		    <div class="col-sm-6">
 		      <input name="Fecha_Registro" value="{{date( 'Y-m-d' )}}" readonly=""  id="Fecha_Registro" style=" background-color: white;" type="text" class="form-control"  >
 		    </div>
 		  </div>
+
+		  <div class="form-group">
+		    <label  class="col-sm-6 control-label">Codigo Diseño: </label>
+		    <div class="col-sm-6">
+		      <input name="Codigo_Diseño" readonly="" id="Codigo_Diseño" type="text" class="form-control"  >
+		    </div>
+		  </div>
+		  
 
 		  <div class="form-group">
 		    <label for="inputEmail3" class="col-sm-6 control-label">Numero Dias</label>

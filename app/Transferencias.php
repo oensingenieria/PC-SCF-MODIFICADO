@@ -8,6 +8,7 @@ protected $table = 'transferencia';
 
 protected $fillable = ['Fecha_Ensayo',
 						'Fecha_Registro',
+						'Fecha_Carga',
 			            'Falla1',
 			            'Hora_f1',
 						'Edad_f1',
@@ -18,6 +19,7 @@ protected $fillable = ['Fecha_Ensayo',
 						'Hora_f3',
 						'Edad_f3',
 						'Promedio_Carga',
+						'Codigo_Diseño',
 						'Numero_Carga',
 						'Encargado',
 			           'Nombre_Cuenta'

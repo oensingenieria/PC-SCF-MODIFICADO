@@ -94,16 +94,7 @@
 			<p class="text-center">Densidad Real (kg/m3)</p> 
 			
 			<p class="text-center"><b>
-				
-			<?php 
-			$yield_dato = $carga->Yield;
-			$peso_molde = $carga->Peso_Molde;
-			$volumen_molde = $carga->Volumen_Molde;
-
-		    $densidad_real = ($yield_dato - $peso_molde)/$volumen_molde;
-
-		    print(number_format((float)$densidad_real, 2, '.', ''));
-			 ?>
+				{{$carga->Densidad_Real}}
 
 			</b></p>
 
@@ -116,21 +107,7 @@
 			<p class="text-center">Volumen Real (m3)</p> 
 			<p class="text-center"><b>
 				
-			<?php 
-
-			$agregado_dato = $carga->Agregado;
-			$cemento_dato = $carga->Cemento;
-			$aditivo1_dato =$carga->Aditivo1;
-			$aditivo2_dato = $carga->Aditivo2;
-			$agua_dato = $carga->Agua;
-
-			$volumen_real = ($agregado_dato+$cemento_dato+$aditivo1_dato+$aditivo2_dato+$agua_dato) / $densidad_real;
-
-		    print(number_format((float)$volumen_real, 2, '.', ''));
-			 
-			 ?>	
-
-
+                 {{$carga->Volumen_Real}}
 			</b></p>
 
 			</div>
@@ -142,20 +119,7 @@
 			<p class="text-center">Rendimiento Real (%)</p> 
 			<p class="text-center"><b>
 				
-			<?php 
-
-			 $volumen_mixer = $carga->Volumen_de_Carga;
-			 if($volumen_mixer == 0){
-			 	$volumen_mixer = 1;
-			 }
-
-			 $Rendimiento_real =  100 * ($volumen_real/$volumen_mixer);
-
-			 print(number_format((float)$Rendimiento_real, 2, '.', ''));
-
-			 ?>
-
-
+			 {{$carga->Rendimiento_Real}}
 
 			</b></p>
 

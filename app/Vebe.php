@@ -8,7 +8,7 @@ class Vebe extends Model {
 	
 
 
-	protected $fillable = ['Fecha_Registro','Fecha_Ensayo' ,'Pista','Numero_Carga', 'Tarro' ,'Mezcla','Peralte', 'Volumen',
+	protected $fillable = ['Fecha_Registro','Fecha_Ensayo' , 'Fecha_Carga' ,'Pista','Numero_Carga', 'Tarro' ,'Mezcla','Peralte', 'Volumen',
                            'Nombre_Cuenta','Encargado','Humedad','Amperimetro',
                           'Vebe'];
 

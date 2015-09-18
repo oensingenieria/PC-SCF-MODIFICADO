@@ -20,8 +20,8 @@
 				
 				<div class="row">
 				<div class="col-md-12  ">
-			@if(isset($carga) )
-				@if(!is_null($carga) & count($carga) > 0  )
+			@if(isset($carga) || isset($historial) )
+				@if(!is_null($carga) & count($carga) > 0  || !is_null($historial) & count($historial) > 0 )
 				<table class="table table-bordered tablePag">
  				
 				   <thead class="bg-success">
@@ -29,11 +29,13 @@
 				        <td>Acción</td>
 				        <td>Numero carga</td>
 				        <td>Nombre Proyecto</td>
-				        <td>Codigo Proyecto</td>
 				        <td>Nombre Elemento</td>
-				        <td>Codigo Elemento</td>
 				        <td>Diseño</td>
-				        <td>Codigo Diseño</td>
+				        <td>Vebe</td>
+				        <td>Peralte</td>
+				        <td>Volumen (m³)</td>
+				        <td>Codigo Tarro</td>
+				        <td>Encargado</td>
 				       
 
 				      </tr>
@@ -43,19 +45,50 @@
 					  
 				     <tbody>
 
+				  @if(isset($historial))
+                    @if( count($historial) > 0 )
+
+                       @foreach($historial as $mix)
+                               
+                               <tr >
+                                    <td><button  class="btn btn-info"  >{{$mix->Nombre_Cuenta}}</button></td>
+
+
+                                        <td>{{$mix->Numero_Carga}}</td>
+								     	<td>{{$mix->Nombre_Proyecto}}</td>
+								     	<td>{{$mix->Nombre_Elemento}}</td>
+								     	<td>{{$mix->Diseño}}</td>
+								     	<td>{{$mix->Vebe}}</td>
+								     	<td>{{$mix->Peralte}}</td>
+								     	<td>{{$mix->Volumen}}</td>
+								     	<td>{{$mix->Tarro}}</td>
+								     	<td style="color:blue">{{$mix->Encargado}}</td>
+                               </tr>
+                              
+                              
+                            @endforeach
+
+
+	                    @endif
+
+	                 @endif  	
+
+
 				  
 				     @foreach($carga as $mix)
 				     
 				     	<tr>
 						 	<td><button  class="btn btn-success llenardatos" data-numerocarga="{{$mix->Numero_Carga}}" 
-						 	data-fechaensayo="{{$mix->Fecha_Ensayo}}" data-volumen="{{$mix->Volumen_de_Carga}}" data-humedad="{{$mix->Humedad_Mezcla}}"	data-remodal-target="llenardatos_modal" >Seleccionar</button></td>
+						 	data-fechacarga="{{$mix->Fecha_de_Carga}}" data-volumen="{{$mix->Volumen_de_Carga}}" data-humedad="{{$mix->Humedad_Mezcla}}"	data-remodal-target="llenardatos_modal" >Seleccionar</button></td>
 					     	<td>{{$mix->Numero_Carga}}</td>
 					     	<td>{{$mix->Nombre_Proyecto}}</td>
-					     	<td>{{$mix->Codigo_Proyecto}}</td>
 					     	<td>{{$mix->Nombre_Elemento}}</td>
-					     	<td>{{$mix->Codigo_Elemento}}</td>
-					     	<td>{{$mix->Diseño}}</td>
-					     	<td>{{$mix->Codigo_Diseño}}</td>
+					     	<td></td>
+					     	<td></td>
+					     	<td></td>
+					     	<td>{{$mix->Volumen}}</td>
+					     	<td></td>
+					     	<td></td>
 					     
 				     	</tr>
 				     @endforeach
@@ -248,6 +281,13 @@
 
 		 <tbody>
                    
+
+                     <tr>
+				   	 <td><strong>Fecha de Ensayo</strong> </td>
+				   	 <td>  <input  name="Fecha_Ensayo"   style="cursor: pointer; background-color: white;"  required="" readonly=""  type="Text" class="form-control  datepicker"  placeholder="Ingrese una fecha" > </td>
+
+
+				   </tr>
 				  
 				   <tr>
 				   	 <td><strong>Mezcla</strong> </td>
@@ -334,7 +374,7 @@
 
      	</table>
 
-     	<input type="hidden" name="Fecha_Ensayo" id="fecha_ensayo">	
+     	<input type="hidden" name="Fecha_Carga" id="fecha_carga">	
 
      	
         <button type="submit" class="btn btn-success pull-right">Guardar</button>
@@ -412,13 +452,13 @@ $(document).ready(function(){
       
       
        var numerocarga = $(this).data('numerocarga');
-       var fechaensayo = $(this).data('fechaensayo');
+       var fechacarga = $(this).data('fechacarga');
        var volumenmix = $(this).data('volumen');
        var humedadmix = $(this).data('humedad');
 
        
        $('#numerocarga').val(numerocarga);
-       $('#fecha_ensayo').val(fechaensayo);
+       $('#fecha_carga').val(fechacarga);
        $('#volumenmix').val(volumenmix);
        $('#humedadmix').val(humedadmix);
 
